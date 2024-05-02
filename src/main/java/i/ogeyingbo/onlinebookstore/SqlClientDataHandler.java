@@ -57,7 +57,7 @@ public class SqlClientDataHandler {
   
   
   
-  
+  /***
  public  ArrayList<ShoppingCartBook>  getShoppingCartBooks(String   inOrderSerial){
       
      ArrayList<ShoppingCartBook>  shoppingCartBookList =  new   ArrayList<>();
@@ -96,7 +96,7 @@ public class SqlClientDataHandler {
   }
  
  
- 
+ **/
  
   
     

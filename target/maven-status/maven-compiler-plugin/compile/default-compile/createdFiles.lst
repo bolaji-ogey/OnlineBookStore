@@ -1,0 +1,15 @@
+i\ogeyingbo\onlinebookstore\model\objects\Payment.class
+i\ogeyingbo\onlinebookstore\model\objects\InventoryBook.class
+i\ogeyingbo\onlinebookstore\model\objects\UserPurchaseHistory.class
+i\ogeyingbo\onlinebookstore\model\objects\UserProfile.class
+i\ogeyingbo\onlinebookstore\model\objects\ShoppingCartBook.class
+i\ogeyingbo\online\bookstore\dao\PGDataRetriever.class
+i\ogeyingbo\onlinebookstore\SqlClientDataHandler.class
+i\ogeyingbo\online\bookstore\api\BookStoreAPI.class
+i\ogeyingbo\onlinebookstore\model\objects\ShoppingCart.class
+i\ogeyingbo\online\bookstore\dao\RelDataHandler.class
+i\ogeyingbo\online\bookstore\dao\PGDataSource.class
+i\ogeyingbo\onlinebookstore\model\objects\UserPurchase.class
+i\ogeyingbo\onlinebookstore\model\objects\Genre.class
+i\ogeyingbo\onlinebookstore\model\objects\Book.class
+i\ogeyingbo\onlinebookstore\model\objects\OnlineBookStore.class

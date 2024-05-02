@@ -74,6 +74,53 @@ public class UserProfile {
     
     
     
+    
+    
+      
+    public  int   getId(){
+        return    id;
+    }
+    
+    public  String   getUsername(){
+         return    username;
+    }
+    
+    public  String   getUserPassword(){
+         return    userPassword;
+    }
+    
+    public  String   getFullName(){
+         return    fullName;
+    }
+    
+    public  String   getMobile(){
+         return    mobile;
+    }
+    
+    public  String   getEmail(){
+         return    email;
+    }
+    
+    public  BigDecimal   getWalletBalance(){
+         return    walletBalance;
+    }
+    
+    
+    public  String   getAuthPIN(){
+         return    authPIN;
+    }
+    
+    public  String   getLastPurchaseDate(){
+        return    lastPurchaseDate;
+    }
+    
+    public  String   getLastPurchaseTime(){
+       return    lastPurchaseTime;
+    }
+    
+    
+    
+    
       
     public  static final  UserProfile  readFromJSONAndLog(Connection con, final String  inObjectJSON){ 
         UserProfile   userProfile  =  null;

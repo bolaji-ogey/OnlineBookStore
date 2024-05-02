@@ -10,11 +10,7 @@ import i.ogeyingbo.onlinebookstore.model.objects.UserProfile;
 import i.ogeyingbo.onlinebookstore.model.objects.UserPurchaseHistory;
 import i.ogeyingbo.onlinebookstore.model.objects.ShoppingCart;
 import i.ogeyingbo.onlinebookstore.model.objects.UserPurchase;
-import io.vertx.core.json.JsonArray;
-import static io.vertx.sqlclient.ClientBuilder.pool;
-import io.vertx.sqlclient.Row;
-import io.vertx.sqlclient.RowSet;
-import io.vertx.sqlclient.Tuple;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -59,9 +55,8 @@ public class PGDataRetriever {
      
     
   public     ArrayList<InventoryBook>    getBookInventory(){
-         
-           StringBuilder   sbQuery = new StringBuilder(150);
-           PreparedStatement    prepStmnt =    null; 
+          
+           Statement     stmnt =    null; 
            ResultSet row = null;
            ArrayList<InventoryBook>  inventoryBookList =  new   ArrayList<>(); 
            Connection  cron   = null;
@@ -83,11 +78,9 @@ public class PGDataRetriever {
                 cron   =  pgDataSource.getConnect();                
                 System.out.println("cron = "+cron);
                 
-                prepStmnt =    cron.prepareStatement(sbQuery.toString());
-                
-                
-                        
-                row = prepStmnt.executeQuery();
+                stmnt =    cron.createStatement();
+              
+                row = stmnt.executeQuery(selectQuery.toString());
                   
                         // Parameters start with 1
                         while (row.next()) {
@@ -112,11 +105,11 @@ public class PGDataRetriever {
                  
                 e.printStackTrace();
             }  finally{ 
-               sbQuery = null;
+               //selectQuery = null;
                  try{
-                     if(prepStmnt !=  null){
-                        prepStmnt.cancel();
-                        prepStmnt.close();
+                     if(stmnt !=  null){
+                        stmnt.cancel();
+                        stmnt.close();
                     }
                     
                     if(row != null){
@@ -320,6 +313,57 @@ public class PGDataRetriever {
        }
      
      
+  
+  
+         
+  public    int     makePayment(String  userName, String inPassword,  String PIN,  BigDecimal  inTotalAmount){
+         
+           StringBuilder   sbQuery = new StringBuilder(150);
+           PreparedStatement    prepStmnt =    null; 
+           int   resultCount  =  0;
+           Connection  cron   = null;
+           
+            
+           try { 
+                
+                StringBuilder   updateQuery  =  new  StringBuilder(200);
+                updateQuery.append(" UPDATE   user_profile   SET  wallet_balance  =   wallet_balance  -  ? ");
+                updateQuery.append(" WHERE  username = ?  AND  user_password   = ?   AND  wallet_balance >=  ?  ");  
+              
+                cron   =  pgDataSource.getConnect();                
+                System.out.println("cron = "+cron);
+                
+                prepStmnt =    cron.prepareStatement(updateQuery.toString());
+                
+                prepStmnt.setBigDecimal(1, inTotalAmount);
+                prepStmnt.setString(2, userName);
+                prepStmnt.setString(3, inPassword);
+                prepStmnt.setBigDecimal(4, inTotalAmount);
+                        
+                resultCount = prepStmnt.executeUpdate();
+                           
+               // custPool.closePoolConnection(identKey); 
+            } catch (Exception e) {
+                 
+                e.printStackTrace();
+            }  finally{ 
+               sbQuery = null;
+                 try{
+                     if(prepStmnt !=  null){
+                        prepStmnt.cancel();
+                        prepStmnt.close();
+                    }
+                     
+                    if(cron != null){
+                        cron.close();
+                    }
+                } catch (Exception ex) {  
+                    ex.printStackTrace();
+                }
+            } 
+           return   resultCount;
+       }
+  
   
   
               

@@ -12,22 +12,21 @@ import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.AllowForwardHeaders;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
-import io.vertx.ext.web.validation.builder.Bodies;
-import io.vertx.ext.web.validation.builder.ValidationHandlerBuilder;
-import io.vertx.json.schema.common.dsl.ObjectSchemaBuilder;
-import static io.vertx.json.schema.common.dsl.Schemas.objectSchema;
-import static io.vertx.json.schema.common.dsl.Schemas.stringSchema;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
-
+import org.json.JSONObject; 
  
 import i.ogeyingbo.online.bookstore.dao.PGDataRetriever;
 import i.ogeyingbo.onlinebookstore.model.objects.InventoryBook;
 import i.ogeyingbo.onlinebookstore.model.objects.ShoppingCart;
 import i.ogeyingbo.onlinebookstore.model.objects.UserProfile;
 import i.ogeyingbo.onlinebookstore.model.objects.UserPurchaseHistory;
+import i.ogeyingbo.onlinebookstore.model.objects.Payment;
 import io.vertx.core.http.HttpServerRequest;
+import io.vertx.ext.web.handler.BodyHandler;
+import io.vertx.ext.web.handler.FaviconHandler;
+import io.vertx.ext.web.handler.StaticHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
@@ -94,10 +93,17 @@ public class BookStoreAPI  extends AbstractVerticle  {
 
     Router router = Router.router(vertx); 
     
+    router.route().handler(BodyHandler.create());
+    
    // initValidator();
     
     try{
         
+         router.route().handler(StaticHandler.create()); 
+          router.route().handler(FaviconHandler.create(vertx));
+    
+        router.get("/").handler(this::handleBookStoreDashBoard); 
+        router.get("/web/*").handler(this::handleServerResources); 
         
         router.get("/bookstore/inventory/books/page").handler(this::handleBookInventoryPg);         
         router.get("/bookstore/shoppingcart/page").handler(this::handleShoppingCartPg);
@@ -109,6 +115,8 @@ public class BookStoreAPI  extends AbstractVerticle  {
         router.get("/fetch/user/purchases/:userId").handler(this::handleUserPurchaseHistory);
         
         router.get("/fetch/user/profiles").handler(this::handleUserProfileList);
+        
+        router.get("/bookstore/inventory/books/json").handler(this::handleBookInventoryJSON); 
          
          
     }catch(Exception ex){
@@ -129,7 +137,59 @@ public class BookStoreAPI  extends AbstractVerticle  {
        });
   }
  
+  
+  
  
+    private  void handleServerResources(RoutingContext routingContext){
+      // clean up results in memory and update result read status in database. 
+       HttpServerRequest request = routingContext.request();  
+       HttpServerResponse response = routingContext.response();        
+        String file = "";
+        System.out.println(String.format("request.path():  %s", request.path()));
+        if (request.path().equals("/") || request.path().isEmpty() || request.path().isBlank()) {
+            file = "onlinebookstore-dashboard.html"; //file = "login.html";
+            System.out.println(String.format("File served is:  %s", file));
+            response.sendFile("web/" + file); 
+        }else if(request.path().endsWith(".html") || request.path().endsWith(".htm")
+                    || request.path().endsWith(".js")  || request.path().endsWith(".css")
+                         || request.path().endsWith(".map")){
+                file = request.path();   
+                System.out.println(String.format("File served is:  %s", file));
+                response.sendFile("web/"+file);             
+        }
+  } 
+    
+    
+    
+  private  void  handleBookStoreDashBoard(RoutingContext routingContext){
+      // clean up results in memory and update result read status in database. 
+       HttpServerRequest request = routingContext.request();  
+       HttpServerResponse response = routingContext.response();   
+           String file = request.path();  
+           System.out.println(String.format("initial request.path():  %s", request.path()));
+           
+            file = "onlinebookstore-dashboard.html";
+           response.sendFile("web/" + file); 
+           
+           /****
+            if(request.path().endsWith(".html") || request.path().endsWith(".htm")
+                    || request.path().endsWith(".js")  || request.path().endsWith(".css")
+                         || request.path().endsWith(".map")){
+                file = request.path();   
+                System.out.println(String.format("File served is:  %s", file));
+                response.sendFile("web/"+file); 
+            } else if (!file.endsWith("html")) {
+                file = "onlinebookstore-dashboard.html";
+                lendersHttpServiceAPILog.info(String.format("File served is:  %s", file));
+                response.sendFile("web/" + file); 
+           } else{
+                response.sendFile("web/" + file); 
+            }
+          ****/
+  } 
+          
+          
+          
                         
    private  void handleBookInventoryPg(RoutingContext routingContext){
       // clean up results in memory and update result read status in database. 
@@ -137,13 +197,26 @@ public class BookStoreAPI  extends AbstractVerticle  {
        HttpServerResponse response = routingContext.response();   
            String file = request.path();  
            System.out.println(String.format("initial request.path():  %s", request.path()));
-            if (file.isEmpty() || file.isBlank() || file.equals("/")) {
+          
+           file = "book-inventory.html";
+           response.sendFile("web/" + file); 
+           
+           /****
+            if(request.path().endsWith(".html") || request.path().endsWith(".htm")
+                    || request.path().endsWith(".js")  || request.path().endsWith(".css")
+                         || request.path().endsWith(".map")){
+                file = request.path();   
+                file =   "book-inventory.html";
+                System.out.println(String.format("File served is:  %s", file));
+                response.sendFile("web/"+file); 
+            } else if (!file.endsWith("html")) {
                 file = "book-inventory.html";
                 lendersHttpServiceAPILog.info(String.format("File served is:  %s", file));
                 response.sendFile("web/" + file); 
            } else{
                 response.sendFile("web/" + file); 
             }
+         ***/
   } 
    
    
@@ -155,13 +228,26 @@ public class BookStoreAPI  extends AbstractVerticle  {
        HttpServerResponse response = routingContext.response();   
            String file = request.path();  
            System.out.println(String.format("initial request.path():  %s", request.path()));
-            if (file.isEmpty() || file.isBlank() || file.equals("/")) {
+           
+           file = "shopping-cart.html"; 
+            response.sendFile("web/" + file); 
+           
+            /***
+            if(request.path().endsWith(".html") || request.path().endsWith(".htm")
+                    || request.path().endsWith(".js")  || request.path().endsWith(".css")
+                         || request.path().endsWith(".map")){
+                file = request.path();   
+                file =   "shopping-cart.html";
+                System.out.println(String.format("File served is:  %s", file));
+                response.sendFile("web/"+file); 
+            } else if (!file.endsWith("html")) {
                 file = "shopping-cart.html";
                 lendersHttpServiceAPILog.info(String.format("File served is:  %s", file));
                 response.sendFile("web/" + file); 
            } else{
                 response.sendFile("web/" + file); 
             }
+          ***/
   } 
    
    
@@ -173,13 +259,26 @@ public class BookStoreAPI  extends AbstractVerticle  {
        HttpServerResponse response = routingContext.response();   
            String file = request.path();  
            System.out.println(String.format("initial request.path():  %s", request.path()));
-            if (file.isEmpty() || file.isBlank() || file.equals("/")) {
+           
+           file = "users.html";
+           response.sendFile("web/" + file); 
+           
+           /***
+            if(request.path().endsWith(".html") || request.path().endsWith(".htm")
+                    || request.path().endsWith(".js")  || request.path().endsWith(".css")
+                         || request.path().endsWith(".map")){
+                file = request.path();   
+                file =   "users.html";
+                System.out.println(String.format("File served is:  %s", file));
+                response.sendFile("web/"+file); 
+            } else if (!file.endsWith("html")) {
                 file = "users.html";
                lendersHttpServiceAPILog.info(String.format("File served is:  %s", file));
                 response.sendFile("web/" + file); 
            } else{
                 response.sendFile("web/" + file); 
             }
+            * ***/
   } 
    
    
@@ -190,13 +289,26 @@ public class BookStoreAPI  extends AbstractVerticle  {
        HttpServerResponse response = routingContext.response();   
            String file = request.path();  
            System.out.println(String.format("initial request.path():  %s", request.path()));
-            if (file.isEmpty() || file.isBlank() || file.equals("/")) {
+           
+           file = "purchase-history.html";
+           response.sendFile("web/" + file); 
+           
+           /***
+            if(request.path().endsWith(".html") || request.path().endsWith(".htm")
+                    || request.path().endsWith(".js")  || request.path().endsWith(".css")
+                         || request.path().endsWith(".map")){
+                file = request.path();   
+                file = "purchase-history.html";
+                System.out.println(String.format("File served is:  %s", file));
+                response.sendFile("web/"+file); 
+            } else if (!file.endsWith("html")) {
                 file = "purchase-history.html";
                 lendersHttpServiceAPILog.info(String.format("File served is:  %s", file));
                 response.sendFile("web/" + file); 
            } else{
                 response.sendFile("web/" + file); 
             }
+         ****/
   } 
     
     
@@ -279,6 +391,9 @@ public class BookStoreAPI  extends AbstractVerticle  {
   
   
   
+  
+  
+  
     
   private  void   handleUserProfileList(RoutingContext  routingContext){
       // clean up results in memory and update result read status in database. 
@@ -305,6 +420,70 @@ public class BookStoreAPI  extends AbstractVerticle  {
   
   
   
+      
+  private  void    handleUserPayment(RoutingContext  routingContext){
+      // clean up results in memory and update result read status in database. 
+      
+       HttpServerResponse response = routingContext.response(); 
+       boolean  paymentSuccessfull  =  false;
+       UserPurchaseHistory    userPurchaseHistory = null;
+        
+       try{
+           
+                  String reqData  =   routingContext.body().asJsonObject().toString();  
+                  
+                    if(reqData != null){
+                        
+                         Payment   payment  =   Payment.readFromJSON(reqData);
+                         
+                            if(pgDataRetriever.makePayment(payment.getUsername(), payment.getPassword(), 
+                                                            payment.getPIN(), payment.getTotalAmount()) >  0){
+                                   paymentSuccessfull = true ;
+                                handleUserPurchaseHistory(routingContext); 
+                            }
+
+                             String  listData="{\"Result\":\"OK\",\"Records\":"+""+"}";
+
+                             response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(200).send(listData);
+                     }   
+                 
+            }catch(Exception ex){  
+                 String error="{\"Result\":\"ERROR\",\"Message\":"+ex.getMessage()+"}"; 
+                response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(201).send(error);
+                ex.printStackTrace();
+            }
+        
+    } 
+  
+  
+  
+  
+  
+  private  void handleBookInventoryJSON(RoutingContext  routingContext){
+      // clean up results in memory and update result read status in database. 
+      
+       HttpServerResponse response = routingContext.response();  
+        
+       try{
+                      
+                       ArrayList<InventoryBook>    inventoryBookList = pgDataRetriever.getBookInventory();
+                            
+                       System.out.println("inventoryBookList  size = "+inventoryBookList.size());
+                       String  listData="{\"Result\":\"OK\",\"Records\":"+inventoryBookList+"}";
+                            
+                      JSONObject   jsonObjectResult  = new JSONObject();
+                      jsonObjectResult.put("data", inventoryBookList.toArray());
+                      // response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(200).send(new JSONObject(inventoryBookList.get(0)).toString());
+                       response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(200).send(jsonObjectResult.toString());
+                          
+                 
+            }catch(Exception ex){  
+                 String error="{\"Result\":\"ERROR\",\"Message\":"+ex.getMessage()+"}"; 
+                response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(201).send(error);
+                ex.printStackTrace();
+            }
+        
+    } 
  
     
 }
