@@ -163,7 +163,11 @@ public class BookStoreAPI  extends AbstractVerticle  {
         }else if(request.path().endsWith(".htm")  || request.path().endsWith(".js")  
                       || request.path().endsWith(".css") || request.path().endsWith(".map")){
             
-                file = request.path();   
+               String    newRequestPath = requestPath.replace(requestTokens[requestTokens.length - 1], "");
+               System.out.println("newRequestPath: "+newRequestPath);
+               
+                //file = request.path().replace(newRequestPath, ""); 
+                file = request.path();
                 System.out.println(String.format("handleServerResources:   File served is:  %s", file));
                 response.sendFile("web/"+file);     
                 
