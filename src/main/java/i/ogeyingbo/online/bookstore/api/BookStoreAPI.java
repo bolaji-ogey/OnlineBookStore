@@ -102,13 +102,13 @@ public class BookStoreAPI  extends AbstractVerticle  {
          router.route().handler(StaticHandler.create()); 
           router.route().handler(FaviconHandler.create(vertx));
     
-        router.get("/").handler(this::handleBookStoreDashBoard); 
-        router.get("/web/*").handler(this::handleServerResources); 
+        router.get("/").handler(this::handleBookStoreDashBoard);  
+        router.get("/*").handler(this::handleServerResources); 
         
-        router.get("/bookstore/inventory/books/page").handler(this::handleBookInventoryPg);         
-        router.get("/bookstore/shoppingcart/page").handler(this::handleShoppingCartPg);
-        router.get("/fetch/users/page").handler(this::handleUserPage); 
-        router.get("/fetch/user/purchase/history/page").handler(this::handleUserPurchasesPage);        
+        router.get("/bookstore/inventory/books/page/book-inventory.html").handler(this::handleBookInventoryPg);         
+        router.get("/bookstore/shoppingcart/page/shopping-cart.html").handler(this::handleShoppingCartPg);
+        router.get("/fetch/users/page/users.html").handler(this::handleUserPage); 
+        router.get("/fetch/user/purchase/history/page/purchase-history.html").handler(this::handleUserPurchasesPage);        
                 
         router.get("/bookstore/inventory/books").handler(this::handleBookInventory);         
         router.get("/bookstore/shoppingcart/:orderId").handler(this::handleRetrieveShoppingCart);
@@ -117,6 +117,9 @@ public class BookStoreAPI  extends AbstractVerticle  {
         router.get("/fetch/user/profiles").handler(this::handleUserProfileList);
         
         router.get("/bookstore/inventory/books/json").handler(this::handleBookInventoryJSON); 
+        
+        
+        router.get("/bookstore/inventory/books/page/book-inventory.html").handler(this::handleBookInventoryPg);  
          
          
     }catch(Exception ex){
@@ -144,19 +147,57 @@ public class BookStoreAPI  extends AbstractVerticle  {
       // clean up results in memory and update result read status in database. 
        HttpServerRequest request = routingContext.request();  
        HttpServerResponse response = routingContext.response();        
-        String file = "";
+        String requestPath =  request.path(); 
+        String  requestPathTokens  = requestPath.replace("/", ",");
+        String[]  requestTokens  = requestPathTokens.split(",");
+        
+        String  file = "";
+                        
         System.out.println(String.format("request.path():  %s", request.path()));
         if (request.path().equals("/") || request.path().isEmpty() || request.path().isBlank()) {
+            
             file = "onlinebookstore-dashboard.html"; //file = "login.html";
-            System.out.println(String.format("File served is:  %s", file));
+            System.out.println(String.format("handleServerResources:  File served is:  %s", file));
             response.sendFile("web/" + file); 
-        }else if(request.path().endsWith(".html") || request.path().endsWith(".htm")
-                    || request.path().endsWith(".js")  || request.path().endsWith(".css")
-                         || request.path().endsWith(".map")){
+            
+        }else if(request.path().endsWith(".htm")  || request.path().endsWith(".js")  
+                      || request.path().endsWith(".css") || request.path().endsWith(".map")){
+            
                 file = request.path();   
-                System.out.println(String.format("File served is:  %s", file));
-                response.sendFile("web/"+file);             
+                System.out.println(String.format("handleServerResources:   File served is:  %s", file));
+                response.sendFile("web/"+file);     
+                
+        }else if(request.path().endsWith(".html")){
+            
+              file = requestTokens[requestTokens.length - 1];
+              System.out.println(String.format("handleServerResources:   File served is:  %s", file));
+              response.sendFile("web/"+file); 
+              
+        }else{
+            
+             switch(request.path()){
+             
+                 case "/bookstore/inventory/books":  handleBookInventory(routingContext);
+                                                     break;
+                                                     
+                 case "/bookstore/shoppingcart/:orderId":  handleRetrieveShoppingCart(routingContext);
+                                                     break;
+                                                     
+                 case "/fetch/user/purchases/:userId":  handleUserPurchaseHistory(routingContext);
+                                                     break;
+                                                     
+                 case "/fetch/user/profiles":  handleUserProfileList(routingContext);
+                                                     break;
+                                                     
+                 case "/bookstore/inventory/books/json":  handleBookInventoryJSON(routingContext);
+                                                            break;
+                                                     
+                // default:   handleBookInventoryJSON(routingContext);
+                 //           break;
+             }
+        
         }
+        
   } 
     
     
@@ -171,21 +212,7 @@ public class BookStoreAPI  extends AbstractVerticle  {
             file = "onlinebookstore-dashboard.html";
            response.sendFile("web/" + file); 
            
-           /****
-            if(request.path().endsWith(".html") || request.path().endsWith(".htm")
-                    || request.path().endsWith(".js")  || request.path().endsWith(".css")
-                         || request.path().endsWith(".map")){
-                file = request.path();   
-                System.out.println(String.format("File served is:  %s", file));
-                response.sendFile("web/"+file); 
-            } else if (!file.endsWith("html")) {
-                file = "onlinebookstore-dashboard.html";
-                lendersHttpServiceAPILog.info(String.format("File served is:  %s", file));
-                response.sendFile("web/" + file); 
-           } else{
-                response.sendFile("web/" + file); 
-            }
-          ****/
+          
   } 
           
           
@@ -197,26 +224,21 @@ public class BookStoreAPI  extends AbstractVerticle  {
        HttpServerResponse response = routingContext.response();   
            String file = request.path();  
            System.out.println(String.format("initial request.path():  %s", request.path()));
-          
-           file = "book-inventory.html";
-           response.sendFile("web/" + file); 
            
-           /****
-            if(request.path().endsWith(".html") || request.path().endsWith(".htm")
-                    || request.path().endsWith(".js")  || request.path().endsWith(".css")
+           if(request.path().endsWith(".htm")  || request.path().endsWith(".js")  || request.path().endsWith(".css")
                          || request.path().endsWith(".map")){
-                file = request.path();   
-                file =   "book-inventory.html";
-                System.out.println(String.format("File served is:  %s", file));
-                response.sendFile("web/"+file); 
-            } else if (!file.endsWith("html")) {
-                file = "book-inventory.html";
-                lendersHttpServiceAPILog.info(String.format("File served is:  %s", file));
+               
+               file = request.path();
+               System.out.println(String.format("handleBookInventoryPg:   File served is:  %s", file));
+               response.sendFile("web/" + file);
+               
+           }else{
+               
+                 file = "book-inventory.html";
+                 System.out.println(String.format("handleBookInventoryPg:   File served is:  %s", file));
                 response.sendFile("web/" + file); 
-           } else{
-                response.sendFile("web/" + file); 
-            }
-         ***/
+           } 
+            
   } 
    
    
@@ -229,25 +251,21 @@ public class BookStoreAPI  extends AbstractVerticle  {
            String file = request.path();  
            System.out.println(String.format("initial request.path():  %s", request.path()));
            
-           file = "shopping-cart.html"; 
-            response.sendFile("web/" + file); 
            
-            /***
-            if(request.path().endsWith(".html") || request.path().endsWith(".htm")
-                    || request.path().endsWith(".js")  || request.path().endsWith(".css")
+            if(request.path().endsWith(".htm")  || request.path().endsWith(".js")  || request.path().endsWith(".css")
                          || request.path().endsWith(".map")){
-                file = request.path();   
-                file =   "shopping-cart.html";
-                System.out.println(String.format("File served is:  %s", file));
-                response.sendFile("web/"+file); 
-            } else if (!file.endsWith("html")) {
-                file = "shopping-cart.html";
-                lendersHttpServiceAPILog.info(String.format("File served is:  %s", file));
+               
+               file = request.path();
+               System.out.println(String.format("handleBookInventoryPg:   File served is:  %s", file));
+               response.sendFile("web/" + file);
+               
+           }else{
+               
+                 file = "shopping-cart.html";
+                 System.out.println(String.format("handleBookInventoryPg:   File served is:  %s", file));
                 response.sendFile("web/" + file); 
-           } else{
-                response.sendFile("web/" + file); 
-            }
-          ***/
+           } 
+             
   } 
    
    
@@ -259,26 +277,21 @@ public class BookStoreAPI  extends AbstractVerticle  {
        HttpServerResponse response = routingContext.response();   
            String file = request.path();  
            System.out.println(String.format("initial request.path():  %s", request.path()));
-           
-           file = "users.html";
-           response.sendFile("web/" + file); 
-           
-           /***
-            if(request.path().endsWith(".html") || request.path().endsWith(".htm")
-                    || request.path().endsWith(".js")  || request.path().endsWith(".css")
+             
+           if(request.path().endsWith(".htm")  || request.path().endsWith(".js")  || request.path().endsWith(".css")
                          || request.path().endsWith(".map")){
-                file = request.path();   
-                file =   "users.html";
-                System.out.println(String.format("File served is:  %s", file));
-                response.sendFile("web/"+file); 
-            } else if (!file.endsWith("html")) {
-                file = "users.html";
-               lendersHttpServiceAPILog.info(String.format("File served is:  %s", file));
+               
+               file = request.path();
+               System.out.println(String.format("handleBookInventoryPg:   File served is:  %s", file));
+               response.sendFile("web/" + file);
+               
+           }else{
+               
+                 file = "users.html";
+                 System.out.println(String.format("handleBookInventoryPg:   File served is:  %s", file));
                 response.sendFile("web/" + file); 
-           } else{
-                response.sendFile("web/" + file); 
-            }
-            * ***/
+           } 
+        
   } 
    
    
@@ -289,26 +302,21 @@ public class BookStoreAPI  extends AbstractVerticle  {
        HttpServerResponse response = routingContext.response();   
            String file = request.path();  
            System.out.println(String.format("initial request.path():  %s", request.path()));
-           
-           file = "purchase-history.html";
-           response.sendFile("web/" + file); 
-           
-           /***
-            if(request.path().endsWith(".html") || request.path().endsWith(".htm")
-                    || request.path().endsWith(".js")  || request.path().endsWith(".css")
+            
+           if(request.path().endsWith(".htm")  || request.path().endsWith(".js")  || request.path().endsWith(".css")
                          || request.path().endsWith(".map")){
-                file = request.path();   
-                file = "purchase-history.html";
-                System.out.println(String.format("File served is:  %s", file));
-                response.sendFile("web/"+file); 
-            } else if (!file.endsWith("html")) {
-                file = "purchase-history.html";
-                lendersHttpServiceAPILog.info(String.format("File served is:  %s", file));
+               
+               file = request.path();
+               System.out.println(String.format("handleBookInventoryPg:   File served is:  %s", file));
+               response.sendFile("web/" + file);
+               
+           }else{
+               
+                 file = "purchase-history.html";
+                 System.out.println(String.format("handleBookInventoryPg:   File served is:  %s", file));
                 response.sendFile("web/" + file); 
-           } else{
-                response.sendFile("web/" + file); 
-            }
-         ****/
+           } 
+           
   } 
     
     
