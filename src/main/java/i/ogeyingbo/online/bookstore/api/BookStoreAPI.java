@@ -30,6 +30,7 @@ import io.vertx.ext.web.handler.StaticHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
@@ -42,7 +43,8 @@ public class BookStoreAPI  extends AbstractVerticle  {
    
   private    Validator    validator;
   private  static  PGDataRetriever    pgDataRetriever =   PGDataRetriever.getInstance();
-  
+  private  static  ConcurrentHashMap<String, String>     filterStore  =  new  ConcurrentHashMap<>();
+  private  static  String   filterString  = "";
   
  
   /**
@@ -95,7 +97,11 @@ public class BookStoreAPI  extends AbstractVerticle  {
     
     router.route().handler(BodyHandler.create());
     
-   // initValidator();
+    filterStore.put("/bookstore/inventory/books/", "/bookstore/inventory/books/");
+    filterStore.put("/bookstore/shoppingcart/", "/bookstore/shoppingcart/");
+    filterStore.put("/fetch/user/", "/fetch/user/");
+    filterStore.put("/fetch/user/purchases/", "/fetch/user/purchases/"); 
+    
     
     try{
         
@@ -110,7 +116,7 @@ public class BookStoreAPI  extends AbstractVerticle  {
         router.get("/fetch/users/page/users.html").handler(this::handleUserPage); 
         router.get("/fetch/user/purchase/history/page/purchase-history.html").handler(this::handleUserPurchasesPage);        
                 
-        router.get("/bookstore/inventory/books").handler(this::handleBookInventory);         
+        router.get("/bookstore/inventory/books/list").handler(this::handleBookInventory);         
         router.get("/bookstore/shoppingcart/:orderId").handler(this::handleRetrieveShoppingCart);
         router.get("/fetch/user/purchases/:userId").handler(this::handleUserPurchaseHistory);
         
@@ -151,30 +157,51 @@ public class BookStoreAPI  extends AbstractVerticle  {
         String  requestPathTokens  = requestPath.replace("/", ",");
         String[]  requestTokens  = requestPathTokens.split(",");
         
-        String  file = "";
+        String    newRequestPath = "";   String  file = "";
+        
+          if(requestPath.startsWith("/bookstore")   ||  requestPath.startsWith("/fetch")){
+         // if((requestPath.startsWith("/bookstore") || requestPath.startsWith("/fetch")) && filterString.isEmpty()){
+               
+               String  tmpRequestPath =   "";
+               
+                if(filterStore.get(requestPath.replace(requestTokens[requestTokens.length - 1], "")) != null){
+                    tmpRequestPath =   requestPath.replace(requestTokens[requestTokens.length - 1], "");
+                     filterString =  tmpRequestPath;  
+                 } //else{
+               //     newRequestPath   =    requestPath.replace(filterString, "");
+               //  }
+               
+            } else{
+    
+               newRequestPath   =    requestPath.replace(filterString, "");
+            }
+          
+          
+            System.out.println("filterString: "+filterString);
+            System.out.println("newRequestPath: "+newRequestPath);
+         
                         
         System.out.println(String.format("request.path():  %s", request.path()));
         if (request.path().equals("/") || request.path().isEmpty() || request.path().isBlank()) {
             
             file = "onlinebookstore-dashboard.html"; //file = "login.html";
-            System.out.println(String.format("handleServerResources:  File served is:  %s", file));
+            System.out.println(String.format("handleServerResources A:  File served is:  %s", file));
             response.sendFile("web/" + file); 
             
         }else if(request.path().endsWith(".htm")  || request.path().endsWith(".js")  
                       || request.path().endsWith(".css") || request.path().endsWith(".map")){
             
-               String    newRequestPath = requestPath.replace(requestTokens[requestTokens.length - 1], "");
-               System.out.println("newRequestPath: "+newRequestPath);
-               
-                //file = request.path().replace(newRequestPath, ""); 
-                file = request.path();
-                System.out.println(String.format("handleServerResources:   File served is:  %s", file));
+                file = newRequestPath;
+                if(file.isEmpty()){
+                   file = request.path().replace(filterString, "");
+                }
+                System.out.println(String.format("handleServerResources B:   File served is:  %s", file));
                 response.sendFile("web/"+file);     
                 
         }else if(request.path().endsWith(".html")){
             
               file = requestTokens[requestTokens.length - 1];
-              System.out.println(String.format("handleServerResources:   File served is:  %s", file));
+              System.out.println(String.format("handleServerResources C:   File served is:  %s", file));
               response.sendFile("web/"+file); 
               
         }else{
@@ -243,10 +270,13 @@ public class BookStoreAPI  extends AbstractVerticle  {
            String file = request.path();  
            System.out.println(String.format("initial request.path():  %s", request.path()));
            
+           String  newRequestPath =  filterRequestPath(routingContext);
+           
            if(request.path().endsWith(".htm")  || request.path().endsWith(".js")  || request.path().endsWith(".css")
                          || request.path().endsWith(".map")){
                
-               file = request.path();
+             //  file = request.path();
+               file = newRequestPath;
                System.out.println(String.format("handleBookInventoryPg:   File served is:  %s", file));
                response.sendFile("web/" + file);
                
@@ -511,5 +541,39 @@ public class BookStoreAPI  extends AbstractVerticle  {
         
     } 
  
+  
+  
+  
+    public   String  filterRequestPath(RoutingContext  routingContext){
+         HttpServerRequest request = routingContext.request();         
+        String requestPath =  request.path(); 
+        String  requestPathTokens  = requestPath.replace("/", ",");
+        String[]  requestTokens  = requestPathTokens.split(",");
+        
+        String    newRequestPath = "";   String  file = "";
+        
+          if(requestPath.startsWith("/bookstore")   ||  requestPath.startsWith("/fetch")){
+         // if((requestPath.startsWith("/bookstore") || requestPath.startsWith("/fetch")) && filterString.isEmpty()){
+               
+               String  tmpRequestPath =   "";
+               
+                if(filterString.isEmpty()){
+                    tmpRequestPath =   requestPath.replace(requestTokens[requestTokens.length - 1], "");
+                    filterString =  tmpRequestPath;  
+                 }  
+                
+            } else{
+    
+               newRequestPath   =    requestPath.replace(filterString, "");
+            }
+          
+          
+            System.out.println("filterString: "+filterString);
+            System.out.println("newRequestPath: "+newRequestPath);
+         return   newRequestPath;
+    }
+    
+    
+    
     
 }
