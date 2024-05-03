@@ -191,9 +191,23 @@ public class BookStoreAPI  extends AbstractVerticle  {
                                                      
                  case "/bookstore/inventory/books/json":  handleBookInventoryJSON(routingContext);
                                                             break;
+                                                            
+                case "/bookstore/inventory/books/page":  handleBookInventoryPg(routingContext);
+                                                            break;
                                                      
+                case "/bookstore/shoppingcart/page":  handleShoppingCartPg(routingContext);
+                                                            break;
+                                                            
+                case "/fetch/users/page":  handleUserPage(routingContext);
+                                                            break;
+
+                case "/fetch/user/purchase/history/page":  handleUserPurchasesPage(routingContext);
+                                                            break;
+                                                             
+                                                            
                 // default:   handleBookInventoryJSON(routingContext);
-                 //           break;
+                 //                 break;
+                                                            
              }
         
         }
