@@ -4,7 +4,6 @@
  */
 package i.ogeyingbo.online.bookstore.dao;
  
-import i.ogeyingbo.onlinebookstore.*;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.pgclient.PgBuilder;
@@ -30,8 +29,26 @@ static PgConnectOptions connectOptions;
  // SqlClient   client;
     
     
+
+private  static  RelDataHandler   relDataHandler; 
+        
+    public static RelDataHandler getInstance()
+    {
+        if (relDataHandler == null)
+        {
+            synchronized (RelDataHandler.class)
+            {
+                relDataHandler = new RelDataHandler();
+            } 
+        }
+        return   relDataHandler;
+    }
+   
+    
+    
+    
  // private void  initPoolConnections(){
-  static {
+   private RelDataHandler() { 
       
      String  rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
      String appConfigFile = rootPath + "data_source.properties";

@@ -88,11 +88,11 @@ public class PGDataRetriever {
                              InventoryBook   inventoryBook  =  new  InventoryBook();
                         
                             inventoryBook.setId( row.getInt("id")); 
-                            inventoryBook.setTitle(row.getString("title"));
-                            inventoryBook.setGenre(row.getString("genre"));
-                            inventoryBook.setIsbn(row.getString("isbn"));
-                            inventoryBook.setAuthor(row.getString("author"));
-                            inventoryBook.setYearPublished(row.getString("year_published")); 
+                            inventoryBook.setTitle(row.getString("title").trim());
+                            inventoryBook.setGenre(row.getString("genre").trim());
+                            inventoryBook.setIsbn(row.getString("isbn").trim());
+                            inventoryBook.setAuthor(row.getString("author").trim());
+                            inventoryBook.setYearPublished(row.getString("year_published").trim()); 
                             inventoryBook.setPrice(row.getBigDecimal("price"));
                             inventoryBook.setUnitsInStock( row.getInt("units_in_stock"));
 
@@ -150,12 +150,12 @@ public class PGDataRetriever {
                         ShoppingCartBook   shoppingCartBook  =  new  ShoppingCartBook();
                         
                         shoppingCartBook.setId(row.getInt("id"));
-                        shoppingCartBook.setOrderSerial(row.getString("order_serial"));
-                        shoppingCartBook.setTitle(row.getString("title"));
-                        shoppingCartBook.setGenre(row.getString("genre"));
-                        shoppingCartBook.setIsbn(row.getString("isbn"));
-                        shoppingCartBook.setAuthor(row.getString("author"));
-                        shoppingCartBook.setYearPublished(row.getString("year_published"));
+                        shoppingCartBook.setOrderSerial(row.getString("order_serial").trim());
+                        shoppingCartBook.setTitle(row.getString("title").trim());
+                        shoppingCartBook.setGenre(row.getString("genre").trim());
+                        shoppingCartBook.setIsbn(row.getString("isbn").trim());
+                        shoppingCartBook.setAuthor(row.getString("author").trim());
+                        shoppingCartBook.setYearPublished(row.getString("year_published").trim());
                         shoppingCartBook.setPrice(row.getBigDecimal("price"));
                         
                         shoppingCart.add(shoppingCartBook);
@@ -211,18 +211,18 @@ public class PGDataRetriever {
                       UserPurchase  userPurchase  =  new  UserPurchase();
                         
                         userPurchase.setId(row.getInt("id"));
-                        userPurchase.setOrderSerial(row.getString("order_serial"));
-                        userPurchase.setTitle(row.getString("title"));
-                        userPurchase.setGenre(row.getString("genre"));
-                        userPurchase.setIsbn(row.getString("isbn"));
-                        userPurchase.setAuthor(row.getString("author"));
-                        userPurchase.setYearPublished(row.getString("year_published"));
+                        userPurchase.setOrderSerial(row.getString("order_serial").trim());
+                        userPurchase.setTitle(row.getString("title").trim());
+                        userPurchase.setGenre(row.getString("genre").trim());
+                        userPurchase.setIsbn(row.getString("isbn").trim());
+                        userPurchase.setAuthor(row.getString("author").trim());
+                        userPurchase.setYearPublished(row.getString("year_published").trim());
                         userPurchase.setUserId( row.getInt("user_id"));
-                        userPurchase.setUserName(row.getString("user_name"));
-                        userPurchase.setUserPhoneNumber(row.getString("user_phone_number"));
+                        userPurchase.setUserName(row.getString("user_name").trim());
+                        userPurchase.setUserPhoneNumber(row.getString("user_phone_number").trim());
                         userPurchase.setPurchasePrice(row.getBigDecimal("purchase_price"));
-                        userPurchase.setPurchaseDate(row.getString("purchase_date"));
-                        userPurchase.setPurchaseTime(row.getString("purchase_time"));
+                        userPurchase.setPurchaseDate(row.getString("purchase_date").trim());
+                        userPurchase.setPurchaseTime(row.getString("purchase_time").trim());
                  
                        userPurchaseHistory.add(userPurchase);
                     } 
@@ -276,15 +276,15 @@ public class PGDataRetriever {
                       UserProfile   userProfile  =  new  UserProfile();
                       
                         userProfile.setId( row.getInt("id"));
-                        userProfile.setUsername(row.getString("username"));
-                        userProfile.setUserPassword(row.getString("user_password"));
-                        userProfile.setFullName(row.getString("full_name"));
-                        userProfile.setMobile(row.getString("mobile"));
-                        userProfile.setEmail(row.getString("email"));
+                        userProfile.setUsername(row.getString("username").trim());
+                        userProfile.setUserPassword(row.getString("user_password").trim());
+                        userProfile.setFullName(row.getString("full_name").trim());
+                        userProfile.setMobile(row.getString("mobile").trim());
+                        userProfile.setEmail(row.getString("email").trim());
                         userProfile.setWalletBalance(row.getBigDecimal("wallet_balance"));
-                        userProfile.setAuthPIN(row.getString("uath_pin"));
-                        userProfile.setLastPurchaseDate(row.getString("last_purchase_date"));
-                        userProfile.setLastPurchaseTime(row.getString("last_purchase_time")); 
+                        userProfile.setAuthPIN(row.getString("uath_pin").trim());
+                        userProfile.setLastPurchaseDate(row.getString("last_purchase_date").trim());
+                        userProfile.setLastPurchaseTime(row.getString("last_purchase_time").trim()); 
                         
                         userProfileList.add(userProfile);
                 } 

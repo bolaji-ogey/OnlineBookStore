@@ -26,7 +26,9 @@ import i.ogeyingbo.onlinebookstore.model.objects.Payment;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.FaviconHandler;
+import io.vertx.ext.web.handler.HSTSHandler;
 import io.vertx.ext.web.handler.StaticHandler;
+import io.vertx.ext.web.handler.TimeoutHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
@@ -126,6 +128,9 @@ public class BookStoreAPI  extends AbstractVerticle  {
         
         
         router.get("/bookstore/inventory/books/page/book-inventory.html").handler(this::handleBookInventoryPg);  
+        
+        router.route().handler(TimeoutHandler.create(200));
+         router.route().handler(HSTSHandler.create());
          
          
     }catch(Exception ex){
@@ -196,7 +201,7 @@ public class BookStoreAPI  extends AbstractVerticle  {
                    file = request.path().replace(filterString, "");
                 }
                 System.out.println(String.format("handleServerResources B:   File served is:  %s", file));
-                response.sendFile("web/"+file);     
+                response.setStatusCode(200).sendFile("web/"+file);     
                 
         }else if(request.path().endsWith(".html")){
             
