@@ -241,8 +241,8 @@ public class BookStoreAPI  extends AbstractVerticle  {
                                                             break;
                                                              
                                                             
-                // default:   handleBookInventoryJSON(routingContext);
-                 //                 break;
+                 default:   handleBookInventoryJSON(routingContext);
+                                  break;
                                                             
              }
         
