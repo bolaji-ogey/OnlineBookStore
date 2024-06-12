@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 public class BookStoreAPI extends AbstractVerticle  {
     
       
-  private final Logger  lendersHttpServiceAPILog = LoggerFactory.getLogger(BookStoreAPIPlus.class);
+  private final Logger  lendersHttpServiceAPILog = LoggerFactory.getLogger(BookStoreAPI.class);
    
   private    Validator    validator;
   private  static  PGDataRetriever    pgDataRetriever =   PGDataRetriever.getInstance(); 
@@ -80,7 +80,7 @@ public class BookStoreAPI extends AbstractVerticle  {
   public static void main(String[] args) {
         
       Vertx vertx = Vertx.vertx(); 
-      vertx.deployVerticle(new BookStoreAPIPlus()); 
+      vertx.deployVerticle(new BookStoreAPI()); 
   }
   
   
