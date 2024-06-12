@@ -159,7 +159,7 @@ public class BookStoreAPIPlus extends AbstractVerticle  {
         }else if(request.path().endsWith(".js")  || request.path().endsWith(".css")
                   || request.path().endsWith(".png")  || request.path().endsWith(".jpg")){
             
-                file =  newFilterRequestPath(request.path()); 
+                file =  filterRequestPath(request.path()); 
                 System.out.println(String.format("handleServerResources B:   File served is:  %s", file));
                 response.setStatusCode(200).sendFile("web/"+file);     
                 
@@ -217,7 +217,7 @@ public class BookStoreAPIPlus extends AbstractVerticle  {
   
     
     
- public   String    newFilterRequestPath(String   inRequestPath){ 
+ public   String    filterRequestPath(String   inRequestPath){ 
         String  requestPathTokens  = inRequestPath.replace("/", ",");
         requestPathTokens  = requestPathTokens.substring(1, requestPathTokens.length());
         System.out.println("requestPathTokens  >>> "+requestPathTokens);
