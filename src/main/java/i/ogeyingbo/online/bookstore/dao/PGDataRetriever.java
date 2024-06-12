@@ -4,12 +4,12 @@
  */
 package i.ogeyingbo.online.bookstore.dao;
 
-import i.ogeyingbo.onlinebookstore.model.objects.InventoryBook;
-import i.ogeyingbo.onlinebookstore.model.objects.ShoppingCartBook;
-import i.ogeyingbo.onlinebookstore.model.objects.UserProfile;
-import i.ogeyingbo.onlinebookstore.model.objects.UserPurchaseHistory;
-import i.ogeyingbo.onlinebookstore.model.objects.ShoppingCart;
-import i.ogeyingbo.onlinebookstore.model.objects.UserPurchase;
+import i.ogeyingbo.online.bookstore.model.objects.InventoryBook;
+import i.ogeyingbo.online.bookstore.model.objects.ShoppingCartBook;
+import i.ogeyingbo.online.bookstore.model.objects.UserProfile;
+import i.ogeyingbo.online.bookstore.model.objects.UserPurchaseHistory;
+import i.ogeyingbo.online.bookstore.model.objects.ShoppingCart;
+import i.ogeyingbo.online.bookstore.model.objects.UserPurchase;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

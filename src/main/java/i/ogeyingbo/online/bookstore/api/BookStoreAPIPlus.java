@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author BOLAJI-OGEYINGBO
  */
-public class BookStoreAPI extends AbstractVerticle  {
+public class BookStoreAPIPlus extends AbstractVerticle  {
     
       
   private final Logger  lendersHttpServiceAPILog = LoggerFactory.getLogger(BookStoreAPIPlus.class);
@@ -64,7 +64,7 @@ public class BookStoreAPI extends AbstractVerticle  {
   
   
   
-  public   BookStoreAPI(){
+  public   BookStoreAPIPlus(){
              
       urlPageMap.put("/bookstore/inventory/books/page", "book-inventory.html");
       urlPageMap.put("/bookstore/shoppingcart/page", "shopping-cart.html");
