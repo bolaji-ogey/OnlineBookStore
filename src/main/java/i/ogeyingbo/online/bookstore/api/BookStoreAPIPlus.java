@@ -6,10 +6,7 @@ package i.ogeyingbo.online.bookstore.api;
 
 import i.ogeyingbo.online.bookstore.dao.PGDataRetriever;
 import i.ogeyingbo.online.bookstore.model.objects.InventoryBook;
-import i.ogeyingbo.online.bookstore.model.objects.Payment;
-import i.ogeyingbo.online.bookstore.model.objects.ShoppingCart;
 import i.ogeyingbo.online.bookstore.model.objects.UserProfile;
-import i.ogeyingbo.online.bookstore.model.objects.UserPurchaseHistory;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
@@ -26,7 +23,6 @@ import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.TimeoutHandler;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,12 +34,12 @@ import org.slf4j.LoggerFactory;
 
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import i.ogeyingbo.online.bookstore.model.objects.ShoppingCartBook;
 import i.ogeyingbo.online.bookstore.model.objects.UserPurchase;
-import io.vertx.core.json.JsonObject;
+import io.vertx.core.DeploymentOptions;
+import io.vertx.core.ThreadingModel;
 /**
  *
  * @author BOLAJI-OGEYINGBO
@@ -90,7 +86,12 @@ public class BookStoreAPIPlus extends AbstractVerticle  {
   public static void main(String[] args) {
         
       Vertx vertx = Vertx.vertx(); 
-      vertx.deployVerticle(new BookStoreAPIPlus()); 
+      
+       DeploymentOptions  deployOptions =  new  DeploymentOptions(); 
+       deployOptions.setWorkerPoolSize(5);
+       deployOptions.setThreadingModel(ThreadingModel.WORKER);
+       
+      vertx.deployVerticle(new BookStoreAPIPlus(), deployOptions); 
   }
   
   

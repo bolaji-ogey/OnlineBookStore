@@ -43,6 +43,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import i.ogeyingbo.online.bookstore.model.objects.ShoppingCartBook;
 import i.ogeyingbo.online.bookstore.model.objects.UserPurchase;
+import io.vertx.core.DeploymentOptions;
+import io.vertx.core.ThreadingModel;
 import io.vertx.core.json.JsonObject;
 /**
  *
@@ -90,7 +92,12 @@ public class BookStoreAPI extends AbstractVerticle  {
   public static void main(String[] args) {
         
       Vertx vertx = Vertx.vertx(); 
-      vertx.deployVerticle(new BookStoreAPI()); 
+      
+      DeploymentOptions  deployOptions =  new  DeploymentOptions(); 
+       deployOptions.setWorkerPoolSize(5);
+       deployOptions.setThreadingModel(ThreadingModel.WORKER); 
+       
+      vertx.deployVerticle(new BookStoreAPI(), deployOptions); 
   }
   
   
