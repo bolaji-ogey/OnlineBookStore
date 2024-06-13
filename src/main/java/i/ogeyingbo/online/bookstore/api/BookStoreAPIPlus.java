@@ -27,6 +27,7 @@ import io.vertx.ext.web.handler.TimeoutHandler;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
@@ -34,6 +35,14 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
+import i.ogeyingbo.online.bookstore.model.objects.ShoppingCartBook;
+import i.ogeyingbo.online.bookstore.model.objects.UserPurchase;
 /**
  *
  * @author BOLAJI-OGEYINGBO
@@ -173,9 +182,17 @@ public class BookStoreAPIPlus extends AbstractVerticle  {
             
             if(request.path().endsWith("page") ||  request.path().endsWith("pg")){
                 
+                 System.out.println(String.format("handleTargetPage"));
                 handleTargetPage(routingContext);
+                
+            }else if(request.path().startsWith("/view") ||  request.path().endsWith("/view")){
+                
+                System.out.println(String.format("handleDataRetrieveViewJSON"));
+                handleDataRetrieveViewJSON(routingContext);
+                
             }else {
                 
+                 System.out.println(String.format("handleDataRetrieveJSON"));
                 handleDataRetrieveJSON(routingContext);
             }
             
@@ -286,10 +303,10 @@ private  void    handleDataRetrieveJSON(RoutingContext  routingContext){
         JSONObject   jsonObjectResult  = new JSONObject();
         
         try{
-             
+             System.out.println("Switch Request Path"+requestPath);
             switch(requestPath){
 
-                                case "/bookstore/inventory/books":  jsonObjectResult.put("data", (pgDataRetriever.getBookInventory()).toArray());
+                                case "/bookstore/inventory/books":  { jsonObjectResult.put("data", (pgDataRetriever.getBookInventory()).toArray()); }
                                                                    break;
 
                                case "/bookstore/shoppingcart/:orderId": {
@@ -297,6 +314,7 @@ private  void    handleDataRetrieveJSON(RoutingContext  routingContext){
                                                                           jsonObjectResult.put("data", (pgDataRetriever.getShoppingCart(orderId)).toArray());
                                                                         }                               
                                                                      break;
+                                                                        
 
                                case "/fetch/user/purchases/:userId": {
                                                                         String userId = routingContext.pathParam("userId");
@@ -306,22 +324,17 @@ private  void    handleDataRetrieveJSON(RoutingContext  routingContext){
 
                                case "/fetch/user/profiles":  jsonObjectResult.put("data", (pgDataRetriever.getUserProfiles()).toArray());
                                                                    break;
-
+                               
                                case "/bookstore/inventory/books/json":  jsonObjectResult.put("data", (pgDataRetriever.getBookInventory()).toArray());
                                                                    break;
-
+                             
                                default:   jsonObjectResult.put("data", (pgDataRetriever.getBookInventory()).toArray());
                                                                    break;
 
 
                }
             
-            /***
-            ArrayList    list  =  (ArrayList)jsonObjectResult.get("data");
-             System.out.println("List  size = "+list.size());
-             String  listData="{\"Result\":\"OK\",\"Records\":"+list+"}";
-              System.out.println("List    = "+list.toString());
-              * ***/
+             
           response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(200).send(jsonObjectResult.toString());
           
         }catch(Exception ex){
@@ -337,5 +350,160 @@ private  void    handleDataRetrieveJSON(RoutingContext  routingContext){
  
  
  
+private  void    handleDataRetrieveViewJSON(RoutingContext  routingContext){
+    
+        HttpServerRequest request = routingContext.request();  
+        HttpServerResponse response = routingContext.response();   
+         String requestPath = request.path(); 
+        JSONObject   jsonObjectResult  = new JSONObject();
+        
+        StringBuilder   result  = new StringBuilder(500);
+        result.append("{\"Result\":\"OK\",");
+        
+        try{
+             System.out.println("Switch Request Path"+requestPath);
+            switch(requestPath){
+
+                                case "/bookstore/inventory/books/view": 
+                                                                        {
+                                                                            System.out.println("Data Retrieve method:  getBookInventory()");
+                                                                            result.append("\"Records\":");
+                                                                            Gson gson = new Gson();
+                                                                            JsonElement element = gson.toJsonTree(pgDataRetriever.getBookInventory(), new TypeToken<List<InventoryBook>>() {}.getType());
+                                                                            com.google.gson.JsonArray jsonArray = element.getAsJsonArray();
+                                                                            result.append(jsonArray.toString());
+                                                                            result.append("}");                                                                             
+                                                                        }
+                                                                   break; 
+                                case  "/view/bookstore/inventory/books" :  {
+                                                                             System.out.println("Data Retrieve method:  getBookInventory()");
+                                                                            result.append("\"Records\":");
+                                                                            Gson gson = new Gson();
+                                                                            JsonElement element = gson.toJsonTree(pgDataRetriever.getBookInventory(), new TypeToken<List<InventoryBook>>() {}.getType());
+                                                                            com.google.gson.JsonArray jsonArray = element.getAsJsonArray();
+                                                                            result.append(jsonArray.toString());
+                                                                            result.append("}");                                                                             
+                                                                        }
+                                                                   break;
+
+                               case "/bookstore/shoppingcart/:orderId/view":
+                                                                             {
+                                                                                  System.out.println("Data Retrieve method:  getShoppingCart()");
+                                                                                 String orderId = routingContext.pathParam("orderId");
+                                                                                 result.append("\"Records\":");
+                                                                                 Gson gson = new Gson();
+                                                                                   JsonElement element = gson.toJsonTree(pgDataRetriever.getShoppingCart(orderId), new TypeToken<List<ShoppingCartBook>>() {}.getType());
+                                                                                   com.google.gson.JsonArray jsonArray = element.getAsJsonArray();
+                                                                                   result.append(jsonArray.toString()); 
+                                                                                 result.append("}"); 
+                                                                               }                               
+                                                                          break;
+                               case "/view/bookstore/shoppingcart/:orderId":  {
+                                                                                System.out.println("Data Retrieve method:  getShoppingCart()");
+                                                                                 String orderId = routingContext.pathParam("orderId");
+                                                                                 result.append("\"Records\":");
+                                                                                 Gson gson = new Gson();
+                                                                                   JsonElement element = gson.toJsonTree(pgDataRetriever.getShoppingCart(orderId), new TypeToken<List<ShoppingCartBook>>() {}.getType());
+                                                                                   com.google.gson.JsonArray jsonArray = element.getAsJsonArray();
+                                                                                   result.append(jsonArray.toString()); 
+                                                                                 result.append("}"); 
+                                                                               }                               
+                                                                          break;
+
+                               case "/fetch/user/purchases/:userId/view":
+                                                                         {
+                                                                                System.out.println("Data Retrieve method:  getUserPurchaseHistory()");
+                                                                                String userId = routingContext.pathParam("userId");
+                                                                                result.append("\"Records\":");
+                                                                                Gson gson = new Gson();
+                                                                                JsonElement element = gson.toJsonTree(pgDataRetriever.getUserPurchaseHistory(Integer.parseInt(userId)), new TypeToken<List<UserPurchase>>() {}.getType());
+                                                                                com.google.gson.JsonArray jsonArray = element.getAsJsonArray();
+                                                                                result.append(jsonArray.toString()); 
+                                                                                result.append("}");                                                                         
+                                                                             }  
+                                                                           break;
+
+                               case "/view/fetch/user/purchases/:userId":   {
+                                                                                 System.out.println("Data Retrieve method:  getUserPurchaseHistory()");
+                                                                                String userId = routingContext.pathParam("userId");
+                                                                                result.append("\"Records\":");
+                                                                                Gson gson = new Gson();
+                                                                                JsonElement element = gson.toJsonTree(pgDataRetriever.getUserPurchaseHistory(Integer.parseInt(userId)), new TypeToken<List<UserPurchase>>() {}.getType());
+                                                                                com.google.gson.JsonArray jsonArray = element.getAsJsonArray();
+                                                                                result.append(jsonArray.toString()); 
+                                                                                result.append("}");                                                                         
+                                                                             }  
+                                                                           break;
+
+                               case "/fetch/user/profiles/view": 
+                                                                  {
+                                                                         System.out.println("Data Retrieve method:  getUserProfiles()");
+                                                                        result.append("\"Records\":");
+                                                                        Gson gson = new Gson();
+                                                                        JsonElement element = gson.toJsonTree(pgDataRetriever.getUserProfiles(), new TypeToken<List<UserProfile>>() {}.getType());
+                                                                        com.google.gson.JsonArray jsonArray = element.getAsJsonArray();
+                                                                        result.append(jsonArray.toString()); 
+                                                                       result.append("}");                                                                             
+                                                                   } 
+                                                                   break;
+                               case "/view/fetch/user/profiles":  {
+                                                                        System.out.println("Data Retrieve method:  getUserProfiles()");
+                                                                        result.append("\"Records\":");
+                                                                        Gson gson = new Gson();
+                                                                        JsonElement element = gson.toJsonTree(pgDataRetriever.getUserProfiles(), new TypeToken<List<UserProfile>>() {}.getType());
+                                                                        com.google.gson.JsonArray jsonArray = element.getAsJsonArray();
+                                                                        result.append(jsonArray.toString()); 
+                                                                       result.append("}");                                                                             
+                                                                   } 
+                                                                   break;
+
+                               case "/bookstore/inventory/books/json/view": 
+                                                                               {
+                                                                                result.append("\"Records\":");
+                                                                                Gson gson = new Gson();
+                                                                                JsonElement element = gson.toJsonTree(pgDataRetriever.getBookInventory(), new TypeToken<List<InventoryBook>>() {}.getType());
+                                                                                com.google.gson.JsonArray jsonArray = element.getAsJsonArray();
+                                                                                result.append(jsonArray.toString()); 
+                                                                                result.append("}");                                                                             
+                                                                            }
+                                                                        break;
+                                                                       
+                               case "/view/bookstore/inventory/books/json":   {
+                                                                                result.append("\"Records\":");
+                                                                                Gson gson = new Gson();
+                                                                                JsonElement element = gson.toJsonTree(pgDataRetriever.getBookInventory(), new TypeToken<List<InventoryBook>>() {}.getType());
+                                                                                com.google.gson.JsonArray jsonArray = element.getAsJsonArray();
+                                                                                result.append(jsonArray.toString()); 
+                                                                                result.append("}");                                                                             
+                                                                            }
+                                                                   break;
+                                               
+                                                        default:   {
+                                                                       String error="{\"Result\":\"ERROR\",\"Message\":\"Resource NOT available\"}"; 
+                                                                       result  = new StringBuilder(200);
+                                                                       result.append(error);
+                                                                   }
+                                                                   break;
+
+
+               } 
+            
+             response.putHeader("Cache-control", "no-cache, no-store");
+            response.putHeader("Pragma", "no-cache");
+            response.putHeader("Expires", "-1");  
+           response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(200).send(result.toString());
+          
+        }catch(Exception ex){
+            String error="{\"Result\":\"ERROR\",\"Message\":"+ex.getMessage()+"}"; 
+             response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(201).send(error);
+             ex.printStackTrace();
+        }
+}
+     
+     
+ 
+
+
+
     
 }

@@ -99,7 +99,8 @@ public class PGDataRetriever {
                            inventoryBookList.add(inventoryBook);
 
                         } 
-                                 
+                      
+                  System.out.println("Inventory Books >>>> "+inventoryBookList.size());
                // custPool.closePoolConnection(identKey); 
             } catch (Exception e) {
                  
@@ -161,6 +162,7 @@ public class PGDataRetriever {
                         shoppingCart.add(shoppingCartBook);
                     } 
                  
+                    System.out.println("Shopping Cart >>>> "+shoppingCart.size());
                // custPool.closePoolConnection(identKey); 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -197,12 +199,12 @@ public class PGDataRetriever {
             
            try { 
                 
-               String  query =  " SELECT * FROM  user_purchase_history  WHERE user_id = ?   "; 
+               String  ph_query =  " SELECT * FROM  user_purchase_history  WHERE user_id = ?   "; 
               
                  cron   =  pgDataSource.getConnect();                
                 System.out.println("cron = "+cron);
               
-                prepStmnt =    cron.prepareStatement(query);
+                prepStmnt =    cron.prepareStatement(ph_query);
                 prepStmnt.setInt(1, userId);
                 row = prepStmnt.executeQuery();
                    
@@ -226,6 +228,8 @@ public class PGDataRetriever {
                  
                        userPurchaseHistory.add(userPurchase);
                     } 
+                    
+                    System.out.println("User Purchases >>>> "+userPurchaseHistory.size());
                   
                // custPool.closePoolConnection(identKey); 
             } catch (Exception e) {
@@ -256,19 +260,19 @@ public class PGDataRetriever {
          
           Statement    stmnt =    null; 
            ResultSet row = null;
-           ArrayList<UserProfile>   userProfileList =   new ArrayList<UserProfile>();
+           ArrayList<UserProfile>   userProfileList =   new ArrayList<>();
             Connection  cron   =  null;
             
            try { 
                 
-                String  query =  " SELECT   * FROM  user_profile  ";  
+                String  up_query =  " SELECT   * FROM  user_profile  ";  
   
                 cron   =  pgDataSource.getConnect();                
                 System.out.println("cron = "+cron);
               
                 stmnt =    cron.createStatement();
                                   
-                row = stmnt.executeQuery(query);
+                row = stmnt.executeQuery(up_query);
                   
                 // Parameters start with 1
                 while (row.next()) {
@@ -289,6 +293,7 @@ public class PGDataRetriever {
                         userProfileList.add(userProfile);
                 } 
                  
+                System.out.println("User Profiles >>>> "+userProfileList.size());
                 //custPool.closePoolConnection(identKey); 
             } catch (Exception e) {
                 e.printStackTrace();
