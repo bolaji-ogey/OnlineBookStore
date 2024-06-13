@@ -350,9 +350,7 @@ private  void   handleTargetPage(RoutingContext routingContext){
            String file = request.path();  
            System.out.println(String.format("initial request.path():  %s", request.path()));
            
-           String  targetPage = urlPageMap.get(request.path());
-            
-           if(request.path().endsWith(".htm")  || request.path().endsWith(".js")  || request.path().endsWith(".css")
+            if(request.path().endsWith(".htm")  || request.path().endsWith(".js")  || request.path().endsWith(".css")
                          || request.path().endsWith(".map")){
                 
                // file =  newFilterRequestPath(file); 
@@ -362,8 +360,14 @@ private  void   handleTargetPage(RoutingContext routingContext){
                
            }else{
                 
-                System.out.println(String.format("handleTargetPage:   File served is:  %s", targetPage));
-                response.sendFile("web/" + targetPage); 
+                  String  targetPage = urlPageMap.get(request.path());
+                if(targetPage != null  && !targetPage.isBlank()){
+                    System.out.println(String.format("handleTargetPage:   File served is:  %s", targetPage));
+                    response.sendFile("web/" + targetPage); 
+                }else{
+                     String error="{\"Result\":\"ERROR\",\"Message\":\"Forbiden URL Path. Url Path does not exist\"}"; 
+                    response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(201).send(error);
+                }
            } 
            
   } 
