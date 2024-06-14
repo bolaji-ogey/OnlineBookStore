@@ -6,10 +6,7 @@ package i.ogeyingbo.online.bookstore.api;
 
 import i.ogeyingbo.online.bookstore.dao.PGDataRetriever;
 import i.ogeyingbo.online.bookstore.model.objects.InventoryBook;
-import i.ogeyingbo.online.bookstore.model.objects.Payment;
-import i.ogeyingbo.online.bookstore.model.objects.ShoppingCart;
 import i.ogeyingbo.online.bookstore.model.objects.UserProfile;
-import i.ogeyingbo.online.bookstore.model.objects.UserPurchaseHistory;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
@@ -26,7 +23,6 @@ import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.TimeoutHandler;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,14 +34,21 @@ import org.slf4j.LoggerFactory;
 
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import i.ogeyingbo.online.bookstore.model.objects.ShoppingCartBook;
 import i.ogeyingbo.online.bookstore.model.objects.UserPurchase;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.ThreadingModel;
+import io.vertx.core.http.CookieSameSite;
 import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.Session;
+import io.vertx.ext.web.handler.CSPHandler;
+import io.vertx.ext.web.handler.SessionHandler;
+import io.vertx.ext.web.handler.XFrameHandler;
+import io.vertx.ext.web.sstore.ClusteredSessionStore;
+import io.vertx.ext.web.sstore.LocalSessionStore;
+import io.vertx.ext.web.sstore.SessionStore;
 /**
  *
  * @author BOLAJI-OGEYINGBO
@@ -126,12 +129,27 @@ public class BookStoreAPI extends AbstractVerticle  {
 
     Router router = Router.router(vertx); 
     
+    // Create a clustered session store using defaults
+     SessionStore store = ClusteredSessionStore.create(vertx);
+     SessionStore store2 = LocalSessionStore.create(vertx);
+     SessionHandler sessionHandler = SessionHandler.create(store);
+     sessionHandler.setCookieSameSite(CookieSameSite.STRICT);
+     
+     router.route().handler(sessionHandler);
+    
     router.route().handler(BodyHandler.create()); 
+    
     
     try{
         
-         router.route().handler(StaticHandler.create()); 
+          router.route().handler(StaticHandler.create()); 
           router.route().handler(FaviconHandler.create(vertx));
+          
+          router.route().handler(HSTSHandler.create());
+          router.route().handler(XFrameHandler.create(XFrameHandler.DENY));
+          router.route().handler(CSPHandler.create()
+               .addDirective("default-src", "*.trusted.com"));
+          
     
         router.get("/").handler(this::handleBookStoreDashBoard);  
         router.get("/bookstore/*").handler(this::handleServerResources);   
@@ -139,8 +157,22 @@ public class BookStoreAPI extends AbstractVerticle  {
         router.get("/view/*").handler(this::handleServerResources); 
         router.route().handler(TimeoutHandler.create(200));
         router.route().handler(HSTSHandler.create());
+          
+    
+         router.get("/filter/user/session/:userId").handler(context->{
+             HttpServerResponse response = context.response();
+             String  userId = context.request().getParam("userId");
+            
+            Session session = context.session();
+            session.put("foo", "bar");
+            int age = session.get("foo");
+            JsonObject obj = session.remove("myobj");
+            JSONObject   jsonObjectResult  = new JSONObject();
+            jsonObjectResult.put("data", "");
+            response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(200).send(jsonObjectResult.toString());
+        }); 
          
-        
+         
          
         router.get("/filter/user/purchases/:userId").handler(context->{
 

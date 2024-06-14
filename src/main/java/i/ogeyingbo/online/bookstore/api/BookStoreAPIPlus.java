@@ -40,6 +40,8 @@ import i.ogeyingbo.online.bookstore.model.objects.ShoppingCartBook;
 import i.ogeyingbo.online.bookstore.model.objects.UserPurchase;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.ThreadingModel;
+import io.vertx.ext.web.handler.CSPHandler;
+import io.vertx.ext.web.handler.XFrameHandler;
 /**
  *
  * @author BOLAJI-OGEYINGBO
@@ -124,8 +126,13 @@ public class BookStoreAPIPlus extends AbstractVerticle  {
     
     try{
         
-         router.route().handler(StaticHandler.create()); 
+          router.route().handler(StaticHandler.create()); 
           router.route().handler(FaviconHandler.create(vertx));
+          
+          router.route().handler(HSTSHandler.create());
+          router.route().handler(XFrameHandler.create(XFrameHandler.DENY));
+          router.route().handler(CSPHandler.create()
+               .addDirective("default-src", "*.trusted.com"));
     
         router.get("/").handler(this::handleBookStoreDashBoard);  
         router.get("/bookstore/*").handler(this::handleServerResources);   

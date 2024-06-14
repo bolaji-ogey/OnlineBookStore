@@ -1,3 +1,4 @@
+C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\api\TestVerticle.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\ShoppingCart.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\dao\PGDataSource.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\OnlineBookStore.java
@@ -6,11 +7,15 @@ C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\UserProfile.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\dao\PGDataRetriever.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\UserPurchase.java
-C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\dao\RelDataHandler.java
+C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\dao\VertxPgSqlClientHandler.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\Genre.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\Payment.java
+C:\DBConnectors\OnlineBookStore\src\main\java\examples\MailLocalHost.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\Book.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\onlinebookstore\SqlClientDataHandler.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\InventoryBook.java
+C:\DBConnectors\OnlineBookStore\src\main\java\examples\SqlClientExample.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\api\BookStoreAPI.java
+C:\DBConnectors\OnlineBookStore\src\main\java\examples\CircuitBreakerClient.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\ShoppingCartBook.java
+C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\dao\VertxPgPoolClientHandler.java
