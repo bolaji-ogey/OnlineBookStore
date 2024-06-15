@@ -9,11 +9,11 @@ package examples;
  * @author BOLAJI-OGEYINGBO
  */
 
-import org.subethamail.smtp.auth.LoginFailedException;
+import org.subethamail.smtp.auth.LoginFailedException; 
 import org.subethamail.smtp.auth.PlainAuthenticationHandlerFactory;
 import org.subethamail.smtp.auth.UsernamePasswordValidator;
-import org.subethamail.smtp.helper.SimpleMessageListenerAdapter;
-import                                              ;
+import org.subethamail.smtp.helper.SimpleMessageListenerAdapter; 
+import org.subethamail.smtp.server.SMTPServer;
 
 /**
  * @author <a href="http://escoffier.me">Clement Escoffier</a>

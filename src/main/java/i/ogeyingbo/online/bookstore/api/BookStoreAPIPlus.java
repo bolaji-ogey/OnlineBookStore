@@ -90,8 +90,9 @@ public class BookStoreAPIPlus extends AbstractVerticle  {
       Vertx vertx = Vertx.vertx(); 
       
        DeploymentOptions  deployOptions =  new  DeploymentOptions(); 
-       deployOptions.setWorkerPoolSize(5);
        deployOptions.setThreadingModel(ThreadingModel.WORKER);
+       deployOptions.setWorkerPoolSize(5);
+       
        
       vertx.deployVerticle(new BookStoreAPIPlus(), deployOptions); 
   }

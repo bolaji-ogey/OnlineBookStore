@@ -30,7 +30,7 @@ import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import  io.vertx.config.ConfigRetriever;
 
 
 import com.google.gson.Gson;
@@ -40,8 +40,15 @@ import i.ogeyingbo.online.bookstore.model.objects.ShoppingCartBook;
 import i.ogeyingbo.online.bookstore.model.objects.UserPurchase;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.ThreadingModel;
+import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.CookieSameSite;
 import io.vertx.core.json.JsonObject;
+import io.vertx.ext.mail.DKIMSignOptions;
+import io.vertx.ext.mail.MailAttachment;
+import io.vertx.ext.mail.MailClient;
+import io.vertx.ext.mail.MailConfig;
+import io.vertx.ext.mail.MailMessage;
+import io.vertx.ext.mail.StartTLSOptions;
 import io.vertx.ext.web.Session;
 import io.vertx.ext.web.handler.CSPHandler;
 import io.vertx.ext.web.handler.SessionHandler;
@@ -58,10 +65,20 @@ public class BookStoreAPI extends AbstractVerticle  {
       
   private final Logger  lendersHttpServiceAPILog = LoggerFactory.getLogger(BookStoreAPI.class);
    
+  ConfigRetriever configRet =  null;    //ConfigRetriever.create(vertx);
   private    Validator    validator;
-  private  static  PGDataRetriever    pgDataRetriever =   PGDataRetriever.getInstance(); 
+  private  static  PGDataRetriever    pgDataRetriever = null;  //   PGDataRetriever.getInstance(); 
   
   private  Map<String, String>  urlPageMap  =  new ConcurrentHashMap<>();
+  
+  //DomainKeys Identified Mail (DKIM) Signature signing to secure your emails.
+  DKIMSignOptions dkimSignOptions =   null;
+  MailConfig secureMailConfig = new MailConfig();
+  MailClient    secureMailClient =   null;
+          
+  MailConfig   mailConfig = new MailConfig();
+  MailClient    mailClient =   null;
+  
  
   /**
   static {
@@ -80,12 +97,29 @@ public class BookStoreAPI extends AbstractVerticle  {
   
   
   public   BookStoreAPI(){
-             
+              
+       configRet  = ConfigRetriever.create(vertx);
+       pgDataRetriever =   PGDataRetriever.getInstance();  
+       
       urlPageMap.put("/bookstore/inventory/books/page", "book-inventory.html");
       urlPageMap.put("/bookstore/shoppingcart/page", "shopping-cart.html");
       
       urlPageMap.put("/fetch/users/page", "users.html");
       urlPageMap.put("/fetch/user/purchase/history/page", "purchase-history.html");
+      
+     dkimSignOptions = new DKIMSignOptions();
+     dkimSignOptions.setPrivateKey("PKCS8 Private Key Base64 String");
+     dkimSignOptions.setAuid("identifier@example.com");
+     dkimSignOptions.setSelector("selector");
+     dkimSignOptions.setSdid("example.com");
+     
+     secureMailConfig.setDKIMSignOption(dkimSignOptions).setEnableDKIM(true);
+     
+      mailConfig.setHostname("mail.example.com");
+      mailConfig.setPort(587);
+      mailConfig.setStarttls(StartTLSOptions.REQUIRED);
+      mailConfig.setUsername("user");
+      mailConfig.setPassword("password");
       
   }
    
@@ -94,11 +128,12 @@ public class BookStoreAPI extends AbstractVerticle  {
    
   public static void main(String[] args) {
         
-      Vertx vertx = Vertx.vertx(); 
+       Vertx vertx = Vertx.vertx(); 
       
-      DeploymentOptions  deployOptions =  new  DeploymentOptions(); 
-       deployOptions.setWorkerPoolSize(5);
+       DeploymentOptions  deployOptions =  new  DeploymentOptions(); 
        deployOptions.setThreadingModel(ThreadingModel.WORKER); 
+       deployOptions.setWorkerPoolSize(5);
+       
        
       vertx.deployVerticle(new BookStoreAPI(), deployOptions); 
   }
@@ -127,7 +162,9 @@ public class BookStoreAPI extends AbstractVerticle  {
   public void start(Promise<Void>  promise) { 
   // public void start() { 
 
-    Router router = Router.router(vertx); 
+     Router router = Router.router(vertx); 
+     secureMailClient = MailClient.createShared(vertx, secureMailConfig, "exampleclient");
+     mailClient = MailClient.createShared(vertx, mailConfig, "exampleclient");
     
     // Create a clustered session store using defaults
      SessionStore store = ClusteredSessionStore.create(vertx);
@@ -150,6 +187,7 @@ public class BookStoreAPI extends AbstractVerticle  {
           router.route().handler(CSPHandler.create()
                .addDirective("default-src", "*.trusted.com"));
           
+        // router.get("/fetch/*").consumes("application/json").handler(this::handleServerResources); 
     
         router.get("/").handler(this::handleBookStoreDashBoard);  
         router.get("/bookstore/*").handler(this::handleServerResources);   
@@ -538,6 +576,78 @@ private  void    handleDataRetrieveViewJSON(RoutingContext  routingContext){
  
 
 
+  private   void  sendSimpleMail(){
+        MailMessage message = new MailMessage();
+        message.setFrom("user@example.com (Example User)");
+        message.setTo("recipient@example.org");
+        message.setCc("Another User <another@example.net>");
+        message.setBcc("Another User <another@example.net>");
+        message.setText("this is the plain message text");
+        message.setHtml("this is html text <a href=\"http://vertx.io\">vertx.io</a>");
+        
+         mailClient.sendMail(message)
+        .onSuccess(System.out::println)
+        .onFailure(Throwable::printStackTrace);
+  }
 
+  
+  
+  
+  private   void  sendMailWithAttach(){
+        MailMessage message = new MailMessage();
+        message.setFrom("user@example.com (Example User)");
+        message.setTo("recipient@example.org");
+        message.setCc("Another User <another@example.net>");
+        message.setBcc("Another User <another@example.net>");
+        message.setText("this is the plain message text");
+        message.setHtml("this is html text <a href=\"http://vertx.io\">vertx.io</a>");
+        
+        MailAttachment attachEmbeddedImage = MailAttachment.create();
+        attachEmbeddedImage.setContentType("image/jpeg");
+        attachEmbeddedImage.setData(Buffer.buffer("image data"));
+        attachEmbeddedImage.setDisposition("inline");
+        attachEmbeddedImage.setContentId("<image1@example.com>");
+        message.setInlineAttachment(attachEmbeddedImage);
+        
+        MailAttachment attachment = MailAttachment.create();
+        attachment.setContentType("text/plain");
+        attachment.setData(Buffer.buffer("attachment file"));
+
+        message.setAttachment(attachment);
+        
+        mailClient.sendMail(message)
+        .onSuccess(System.out::println)
+        .onFailure(Throwable::printStackTrace);
+  }
+
+   
+  
+  
+  private   void  sendHtmlMailWithAttach(){
+        MailMessage message = new MailMessage();
+        message.setFrom("user@example.com (Example User)");
+        message.setTo("recipient@example.org");
+        message.setCc("Another User <another@example.net>"); 
+        message.setBcc("Another User <another@example.net>");
+        message.setHtml("this is html text <a href=\"http://vertx.io\">vertx.io</a>");
+        
+        MailAttachment attachEmbeddedImage = MailAttachment.create();
+        attachEmbeddedImage.setContentType("image/jpeg");
+        attachEmbeddedImage.setData(Buffer.buffer("image data"));
+        attachEmbeddedImage.setDisposition("inline");
+        attachEmbeddedImage.setContentId("<image1@example.com>");
+        message.setInlineAttachment(attachEmbeddedImage);
+        
+        MailAttachment attachment = MailAttachment.create();
+        attachment.setContentType("text/plain");
+        attachment.setData(Buffer.buffer("attachment file")); 
+
+        message.setAttachment(attachment);
+        
+        mailClient.sendMail(message)
+        .onSuccess(System.out::println)
+        .onFailure(Throwable::printStackTrace);
+  }
+    
     
 }
