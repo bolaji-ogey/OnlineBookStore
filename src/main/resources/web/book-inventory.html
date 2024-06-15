@@ -26,15 +26,15 @@
         </style>
 
     
-         <script type="text/javascript">
+     <script type="text/javascript">
     $(document).ready(function () {
-        $('#InventoryTableContainer').jtable({
+        $('#BookInventoryTable').jtable({
             title: 'Book Inventory',
             paging: true,
             pageSize: 10,
             sorting: true,
             actions: {
-                 listAction: 'http:/localhost:8080/bookstore/inventory/books'
+                 listAction: '/view/bookstore/inventory/books'
             },
             fields: {
                 id: {
@@ -77,7 +77,7 @@
 </script>     
     </head>
     <body> 
-        <div id="InventoryTableContainer"></div>
+        <div id="BookInventoryTable"></div>
      
      </body>
  

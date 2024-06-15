@@ -98,7 +98,7 @@ public class BookStoreAPI extends AbstractVerticle  {
   
   public   BookStoreAPI(){
               
-       configRet  = ConfigRetriever.create(vertx);
+       
        pgDataRetriever =   PGDataRetriever.getInstance();  
        
       urlPageMap.put("/bookstore/inventory/books/page", "book-inventory.html");
@@ -160,19 +160,25 @@ public class BookStoreAPI extends AbstractVerticle  {
   
   @Override
   public void start(Promise<Void>  promise) { 
-  // public void start() { 
-
-     Router router = Router.router(vertx); 
-     secureMailClient = MailClient.createShared(vertx, secureMailConfig, "exampleclient");
+  // public void start() {
+  /***
+    configRet  = ConfigRetriever.create(vertx);
+    secureMailClient = MailClient.createShared(vertx, secureMailConfig, "exampleclient");
      mailClient = MailClient.createShared(vertx, mailConfig, "exampleclient");
-    
+    ***/
+  
+     Router router = Router.router(vertx); 
+      
     // Create a clustered session store using defaults
+    /***
      SessionStore store = ClusteredSessionStore.create(vertx);
      SessionStore store2 = LocalSessionStore.create(vertx);
      SessionHandler sessionHandler = SessionHandler.create(store);
      sessionHandler.setCookieSameSite(CookieSameSite.STRICT);
-     
      router.route().handler(sessionHandler);
+     **/
+    
+     
     
     router.route().handler(BodyHandler.create()); 
     
@@ -189,7 +195,8 @@ public class BookStoreAPI extends AbstractVerticle  {
           
         // router.get("/fetch/*").consumes("application/json").handler(this::handleServerResources); 
     
-        router.get("/").handler(this::handleBookStoreDashBoard);  
+        router.get("/").handler(this::handleBookStoreDashBoard); 
+        router.get("/dashboard/*").handler(this::handleSecuredResources); 
         router.get("/bookstore/*").handler(this::handleServerResources);   
         router.get("/fetch/*").handler(this::handleServerResources); 
         router.get("/view/*").handler(this::handleServerResources); 
@@ -301,6 +308,10 @@ public class BookStoreAPI extends AbstractVerticle  {
   }
  
   
+  
+   private  void  handleSecuredResources(RoutingContext routingContext){
+       
+   }
   
  
     private  void handleServerResources(RoutingContext routingContext){
