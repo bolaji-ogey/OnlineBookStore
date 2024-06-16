@@ -1,5 +1,6 @@
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\api\TestVerticle.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\ShoppingCart.java
+C:\DBConnectors\OnlineBookStore\src\main\java\vertx\email\examples\MailHeaders.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\email\examples\MailLocalHost.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\Genre.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\Payment.java
@@ -24,3 +25,4 @@ C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\api\B
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\email\examples\LocalSmtpServer.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\email\examples\MailImages.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\ShoppingCartBook.java
+C:\DBConnectors\OnlineBookStore\src\main\java\vertx\example\metrics\dashboard\Dashboard.java
