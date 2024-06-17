@@ -61,7 +61,7 @@ import io.vertx.ext.web.handler.JWTAuthHandler;
  *
  * @author BOLAJI-OGEYINGBO
  */
-public class BookStoreAPIPlus   extends AbstractVerticle  {
+public class BookStoreAPIPlus extends AbstractVerticle  {
     
       
   private final Logger  lendersHttpServiceAPILog = LoggerFactory.getLogger(BookStoreAPIPlus.class);
@@ -105,8 +105,8 @@ public class BookStoreAPIPlus   extends AbstractVerticle  {
       urlPageMap.put("/bookstore/inventory/books/page", "book-inventory.html");
       urlPageMap.put("/bookstore/shoppingcart/page", "shopping-cart.html");
       
-      urlPageMap.put("/fetch/users/page", "users.html");
-      urlPageMap.put("/fetch/user/purchase/history/page", "purchase-history.html");
+      urlPageMap.put("/bookstore/users/page", "users.html");
+      urlPageMap.put("/bookstore/user/purchase/history/page", "purchase-history.html");
       
      dkimSignOptions = new DKIMSignOptions();
      dkimSignOptions.setPrivateKey("PKCS8 Private Key Base64 String");
@@ -343,11 +343,24 @@ public class BookStoreAPIPlus   extends AbstractVerticle  {
         String file =  "";  
                         
         System.out.println(String.format("request.path():  %s", request.path()));
-      if (request.path().equals("/bookstore/dashbaord") || request.path().startsWith("/bookstore/dashbaord")) {
+        if (request.path().startsWith("/bookstore") || request.path().startsWith("/bookstore/dashbaord")) {
             
-            file = "onlinebookstore-dashboard.html"; //file = "login.html";
-            System.out.println(String.format("handleServerResources A:  File served is:  %s", file));
-            response.sendFile("web/" + file); 
+            if(request.path().endsWith("/page") || request.path().endsWith("/page")){
+                
+                handleTargetPage(routingContext);
+                
+            } else if(request.path().endsWith(".js")  || request.path().endsWith(".css")
+                  || request.path().endsWith(".png")  || request.path().endsWith(".jpg")){
+            
+                file =  filterRequestPath(request.path()); 
+                System.out.println(String.format("handleServerResources B:   File served is:  %s", file));
+                response.setStatusCode(200).sendFile("web/"+file);     
+                 
+            }else{
+                file = "onlinebookstore-dashboard.html"; //file = "login.html";
+                System.out.println(String.format("handleServerResources A:  File served is:  %s", file));
+                response.sendFile("web/" + file); 
+            }
             
         }else if(request.path().endsWith(".js")  || request.path().endsWith(".css")
                   || request.path().endsWith(".png")  || request.path().endsWith(".jpg")){
@@ -362,25 +375,20 @@ public class BookStoreAPIPlus   extends AbstractVerticle  {
               System.out.println(String.format("handleServerResources C:   File served is:  %s", file));
               response.sendFile("web/"+file); 
               
-        }else{
-            
-            if(request.path().endsWith("page") ||  request.path().endsWith("pg")){
+        }else if(request.path().startsWith("/bookstore") &&  (request.path().endsWith("page") ||  request.path().endsWith("pg"))){
                 
                  System.out.println(String.format("handleTargetPage"));
                 handleTargetPage(routingContext);
-                
-            }else if(request.path().startsWith("/view") ||  request.path().endsWith("/view")
-                      ||  request.path().startsWith("/vw")  ||  request.path().endsWith("/vw")){
-                
-                System.out.println(String.format("handleDataRetrieveViewJSON"));
+               
+        }else if(request.path().startsWith("/view")){
+            
+             System.out.println(String.format("handleDataRetrieveViewJSON"));
                 handleDataRetrieveViewJSON(routingContext);
                 
-            }else {
-                
-                 System.out.println(String.format("handleDataRetrieveJSON"));
-                handleDataRetrieveJSON(routingContext);
-            }
+        }else if(request.path().startsWith("/list")){
             
+             System.out.println(String.format("handleDataRetrieveJSON"));
+                handleDataRetrieveJSON(routingContext);
         }
         
   } 
@@ -463,7 +471,7 @@ private  void   handleTargetPage(RoutingContext routingContext){
             if(request.path().endsWith(".htm")  || request.path().endsWith(".js")  || request.path().endsWith(".css")
                          || request.path().endsWith(".map")){
                 
-               // file =  newFilterRequestPath(file); 
+              file =  filterRequestPath(file); 
                
                System.out.println(String.format("handleTargetPage:   File served is:  %s", file));
                response.sendFile("web/" + file);
