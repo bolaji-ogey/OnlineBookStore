@@ -14,7 +14,6 @@ import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.AllowForwardHeaders;
-import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.FaviconHandler;
@@ -41,8 +40,6 @@ import i.ogeyingbo.online.bookstore.model.objects.UserPurchase;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.ThreadingModel;
 import io.vertx.core.buffer.Buffer;
-import io.vertx.core.http.CookieSameSite;
-import io.vertx.core.json.JsonObject;
 import io.vertx.ext.mail.DKIMSignOptions;
 import io.vertx.ext.mail.MailAttachment;
 import io.vertx.ext.mail.MailClient;
@@ -51,11 +48,15 @@ import io.vertx.ext.mail.MailMessage;
 import io.vertx.ext.mail.StartTLSOptions;
 import io.vertx.ext.web.Session;
 import io.vertx.ext.web.handler.CSPHandler;
-import io.vertx.ext.web.handler.SessionHandler;
 import io.vertx.ext.web.handler.XFrameHandler;
-import io.vertx.ext.web.sstore.ClusteredSessionStore;
-import io.vertx.ext.web.sstore.LocalSessionStore;
-import io.vertx.ext.web.sstore.SessionStore;
+
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.auth.JWTOptions; 
+import io.vertx.ext.auth.KeyStoreOptions;
+import io.vertx.ext.auth.jwt.JWTAuth;
+import io.vertx.ext.auth.jwt.JWTAuthOptions;
+import io.vertx.ext.web.Router;
+import io.vertx.ext.web.handler.JWTAuthHandler;
 /**
  *
  * @author BOLAJI-OGEYINGBO
@@ -167,6 +168,15 @@ public class BookStoreAPI extends AbstractVerticle  {
      mailClient = MailClient.createShared(vertx, mailConfig, "exampleclient");
     ***/
   
+  
+     // Create a JWT Auth Provider
+    JWTAuth jwt = JWTAuth.create(vertx, new JWTAuthOptions()
+      .setKeyStore(new KeyStoreOptions()
+        .setType("jceks")
+        .setPath("io/vertx/example/web/jwt/keystore.jceks")
+        .setPassword("secret")));
+    
+    
      Router router = Router.router(vertx); 
       
     // Create a clustered session store using defaults
@@ -203,6 +213,16 @@ public class BookStoreAPI extends AbstractVerticle  {
         router.route().handler(TimeoutHandler.create(200));
         router.route().handler(HSTSHandler.create());
           
+        router.get("/authenticate").handler(context->{
+             HttpServerResponse response = context.response();
+          String  jwtString  =  jwt.generateToken(new JsonObject(), new JWTOptions().setExpiresInSeconds(60));
+          JSONObject   jsonObjectResult  = new JSONObject();
+          jsonObjectResult.put("jwt", jwtString);
+         response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(200).send(jsonObjectResult.toString());
+        }); 
+        
+        // protect the API
+        router.route("/api/*").handler(JWTAuthHandler.create(jwt));
     
          router.get("/filter/user/session/:userId").handler(context->{
              HttpServerResponse response = context.response();

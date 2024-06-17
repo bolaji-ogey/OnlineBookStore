@@ -80,7 +80,8 @@
             <version>42.7.3</version>
             <!--version>42.2.10</version-->
         </dependency>
-        
+         
+
         <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
@@ -157,12 +158,19 @@
                 <artifactId>vertx-mail-client</artifactId>
                 <version>4.5.8</version>
             </dependency>
+            
+            <dependency>
+                <groupId>io.vertx</groupId>
+                <artifactId>vertx-auth-jwt</artifactId>
+                <version>4.5.8</version>
+            </dependency>
           
           <dependency>
-            <groupId>com.github.mcollovati.vertx</groupId>
-            <artifactId>vaadin-flow-sockjs</artifactId>
-            <version>24.3.0-alpha1</version>
-        </dependency>
+                <groupId>com.github.mcollovati.vertx</groupId>
+                <artifactId>vaadin-flow-sockjs</artifactId>
+                <version>23.4.1</version>
+            </dependency>
+         
        
         <dependency>
             <groupId>org.apache.httpcomponents.client5</groupId>
@@ -191,7 +199,7 @@
            <dependency>
                 <groupId>jakarta.servlet</groupId>
                 <artifactId>jakarta.servlet-api</artifactId>
-                <version>6.1.0-M2</version>
+                <version>6.1.0</version>
                 <scope>runtime</scope>
             </dependency>  
             
@@ -211,7 +219,26 @@
               <groupId>io.vertx</groupId>
               <artifactId>vertx-lang-kotlin-coroutines</artifactId>
                <version>4.5.8</version>
-            </dependency>             
+            </dependency> 
+            
+             
+                 <dependency>
+                    <groupId>com.vaadin</groupId>
+                    <artifactId>vaadin-core</artifactId>
+                    <version>24.4.2</version>
+                    <exclusions>
+                      <exclusion>
+                        <groupId>com.vaadin</groupId>
+                        <artifactId>flow-push</artifactId>
+                      </exclusion>
+                      <exclusion>
+                        <groupId>com.vaadin</groupId>
+                        <artifactId>flow-client</artifactId>
+                      </exclusion>
+                    </exclusions>
+                </dependency>            
+                
+                
         
     </dependencies>
     

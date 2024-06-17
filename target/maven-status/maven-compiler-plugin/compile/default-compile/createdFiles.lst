@@ -20,11 +20,14 @@ i\ogeyingbo\online\bookstore\model\objects\ImageObject.class
 vertx\example\metrics\dashboard\Dashboard$1.class
 i\ogeyingbo\online\bookstore\model\objects\ShoppingCart.class
 vertx\email\examples\SqlClientExample.class
+i\ogeyingbo\online\bookstore\model\objects\Whisky.class
 i\ogeyingbo\online\bookstore\model\objects\InventoryBook.class
 i\ogeyingbo\online\bookstore\api\BookStoreAPIPlus$4.class
 vertx\email\examples\MailLocalHost.class
 i\ogeyingbo\online\bookstore\model\objects\Employee$EmployeeBuilder.class
 i\ogeyingbo\online\bookstore\api\BookStoreAPIPlus$3.class
+vertx\example\core\future\ComposeExample.class
+i\ogeyingbo\online\bookstore\dao\VertxJdbcClientVerticle.class
 i\ogeyingbo\online\bookstore\api\BookStoreAPI.class
 vertx\email\examples\MyMessageListener.class
 i\ogeyingbo\online\bookstore\api\BookStoreAPIPlus.class

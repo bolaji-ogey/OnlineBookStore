@@ -14,7 +14,6 @@ import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.AllowForwardHeaders;
-import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.FaviconHandler;
@@ -30,7 +29,7 @@ import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import  io.vertx.config.ConfigRetriever;
 
 
 import com.google.gson.Gson;
@@ -40,8 +39,24 @@ import i.ogeyingbo.online.bookstore.model.objects.ShoppingCartBook;
 import i.ogeyingbo.online.bookstore.model.objects.UserPurchase;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.ThreadingModel;
+import io.vertx.core.buffer.Buffer;
+import io.vertx.ext.mail.DKIMSignOptions;
+import io.vertx.ext.mail.MailAttachment;
+import io.vertx.ext.mail.MailClient;
+import io.vertx.ext.mail.MailConfig;
+import io.vertx.ext.mail.MailMessage;
+import io.vertx.ext.mail.StartTLSOptions;
+import io.vertx.ext.web.Session;
 import io.vertx.ext.web.handler.CSPHandler;
 import io.vertx.ext.web.handler.XFrameHandler;
+
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.auth.JWTOptions; 
+import io.vertx.ext.auth.KeyStoreOptions;
+import io.vertx.ext.auth.jwt.JWTAuth;
+import io.vertx.ext.auth.jwt.JWTAuthOptions;
+import io.vertx.ext.web.Router;
+import io.vertx.ext.web.handler.JWTAuthHandler;
 /**
  *
  * @author BOLAJI-OGEYINGBO
@@ -51,10 +66,20 @@ public class BookStoreAPIPlus extends AbstractVerticle  {
       
   private final Logger  lendersHttpServiceAPILog = LoggerFactory.getLogger(BookStoreAPIPlus.class);
    
+  ConfigRetriever configRet =  null;    //ConfigRetriever.create(vertx);
   private    Validator    validator;
-  private  static  PGDataRetriever    pgDataRetriever =   PGDataRetriever.getInstance(); 
+  private  static  PGDataRetriever    pgDataRetriever = null;  //   PGDataRetriever.getInstance(); 
   
   private  Map<String, String>  urlPageMap  =  new ConcurrentHashMap<>();
+  
+  //DomainKeys Identified Mail (DKIM) Signature signing to secure your emails.
+  DKIMSignOptions dkimSignOptions =   null;
+  MailConfig secureMailConfig = new MailConfig();
+  MailClient    secureMailClient =   null;
+          
+  MailConfig   mailConfig = new MailConfig();
+  MailClient    mailClient =   null;
+  
  
   /**
   static {
@@ -73,12 +98,29 @@ public class BookStoreAPIPlus extends AbstractVerticle  {
   
   
   public   BookStoreAPIPlus(){
-             
+              
+       
+       pgDataRetriever =   PGDataRetriever.getInstance();  
+       
       urlPageMap.put("/bookstore/inventory/books/page", "book-inventory.html");
       urlPageMap.put("/bookstore/shoppingcart/page", "shopping-cart.html");
       
       urlPageMap.put("/fetch/users/page", "users.html");
       urlPageMap.put("/fetch/user/purchase/history/page", "purchase-history.html");
+      
+     dkimSignOptions = new DKIMSignOptions();
+     dkimSignOptions.setPrivateKey("PKCS8 Private Key Base64 String");
+     dkimSignOptions.setAuid("identifier@example.com");
+     dkimSignOptions.setSelector("selector");
+     dkimSignOptions.setSdid("example.com");
+     
+     secureMailConfig.setDKIMSignOption(dkimSignOptions).setEnableDKIM(true);
+     
+      mailConfig.setHostname("mail.example.com");
+      mailConfig.setPort(587);
+      mailConfig.setStarttls(StartTLSOptions.REQUIRED);
+      mailConfig.setUsername("user");
+      mailConfig.setPassword("password");
       
   }
    
@@ -87,10 +129,10 @@ public class BookStoreAPIPlus extends AbstractVerticle  {
    
   public static void main(String[] args) {
         
-      Vertx vertx = Vertx.vertx(); 
+       Vertx vertx = Vertx.vertx(); 
       
        DeploymentOptions  deployOptions =  new  DeploymentOptions(); 
-       deployOptions.setThreadingModel(ThreadingModel.WORKER);
+       deployOptions.setThreadingModel(ThreadingModel.WORKER); 
        deployOptions.setWorkerPoolSize(5);
        
        
@@ -119,11 +161,37 @@ public class BookStoreAPIPlus extends AbstractVerticle  {
   
   @Override
   public void start(Promise<Void>  promise) { 
-  // public void start() { 
-
-    Router router = Router.router(vertx); 
+  // public void start() {
+  /***
+    configRet  = ConfigRetriever.create(vertx);
+    secureMailClient = MailClient.createShared(vertx, secureMailConfig, "exampleclient");
+     mailClient = MailClient.createShared(vertx, mailConfig, "exampleclient");
+    ***/
+  
+  
+     // Create a JWT Auth Provider
+    JWTAuth jwt = JWTAuth.create(vertx, new JWTAuthOptions()
+      .setKeyStore(new KeyStoreOptions()
+        .setType("jceks")
+        .setPath("io/vertx/example/web/jwt/keystore.jceks")
+        .setPassword("secret")));
+    
+    
+     Router router = Router.router(vertx); 
+      
+    // Create a clustered session store using defaults
+    /***
+     SessionStore store = ClusteredSessionStore.create(vertx);
+     SessionStore store2 = LocalSessionStore.create(vertx);
+     SessionHandler sessionHandler = SessionHandler.create(store);
+     sessionHandler.setCookieSameSite(CookieSameSite.STRICT);
+     router.route().handler(sessionHandler);
+     **/
+    
+     
     
     router.route().handler(BodyHandler.create()); 
+    
     
     try{
         
@@ -134,15 +202,42 @@ public class BookStoreAPIPlus extends AbstractVerticle  {
           router.route().handler(XFrameHandler.create(XFrameHandler.DENY));
           router.route().handler(CSPHandler.create()
                .addDirective("default-src", "*.trusted.com"));
+          
+        // router.get("/fetch/*").consumes("application/json").handler(this::handleServerResources); 
     
-        router.get("/").handler(this::handleBookStoreDashBoard);  
+        router.get("/").handler(this::handleBookStoreDashBoard); 
+        router.get("/dashboard/*").handler(this::handleSecuredResources); 
         router.get("/bookstore/*").handler(this::handleServerResources);   
         router.get("/fetch/*").handler(this::handleServerResources); 
         router.get("/view/*").handler(this::handleServerResources); 
         router.route().handler(TimeoutHandler.create(200));
         router.route().handler(HSTSHandler.create());
-         
+          
+        router.get("/authenticate").handler(context->{
+             HttpServerResponse response = context.response();
+          String  jwtString  =  jwt.generateToken(new JsonObject(), new JWTOptions().setExpiresInSeconds(60));
+          JSONObject   jsonObjectResult  = new JSONObject();
+          jsonObjectResult.put("jwt", jwtString);
+         response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(200).send(jsonObjectResult.toString());
+        }); 
         
+        // protect the API
+        router.route("/api/*").handler(JWTAuthHandler.create(jwt));
+    
+         router.get("/filter/user/session/:userId").handler(context->{
+             HttpServerResponse response = context.response();
+             String  userId = context.request().getParam("userId");
+            
+            Session session = context.session();
+            session.put("foo", "bar");
+            int age = session.get("foo");
+            JsonObject obj = session.remove("myobj");
+            JSONObject   jsonObjectResult  = new JSONObject();
+            jsonObjectResult.put("data", "");
+            response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(200).send(jsonObjectResult.toString());
+        }); 
+         
+         
          
         router.get("/filter/user/purchases/:userId").handler(context->{
 
@@ -233,6 +328,10 @@ public class BookStoreAPIPlus extends AbstractVerticle  {
   }
  
   
+  
+   private  void  handleSecuredResources(RoutingContext routingContext){
+       
+   }
   
  
     private  void handleServerResources(RoutingContext routingContext){
@@ -361,13 +460,15 @@ private  void   handleTargetPage(RoutingContext routingContext){
            
             if(request.path().endsWith(".htm")  || request.path().endsWith(".js")  || request.path().endsWith(".css")
                          || request.path().endsWith(".map")){
-                 
+                
+               // file =  newFilterRequestPath(file); 
+               
                System.out.println(String.format("handleTargetPage:   File served is:  %s", file));
                response.sendFile("web/" + file);
                
            }else{
                 
-                String  targetPage = urlPageMap.get(request.path());
+                  String  targetPage = urlPageMap.get(request.path());
                 if(targetPage != null  && !targetPage.isBlank()){
                     System.out.println(String.format("handleTargetPage:   File served is:  %s", targetPage));
                     response.sendFile("web/" + targetPage); 
@@ -404,7 +505,6 @@ private  void    handleDataRetrieveJSON(RoutingContext  routingContext){
                    default:   jsonObjectResult.put("data", (pgDataRetriever.getBookInventory()).toArray());
                                                        break;
 
-
                }
             
              
@@ -436,57 +536,57 @@ private  void    handleDataRetrieveViewJSON(RoutingContext  routingContext){
         try{
              System.out.println("Switch Request Path"+requestPath);
             switch(requestPath){
+ 
+            case  "/view/bookstore/inventory/books" :  {
+                                                         System.out.println("Data Retrieve method:  getBookInventory()");
+                                                        result.append("\"Records\":");
+                                                        Gson gson = new Gson();
+                                                        JsonElement element = gson.toJsonTree(pgDataRetriever.getBookInventory(), new TypeToken<List<InventoryBook>>() {}.getType());
+                                                        com.google.gson.JsonArray jsonArray = element.getAsJsonArray();
+                                                        result.append(jsonArray.toString());
+                                                        result.append("}");                                                                             
+                                                    }
+                                               break;   
 
-                    case  "/view/bookstore/inventory/books" :  {
-                                                                 System.out.println("Data Retrieve method:  getBookInventory()");
-                                                                result.append("\"Records\":");
-                                                                Gson gson = new Gson();
-                                                                JsonElement element = gson.toJsonTree(pgDataRetriever.getBookInventory(), new TypeToken<List<InventoryBook>>() {}.getType());
-                                                                com.google.gson.JsonArray jsonArray = element.getAsJsonArray();
-                                                                result.append(jsonArray.toString());
-                                                                result.append("}");                                                                             
-                                                            }
-                                                       break;   
-
-                   case "/view/fetch/user/purchases":   {
-                                                                     System.out.println("Data Retrieve method:  getUserPurchaseHistory()");
-                                                                    String userId = routingContext.pathParam("userId");
-                                                                    result.append("\"Records\":");
-                                                                    Gson gson = new Gson();
-                                                                    JsonElement element = gson.toJsonTree(pgDataRetriever.getUserPurchaseHistory(Integer.parseInt(userId)), new TypeToken<List<UserPurchase>>() {}.getType());
-                                                                    com.google.gson.JsonArray jsonArray = element.getAsJsonArray();
-                                                                    result.append(jsonArray.toString()); 
-                                                                    result.append("}");                                                                         
-                                                                 }  
-                                                               break; 
-                   case "/view/fetch/user/profiles":  {
-                                                            System.out.println("Data Retrieve method:  getUserProfiles()");
+           case "/view/fetch/user/purchases":   {
+                                                             System.out.println("Data Retrieve method:  getUserPurchaseHistory()");
+                                                            String userId = routingContext.pathParam("userId");
                                                             result.append("\"Records\":");
                                                             Gson gson = new Gson();
-                                                            JsonElement element = gson.toJsonTree(pgDataRetriever.getUserProfiles(), new TypeToken<List<UserProfile>>() {}.getType());
+                                                            JsonElement element = gson.toJsonTree(pgDataRetriever.getUserPurchaseHistory(Integer.parseInt(userId)), new TypeToken<List<UserPurchase>>() {}.getType());
                                                             com.google.gson.JsonArray jsonArray = element.getAsJsonArray();
                                                             result.append(jsonArray.toString()); 
-                                                           result.append("}");                                                                             
-                                                       } 
-                                                       break;
+                                                            result.append("}");                                                                         
+                                                         }  
+                                                       break; 
+           case "/view/fetch/user/profiles":  {
+                                                    System.out.println("Data Retrieve method:  getUserProfiles()");
+                                                    result.append("\"Records\":");
+                                                    Gson gson = new Gson();
+                                                    JsonElement element = gson.toJsonTree(pgDataRetriever.getUserProfiles(), new TypeToken<List<UserProfile>>() {}.getType());
+                                                    com.google.gson.JsonArray jsonArray = element.getAsJsonArray();
+                                                    result.append(jsonArray.toString()); 
+                                                   result.append("}");                                                                             
+                                               } 
+                                               break;
 
 
-                   case "/view/bookstore/inventory/books/json":   {
-                                                                    result.append("\"Records\":");
-                                                                    Gson gson = new Gson();
-                                                                    JsonElement element = gson.toJsonTree(pgDataRetriever.getBookInventory(), new TypeToken<List<InventoryBook>>() {}.getType());
-                                                                    com.google.gson.JsonArray jsonArray = element.getAsJsonArray();
-                                                                    result.append(jsonArray.toString()); 
-                                                                    result.append("}");                                                                             
-                                                                }
-                                                       break;
+           case "/view/bookstore/inventory/books/json":   {
+                                                            result.append("\"Records\":");
+                                                            Gson gson = new Gson();
+                                                            JsonElement element = gson.toJsonTree(pgDataRetriever.getBookInventory(), new TypeToken<List<InventoryBook>>() {}.getType());
+                                                            com.google.gson.JsonArray jsonArray = element.getAsJsonArray();
+                                                            result.append(jsonArray.toString()); 
+                                                            result.append("}");                                                                             
+                                                        }
+                                               break;
 
-                                            default:   {
-                                                           String error="{\"Result\":\"ERROR\",\"Message\":\"Resource NOT available\"}"; 
-                                                           result  = new StringBuilder(200);
-                                                           result.append(error);
-                                                       }
-                                                       break;
+                                    default:   {
+                                                   String error="{\"Result\":\"ERROR\",\"Message\":\"Resource NOT available\"}"; 
+                                                   result  = new StringBuilder(200);
+                                                   result.append(error);
+                                               }
+                                               break;
 
 
                } 
@@ -507,6 +607,78 @@ private  void    handleDataRetrieveViewJSON(RoutingContext  routingContext){
  
 
 
+  private   void  sendSimpleMail(){
+        MailMessage message = new MailMessage();
+        message.setFrom("user@example.com (Example User)");
+        message.setTo("recipient@example.org");
+        message.setCc("Another User <another@example.net>");
+        message.setBcc("Another User <another@example.net>");
+        message.setText("this is the plain message text");
+        message.setHtml("this is html text <a href=\"http://vertx.io\">vertx.io</a>");
+        
+         mailClient.sendMail(message)
+        .onSuccess(System.out::println)
+        .onFailure(Throwable::printStackTrace);
+  }
 
+  
+  
+  
+  private   void  sendMailWithAttach(){
+        MailMessage message = new MailMessage();
+        message.setFrom("user@example.com (Example User)");
+        message.setTo("recipient@example.org");
+        message.setCc("Another User <another@example.net>");
+        message.setBcc("Another User <another@example.net>");
+        message.setText("this is the plain message text");
+        message.setHtml("this is html text <a href=\"http://vertx.io\">vertx.io</a>");
+        
+        MailAttachment attachEmbeddedImage = MailAttachment.create();
+        attachEmbeddedImage.setContentType("image/jpeg");
+        attachEmbeddedImage.setData(Buffer.buffer("image data"));
+        attachEmbeddedImage.setDisposition("inline");
+        attachEmbeddedImage.setContentId("<image1@example.com>");
+        message.setInlineAttachment(attachEmbeddedImage);
+        
+        MailAttachment attachment = MailAttachment.create();
+        attachment.setContentType("text/plain");
+        attachment.setData(Buffer.buffer("attachment file"));
+
+        message.setAttachment(attachment);
+        
+        mailClient.sendMail(message)
+        .onSuccess(System.out::println)
+        .onFailure(Throwable::printStackTrace);
+  }
+
+   
+  
+  
+  private   void  sendHtmlMailWithAttach(){
+        MailMessage message = new MailMessage();
+        message.setFrom("user@example.com (Example User)");
+        message.setTo("recipient@example.org");
+        message.setCc("Another User <another@example.net>"); 
+        message.setBcc("Another User <another@example.net>");
+        message.setHtml("this is html text <a href=\"http://vertx.io\">vertx.io</a>");
+        
+        MailAttachment attachEmbeddedImage = MailAttachment.create();
+        attachEmbeddedImage.setContentType("image/jpeg");
+        attachEmbeddedImage.setData(Buffer.buffer("image data"));
+        attachEmbeddedImage.setDisposition("inline");
+        attachEmbeddedImage.setContentId("<image1@example.com>");
+        message.setInlineAttachment(attachEmbeddedImage);
+        
+        MailAttachment attachment = MailAttachment.create();
+        attachment.setContentType("text/plain");
+        attachment.setData(Buffer.buffer("attachment file")); 
+
+        message.setAttachment(attachment);
+        
+        mailClient.sendMail(message)
+        .onSuccess(System.out::println)
+        .onFailure(Throwable::printStackTrace);
+  }
+    
     
 }
