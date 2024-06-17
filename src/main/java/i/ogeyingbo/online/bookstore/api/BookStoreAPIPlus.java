@@ -343,7 +343,7 @@ public class BookStoreAPIPlus   extends AbstractVerticle  {
         String file =  "";  
                         
         System.out.println(String.format("request.path():  %s", request.path()));
-        if (request.path().equals("/dashbaord") || request.path().startsWith("/dashbaord")) {
+      if (request.path().equals("/bookstore/dashbaord") || request.path().startsWith("/bookstore/dashbaord")) {
             
             file = "onlinebookstore-dashboard.html"; //file = "login.html";
             System.out.println(String.format("handleServerResources A:  File served is:  %s", file));
