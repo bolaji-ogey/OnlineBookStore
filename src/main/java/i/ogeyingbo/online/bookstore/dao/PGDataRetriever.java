@@ -4,7 +4,7 @@
  */
 package i.ogeyingbo.online.bookstore.dao;
 
-import i.ogeyingbo.online.bookstore.model.objects.InventoryBook;
+import i.ogeyingbo.online.bookstore.model.InventoryBook;
 import i.ogeyingbo.online.bookstore.model.objects.ShoppingCartBook;
 import i.ogeyingbo.online.bookstore.model.objects.UserProfile;
 import i.ogeyingbo.online.bookstore.model.objects.UserPurchaseHistory;

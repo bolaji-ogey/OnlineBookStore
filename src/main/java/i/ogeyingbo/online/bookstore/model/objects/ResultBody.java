@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author BOLAJI-OGEYINGBO
  */
-public class ResultBody  extends  ArrayList<Object> {
+public class ResultBody<T extends Object>  extends  ArrayList<T> {
     
     private  boolean  isSuccess  = true;
     
@@ -45,8 +45,8 @@ public class ResultBody  extends  ArrayList<Object> {
         return  this;
     }
      
-   public  ResultBody  doAdd(Object obj){
-        if(super.add(obj) == true){
+   public  ResultBody  doAdd(T  t){
+        if(super.add(t) == true){
                isSuccess  = true;
         }else{
             isSuccess  = false;
@@ -56,8 +56,8 @@ public class ResultBody  extends  ArrayList<Object> {
     
    
     @Override
-    public  boolean  add(Object obj){
-        super.add(obj);
+    public  boolean  add(T t){
+        super.add(t);
         return true;
     }
     

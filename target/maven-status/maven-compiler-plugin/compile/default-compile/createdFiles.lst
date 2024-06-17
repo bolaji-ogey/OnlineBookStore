@@ -2,6 +2,7 @@ vertx\email\examples\MailHeaders.class
 i\ogeyingbo\online\bookstore\model\objects\Payment.class
 i\ogeyingbo\online\bookstore\model\objects\UserPurchase.class
 vertx\validation\example\CreatePostCommand.class
+i\ogeyingbo\online\bookstore\model\InventoryBook.class
 i\ogeyingbo\online\bookstore\api\BookStoreAPIPlus$1.class
 i\ogeyingbo\online\bookstore\model\objects\UserProfile.class
 i\ogeyingbo\online\bookstore\model\objects\ShoppingCartBook.class
@@ -42,6 +43,7 @@ vertx\email\examples\MyMessageListener.class
 i\ogeyingbo\online\bookstore\api\BookStoreAPIPlus.class
 vertx\email\examples\LocalSmtpServer.class
 vertx\email\examples\MailImages.class
+i\ogeyingbo\online\bookstore\model\Book.class
 i\ogeyingbo\online\bookstore\api\BookStoreAPI$2.class
 i\ogeyingbo\online\bookstore\dao\PGDataSource.class
 vertx\validation\example\PostRepository.class
@@ -49,6 +51,7 @@ vertx\example\metrics\dashboard\Dashboard.class
 vertx\email\examples\CircuitBreakerClient.class
 i\ogeyingbo\online\bookstore\dao\VertxPgSqlClientHandler.class
 i\ogeyingbo\online\bookstore\api\BookStoreAPI$4.class
+i\ogeyingbo\online\bookstore\model\ImageObject.class
 i\ogeyingbo\online\bookstore\model\objects\Employee.class
 i\ogeyingbo\online\bookstore\model\objects\Book.class
 i\ogeyingbo\online\bookstore\api\TestVerticle.class

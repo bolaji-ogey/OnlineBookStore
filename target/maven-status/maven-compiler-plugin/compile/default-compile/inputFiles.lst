@@ -11,6 +11,7 @@ C:\DBConnectors\OnlineBookStore\src\main\java\vertx\email\examples\SqlClientExam
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\onlinebookstore\SqlClientDataHandler.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\validation\example\CreatePostCommand.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\email\examples\CircuitBreakerClient.java
+C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\ImageObject.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\ImageObject.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\validation\example\PostRepository.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\ResultBody.java
@@ -24,6 +25,7 @@ C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\dao\PGDataRetriever.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\UserPurchase.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\dao\VertxPgSqlClientHandler.java
+C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\InventoryBook.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\email\examples\MyMessageListener.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\Book.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\InventoryBook.java
@@ -34,6 +36,7 @@ C:\DBConnectors\OnlineBookStore\src\main\java\vertx\validation\example\DataIniti
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\validation\example\MainVerticle.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\email\examples\LocalSmtpServer.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\email\examples\MailImages.java
+C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\Book.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\ShoppingCartBook.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\example\metrics\dashboard\Dashboard.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\validation\example\PostNotFoundException.java
