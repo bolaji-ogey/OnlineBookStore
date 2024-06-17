@@ -168,14 +168,14 @@ public class BookStoreAPI extends AbstractVerticle  {
      mailClient = MailClient.createShared(vertx, mailConfig, "exampleclient");
     ***/
   
-  
+  /***
      // Create a JWT Auth Provider
     JWTAuth jwt = JWTAuth.create(vertx, new JWTAuthOptions()
       .setKeyStore(new KeyStoreOptions()
         .setType("jceks")
         .setPath("io/vertx/example/web/jwt/keystore.jceks")
         .setPassword("secret")));
-    
+    ***/
     
      Router router = Router.router(vertx); 
       
@@ -205,7 +205,7 @@ public class BookStoreAPI extends AbstractVerticle  {
           
         // router.get("/fetch/*").consumes("application/json").handler(this::handleServerResources); 
     
-        router.get("/").handler(this::handleBookStoreDashBoard); 
+       // router.get("/").handler(this::handleBookStoreDashBoard); 
         router.get("/dashboard/*").handler(this::handleSecuredResources); 
         router.get("/bookstore/*").handler(this::handleServerResources);   
         router.get("/fetch/*").handler(this::handleServerResources); 
@@ -213,6 +213,7 @@ public class BookStoreAPI extends AbstractVerticle  {
         router.route().handler(TimeoutHandler.create(200));
         router.route().handler(HSTSHandler.create());
           
+        /***
         router.get("/authenticate").handler(context->{
              HttpServerResponse response = context.response();
           String  jwtString  =  jwt.generateToken(new JsonObject(), new JWTOptions().setExpiresInSeconds(60));
@@ -223,7 +224,8 @@ public class BookStoreAPI extends AbstractVerticle  {
         
         // protect the API
         router.route("/api/*").handler(JWTAuthHandler.create(jwt));
-    
+         **/
+        
          router.get("/filter/user/session/:userId").handler(context->{
              HttpServerResponse response = context.response();
              String  userId = context.request().getParam("userId");
@@ -341,7 +343,7 @@ public class BookStoreAPI extends AbstractVerticle  {
         String file =  "";  
                         
         System.out.println(String.format("request.path():  %s", request.path()));
-        if (request.path().equals("/") || request.path().isEmpty() || request.path().isBlank()) {
+        if (request.path().equals("/dashbaord") || request.path().startsWith("/dashbaord")) {
             
             file = "onlinebookstore-dashboard.html"; //file = "login.html";
             System.out.println(String.format("handleServerResources A:  File served is:  %s", file));
