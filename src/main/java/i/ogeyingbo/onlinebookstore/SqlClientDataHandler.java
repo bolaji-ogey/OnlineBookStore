@@ -13,6 +13,8 @@ import io.vertx.sqlclient.RowSet;
 import io.vertx.sqlclient.SqlClient;
 import java.util.ArrayList;
 
+import  i.ogeyingbo.online.bookstore.model.objects.ShoppingCartBook;
+
 /**
  *
  * @author BOLAJI-OGEYINGBO
@@ -57,14 +59,15 @@ public class SqlClientDataHandler {
   
   
   
-  /***
+  /*** 
  public  ArrayList<ShoppingCartBook>  getShoppingCartBooks(String   inOrderSerial){
       
      ArrayList<ShoppingCartBook>  shoppingCartBookList =  new   ArrayList<>();
      
      String  query = "SELECT * FROM  shopping_cart_books  WHERE  order_serial = $1 ";
      JsonArray params = new JsonArray().add("Fox").add(9);
-             
+          
+     
         client.query(query, params, ar ->  
           {
             if (ar.succeeded()) {
@@ -87,16 +90,16 @@ public class SqlClientDataHandler {
                     
                    System.out.println("Done"); 
             } else {               
-             // System.out.println("Failure: Something went wrong >>> " + ar.cause().getMessage());
+              System.out.println("Failure: Something went wrong >>> " + ar.cause().getMessage());
               ar.cause().printStackTrace();
             }
-           // if(ar.failed() --> Throwable::printStackTrace()));
+           //   if(ar.failed() --> Throwable::printStackTrace()));
           }); 
        return     shoppingCartBookList;
   }
  
- 
- **/
+ ***/
+  
  
   
     
