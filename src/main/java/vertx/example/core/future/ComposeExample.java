@@ -50,7 +50,7 @@ public class ComposeExample extends AbstractVerticle {
   private Future<String> anotherAsyncAction(String name) {
     Promise<String> promise = Promise.promise();
     // mimic something that take times
-    vertx.setTimer(100, l -> promise.complete("hello " + name));
+    vertx.setTimer(500, l -> promise.complete("hello " + name));
     return promise.future();
   }
 

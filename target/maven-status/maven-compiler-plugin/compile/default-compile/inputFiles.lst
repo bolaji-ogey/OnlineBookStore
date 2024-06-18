@@ -1,3 +1,4 @@
+C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\security\MerchSecurityVault.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\api\TestVerticle.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\ShoppingCart.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\email\examples\MailHeaders.java
@@ -23,17 +24,21 @@ C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\validation\example\Post.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\UserProfile.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\dao\PGDataRetriever.java
+C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\security\CustSecurityVault.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\UserPurchase.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\dao\VertxPgSqlClientHandler.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\InventoryBook.java
+C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\CustomerSecurity.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\email\examples\MyMessageListener.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\Book.java
+C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\security\MerchantSecurityHandler.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\InventoryBook.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\dao\VertxJdbcClientVerticle.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\api\BookStoreAPI.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\example\core\future\ComposeExample.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\validation\example\DataInitializer.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\validation\example\MainVerticle.java
+C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\security\CustomerSecurityHandler.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\email\examples\LocalSmtpServer.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\email\examples\MailImages.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\Book.java

@@ -18,14 +18,18 @@ i\ogeyingbo\online\bookstore\model\objects\UserPurchaseHistory.class
 i\ogeyingbo\online\bookstore\api\BookStoreAPIPlus$2.class
 i\ogeyingbo\online\bookstore\api\BookStoreAPI$6.class
 vertx\validation\example\DataInitializer.class
+i\ogeyingbo\online\bookstore\model\objects\CustomerSecurity.class
 i\ogeyingbo\online\bookstore\api\BookStoreAPIPlus$5.class
+MerchantSecurityHandler.class
 vertx\validation\example\PostNotFoundException.class
 vertx\validation\example\Post$PostBuilder.class
+i\ogeyingbo\security\CustomerSecurityHandler.class
 vertx\validation\example\PostsHandler.class
 i\ogeyingbo\online\bookstore\model\objects\Genre.class
 i\ogeyingbo\online\bookstore\api\BookStoreAPIPlus$6.class
 i\ogeyingbo\online\bookstore\model\objects\ImageObject.class
 vertx\example\metrics\dashboard\Dashboard$1.class
+i\ogeyingbo\security\MerchSecurityVault.class
 i\ogeyingbo\online\bookstore\model\objects\ShoppingCart.class
 i\ogeyingbo\online\bookstore\model\objects\ObjectBody.class
 vertx\email\examples\SqlClientExample.class
@@ -50,6 +54,7 @@ vertx\validation\example\PostRepository.class
 vertx\example\metrics\dashboard\Dashboard.class
 vertx\email\examples\CircuitBreakerClient.class
 i\ogeyingbo\online\bookstore\dao\VertxPgSqlClientHandler.class
+i\ogeyingbo\security\CustSecurityVault.class
 i\ogeyingbo\online\bookstore\api\BookStoreAPI$4.class
 i\ogeyingbo\online\bookstore\model\ImageObject.class
 i\ogeyingbo\online\bookstore\model\objects\Employee.class
