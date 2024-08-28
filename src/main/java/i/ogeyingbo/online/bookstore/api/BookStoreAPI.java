@@ -199,9 +199,8 @@ public class BookStoreAPI extends AbstractVerticle  {
           router.route().handler(FaviconHandler.create(vertx));
           
           router.route().handler(HSTSHandler.create());
-          router.route().handler(XFrameHandler.create(XFrameHandler.DENY));
-          router.route().handler(CSPHandler.create()
-               .addDirective("default-src", "*.trusted.com"));
+         // router.route().handler(XFrameHandler.create(XFrameHandler.DENY));
+         // router.route().handler(CSPHandler.create().addDirective("default-src", "*.trusted.com"));
           
         // router.get("/fetch/*").consumes("application/json").handler(this::handleServerResources); 
     
@@ -305,7 +304,9 @@ public class BookStoreAPI extends AbstractVerticle  {
             response.putHeader("Cache-control", "no-cache, no-store");
             response.putHeader("Pragma", "no-cache");
             response.putHeader("Expires", "-1");  
-           response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(200).send(result.toString());
+           response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(200).send(result.toString())
+                                    .onSuccess(ar -> System.out.println("Received response with status code" + ar.toString()))
+                                    .onFailure(err -> System.out.println("Something went wrong " + err.getMessage()));
 
        });
            
@@ -474,7 +475,9 @@ private  void   handleTargetPage(RoutingContext routingContext){
               file =  filterRequestPath(file); 
                
                System.out.println(String.format("handleTargetPage:   File served is:  %s", file));
-               response.sendFile("web/" + file);
+               response.sendFile("web/" + file)
+                       .onSuccess(resp -> System.out.println("Received response with status code" + resp.toString()))
+                     .onFailure(err -> System.out.println("Something went wrong " + err.getMessage()));
                
            }else{
                 
@@ -484,7 +487,9 @@ private  void   handleTargetPage(RoutingContext routingContext){
                     response.sendFile("web/" + targetPage); 
                 }else{
                      String error="{\"Result\":\"ERROR\",\"Message\":\"Forbiden URL Path. Url Path does not exist\"}"; 
-                    response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(201).send(error);
+                    response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(201).send(error)
+                            .onSuccess(resp -> System.out.println("Received response with status code" + resp.toString()))
+                     .onFailure(err -> System.out.println("Something went wrong " + err.getMessage()));
                 }
            } 
            
@@ -518,11 +523,15 @@ private  void    handleDataRetrieveJSON(RoutingContext  routingContext){
                }
             
              
-          response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(200).send(jsonObjectResult.toString());
+          response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(200).send(jsonObjectResult.toString())
+                     .onSuccess(resp -> System.out.println("Received response with status code" + resp.toString()))
+                     .onFailure(err -> System.out.println("Something went wrong " + err.getMessage()));
           
         }catch(Exception ex){
             String error="{\"Result\":\"ERROR\",\"Message\":"+ex.getMessage()+"}"; 
-             response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(201).send(error);
+             response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(201).send(error)
+                     .onSuccess(resp -> System.out.println("Received response with status code" + resp.toString()))
+                     .onFailure(err -> System.out.println("Something went wrong " + err.getMessage()));
              ex.printStackTrace();
         }
 }
@@ -604,11 +613,15 @@ private  void    handleDataRetrieveViewJSON(RoutingContext  routingContext){
              response.putHeader("Cache-control", "no-cache, no-store");
             response.putHeader("Pragma", "no-cache");
             response.putHeader("Expires", "-1");  
-           response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(200).send(result.toString());
+           response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(200).send(result.toString())
+                    .onSuccess(resp -> System.out.println("Received response with status code" + resp.toString()))
+                     .onFailure(err -> System.out.println("Something went wrong " + err.getMessage()));
           
         }catch(Exception ex){
             String error="{\"Result\":\"ERROR\",\"Message\":"+ex.getMessage()+"}"; 
-             response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(201).send(error);
+             response.putHeader(HttpHeaders.CONTENT_TYPE.toString(), "application/json").setStatusCode(201).send(error)
+                     .onSuccess(resp -> System.out.println("Received response with status code" + resp.toString()))
+                     .onFailure(err -> System.out.println("Something went wrong " + err.getMessage()));
              ex.printStackTrace();
         }
 }

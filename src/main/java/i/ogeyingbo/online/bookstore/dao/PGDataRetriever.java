@@ -321,7 +321,8 @@ public class PGDataRetriever {
   
   
          
-  public    int     makePayment(String  userName, String inPassword,  String PIN,  BigDecimal  inTotalAmount){
+  public    int     makePayment(String  userName, String inPassword,  String PIN,  BigDecimal  inTotalAmount,
+                                            String  extTransactionRef){
          
            StringBuilder   sbQuery = new StringBuilder(150);
            PreparedStatement    prepStmnt =    null; 
@@ -368,6 +369,167 @@ public class PGDataRetriever {
             } 
            return   resultCount;
        }
+  
+  
+  
+  
+  
+  
+  
+  
+public    int     updateSessionKey(String  inIPAddress,  String  inOldSessionKey,  
+                                                          long  currentTime,   String  inNewSessionKey){
+         
+           StringBuilder   sbQuery = new StringBuilder(150);
+           StringBuilder   updateQuery  =  new  StringBuilder(150);
+           PreparedStatement    prepStmnt =    null; 
+           PreparedStatement    prepStmnt2 =    null; 
+           int   resultCount  =  0;
+           int   resultCount2  =  0;
+           Connection  cron   = null;
+           
+            
+           try { 
+                
+                
+                updateQuery.append(" UPDATE   user_sessions   SET   new_session_key  =   ?,  ");
+                updateQuery.append(" WHERE  ip_address = ?  AND  old_session_key   = ?    ");  
+                updateQuery.append(" AND  expiry_time <=  ?   ");  
+              
+                cron   =  pgDataSource.getConnect();                
+                System.out.println("cron = "+cron);
+                
+                prepStmnt =    cron.prepareStatement(updateQuery.toString());
+                
+                prepStmnt.setString(1, inNewSessionKey);
+                prepStmnt.setString(2, inIPAddress); 
+                prepStmnt.setString(3, inOldSessionKey);                
+                prepStmnt.setLong(4, currentTime);
+                        
+                resultCount = prepStmnt.executeUpdate();
+                
+                
+                sbQuery.append("UPDAE  user_sessions SET  old_session_key  =  new_session_key, ");
+                sbQuery.append(" expiry_time  =  ?    WHERE  ip_address   = ?    ");
+                prepStmnt2 =    cron.prepareStatement(sbQuery.toString());
+                
+                prepStmnt2.setLong(1, currentTime + 3600000L);               
+                prepStmnt2.setString(2, inIPAddress); 
+                        
+                resultCount2 = prepStmnt2.executeUpdate();
+                           
+               // custPool.closePoolConnection(identKey); 
+            } catch (Exception e) {
+                 
+                e.printStackTrace();
+            }  finally{ 
+               updateQuery = null;
+               sbQuery = null;
+                 try{
+                     if(prepStmnt !=  null){
+                        prepStmnt.cancel();
+                        prepStmnt.close();
+                    }
+                     
+                    if(prepStmnt2 !=  null){
+                        prepStmnt2.cancel();
+                        prepStmnt2.close();
+                    }
+                     
+                    if(cron != null){
+                        cron.close();
+                    }
+                } catch (Exception ex) {  
+                    ex.printStackTrace();
+                }
+            } 
+           return   resultCount;
+       }
+  
+  
+  
+  
+  
+  
+  
+ public    int     initializeSession(String  inIPAddress,  String  inSessionKey, 
+                                                  String inPartnerCode,  Long inExpiryTime){
+         
+           StringBuilder   updateQuery1 = new StringBuilder(150);
+           StringBuilder   updateQuery = new StringBuilder(150);
+           PreparedStatement    prepStmnt1 =    null;
+           PreparedStatement    prepStmnt =    null; 
+           int   resultCount  =  0;
+           Connection  cron   = null;
+           
+            
+           try { 
+               
+               
+                updateQuery.append(" UPDATE   user_sessions  SET  old_session_key  = ?,   ");
+                updateQuery.append("  partner_code = ?,   expiry_time = ?  WHERE  ip_address = ?   ");  
+              
+                cron   =  pgDataSource.getConnect();                
+                System.out.println("cron = "+cron);
+                
+                prepStmnt1 =    cron.prepareStatement(updateQuery1.toString());
+                
+                prepStmnt1.setString(1, inSessionKey); 
+                prepStmnt1.setString(2, inPartnerCode);  
+                prepStmnt1.setLong(3, inExpiryTime);
+                prepStmnt1.setString(4, inIPAddress); 
+                        
+                resultCount = prepStmnt1.executeUpdate();
+                
+                
+                if(resultCount == 0){
+                    
+                    updateQuery.append(" INSERT INTO   user_sessions  (ip_address, old_session_key, ");  
+                    updateQuery.append("  partner_code,  expiry_time)  values (?,?,?,?) "); 
+
+                    System.out.println("cron = "+cron);
+
+                    prepStmnt =    cron.prepareStatement(updateQuery.toString());
+
+                    prepStmnt.setString(1, inIPAddress);
+                    prepStmnt.setString(2, inSessionKey);
+                    prepStmnt.setString(3, inPartnerCode); 
+                    prepStmnt.setLong(5, inExpiryTime);
+
+                    resultCount = prepStmnt.executeUpdate();
+                
+                }
+                           
+               // custPool.closePoolConnection(identKey); 
+            } catch (Exception e) {
+                 
+                e.printStackTrace();
+            }  finally{ 
+               updateQuery = null;
+               updateQuery1 = null;
+                 try{
+                     if(prepStmnt !=  null){
+                        prepStmnt.cancel();
+                        prepStmnt.close();
+                    }
+                     
+                      if(prepStmnt1 !=  null){
+                        prepStmnt1.cancel();
+                        prepStmnt1.close();
+                    }
+                     
+                    if(cron != null){
+                        cron.close();
+                    }
+                } catch (Exception ex) {  
+                    ex.printStackTrace();
+                }
+            } 
+           return   resultCount;
+       }
+  
+  
+  
   
   
   

@@ -48,7 +48,12 @@ private  static  VertxPgPoolClientHandler   relDataHandler;
     
     public  static  void main(String[]  args){
         VertxPgPoolClientHandler  relDataHandler  = VertxPgPoolClientHandler.getInstance();
-        relDataHandler.getBookInventory();
+        ArrayList<InventoryBook>   bookList  = relDataHandler.getBookInventory();
+        
+        for(int v = 0; v < bookList.size(); v++){
+           InventoryBook    book  =  bookList.get(v);
+            System.out.println("Authored by: "+book.getAuthor());
+        }
     }
     
      

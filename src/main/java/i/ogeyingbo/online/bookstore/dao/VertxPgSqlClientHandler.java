@@ -43,9 +43,16 @@ private  static  VertxPgSqlClientHandler   relDataHandler;
     }
    
     
-    public  static  void main(String[]  args){
-        VertxPgSqlClientHandler  relDataHandler  = VertxPgSqlClientHandler.getInstance();
-        relDataHandler.getBookInventory();
+    public  static  void main(String[]  args){ 
+        
+        ArrayList<InventoryBook>   bookList  = VertxPgSqlClientHandler.getInstance().getBookInventory();
+        
+        System.out.println("Size: "+bookList.size());
+        
+        for(int v = 0; v < bookList.size(); v++){
+           InventoryBook    book  =  bookList.get(v);
+            System.out.println("Authored by: "+book.getAuthor());
+        }
     }
     
      
@@ -125,9 +132,10 @@ private  static  VertxPgSqlClientHandler   relDataHandler;
                            inventoryBookList.add(inventoryBook);
                            
                         } 
+                       System.out.println("inventoryBookList Size I: "+inventoryBookList.size());
                        JSONObject   jsonObjectResult  = new JSONObject();
                        jsonObjectResult.put("data", inventoryBookList);
-                       System.out.println(jsonObjectResult.toString());
+                      System.out.println(jsonObjectResult.toString());
                        
                     } else {
                       System.out.println("Failure: " + ar.cause().getMessage());
@@ -136,6 +144,7 @@ private  static  VertxPgSqlClientHandler   relDataHandler;
                     // Now close the pool
                     client.close();
                   }); 
+                System.out.println("inventoryBookList Size: "+inventoryBookList.size());
            return   inventoryBookList;
        }
      
