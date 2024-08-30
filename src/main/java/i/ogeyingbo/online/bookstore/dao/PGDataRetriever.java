@@ -377,8 +377,8 @@ public class PGDataRetriever {
   
   
   
-public    int     updateSessionKey(String  inIPAddress,  String  inOldSessionKey,  
-                                                          long  currentTime,   String  inNewSessionKey){
+public    int     updateSessionKey(String  inIPAddress,  String  inOldRequestKey,  
+                                                          long  currentTime,   String  inNewRequestKey){
          
            StringBuilder   sbQuery = new StringBuilder(150);
            StringBuilder   updateQuery  =  new  StringBuilder(150);
@@ -392,8 +392,8 @@ public    int     updateSessionKey(String  inIPAddress,  String  inOldSessionKey
            try { 
                 
                 
-                updateQuery.append(" UPDATE   user_sessions   SET   new_session_key  =   ?,  ");
-                updateQuery.append(" WHERE  ip_address = ?  AND  old_session_key   = ?    ");  
+                updateQuery.append(" UPDATE   user_sessions   SET   new_request_key  =   ?,  ");
+                updateQuery.append(" WHERE  ip_address = ?  AND  old_request_key   = ?    ");  
                 updateQuery.append(" AND  expiry_time <=  ?   ");  
               
                 cron   =  pgDataSource.getConnect();                
@@ -401,15 +401,15 @@ public    int     updateSessionKey(String  inIPAddress,  String  inOldSessionKey
                 
                 prepStmnt =    cron.prepareStatement(updateQuery.toString());
                 
-                prepStmnt.setString(1, inNewSessionKey);
+                prepStmnt.setString(1, inNewRequestKey);
                 prepStmnt.setString(2, inIPAddress); 
-                prepStmnt.setString(3, inOldSessionKey);                
+                prepStmnt.setString(3, inOldRequestKey);                
                 prepStmnt.setLong(4, currentTime);
                         
                 resultCount = prepStmnt.executeUpdate();
                 
                 
-                sbQuery.append("UPDAE  user_sessions SET  old_session_key  =  new_session_key, ");
+                sbQuery.append("UPDAE  user_sessions SET  old_request_key  =  new_request_key, ");
                 sbQuery.append(" expiry_time  =  ?    WHERE  ip_address   = ?    ");
                 prepStmnt2 =    cron.prepareStatement(sbQuery.toString());
                 
@@ -452,11 +452,12 @@ public    int     updateSessionKey(String  inIPAddress,  String  inOldSessionKey
   
   
   
- public    int     initializeSession(String  inIPAddress,  String  inSessionKey, 
-                                                  String inPartnerCode,  Long inExpiryTime){
+ public    int     initializeSession(String  inIPAddress,  String  inRequestKey, String  inProfileTypeCode,
+                                               String  inCustomerRef,   String inPartnerCode,  long inCurrentTime,
+                                                   String  inSchemeCode,  String inRequestChannel,  String  inRequestUserType){
          
-           StringBuilder   updateQuery1 = new StringBuilder(150);
-           StringBuilder   updateQuery = new StringBuilder(150);
+           StringBuilder   updateQuery1 = new StringBuilder(200);
+           StringBuilder   updateQuery = new StringBuilder(200);
            PreparedStatement    prepStmnt1 =    null;
            PreparedStatement    prepStmnt =    null; 
            int   resultCount  =  0;
@@ -466,35 +467,49 @@ public    int     updateSessionKey(String  inIPAddress,  String  inOldSessionKey
            try { 
                
                
-                updateQuery.append(" UPDATE   user_sessions  SET  old_session_key  = ?,   ");
-                updateQuery.append("  partner_code = ?,   expiry_time = ?  WHERE  ip_address = ?   ");  
+                updateQuery.append(" UPDATE   user_sessions  SET   ip_address = ?,  old_request_key  = ?,  ");
+                updateQuery.append("  expiry_time = ?  WHERE   customer_ref  = ?    ");  
+                updateQuery.append("    AND  scheme_code  = ?  AND  partner_code  = ?");  
               
                 cron   =  pgDataSource.getConnect();                
                 System.out.println("cron = "+cron);
                 
                 prepStmnt1 =    cron.prepareStatement(updateQuery1.toString());
                 
-                prepStmnt1.setString(1, inSessionKey); 
-                prepStmnt1.setString(2, inPartnerCode);  
-                prepStmnt1.setLong(3, inExpiryTime);
-                prepStmnt1.setString(4, inIPAddress); 
+                prepStmnt1.setString(1, inIPAddress);
+                prepStmnt1.setString(2, inRequestKey); 
+                prepStmnt1.setLong(3, inCurrentTime + 3600000L);
+                prepStmnt1.setString(4, inCustomerRef); 
+                prepStmnt1.setString(5, inSchemeCode); 
+                prepStmnt1.setString(6, inPartnerCode);  
+                
+                
                         
                 resultCount = prepStmnt1.executeUpdate();
                 
                 
                 if(resultCount == 0){
                     
-                    updateQuery.append(" INSERT INTO   user_sessions  (ip_address, old_session_key, ");  
-                    updateQuery.append("  partner_code,  expiry_time)  values (?,?,?,?) "); 
+                    updateQuery.append(" INSERT INTO   user_sessions  (ip_address,  profile_type_code, "); 
+                    updateQuery.append(" customer_ref, partner_code,  scheme_code,  request_user_type, "); 
+                    updateQuery.append(" request_channel, old_request_key, expiry_time, is_active_session,  "); 
+                    updateQuery.append(" last_login_date,  last_login_time) ");
+                    updateQuery.append(" values (?,?,?,?,?,?,?,?,?,?, current_date, current_time) "); 
 
                     System.out.println("cron = "+cron);
 
                     prepStmnt =    cron.prepareStatement(updateQuery.toString());
 
                     prepStmnt.setString(1, inIPAddress);
-                    prepStmnt.setString(2, inSessionKey);
-                    prepStmnt.setString(3, inPartnerCode); 
-                    prepStmnt.setLong(5, inExpiryTime);
+                    prepStmnt.setString(2, inProfileTypeCode);
+                    prepStmnt.setString(3, inCustomerRef);
+                    prepStmnt.setString(4, inPartnerCode);
+                    prepStmnt.setString(5, inSchemeCode);
+                    prepStmnt.setString(6, inRequestUserType);
+                    prepStmnt.setString(7, inRequestChannel);
+                    prepStmnt.setString(8, inRequestKey);
+                    prepStmnt.setLong(9, inCurrentTime + 3600000L);
+                    prepStmnt.setBoolean(10, true);  
 
                     resultCount = prepStmnt.executeUpdate();
                 
