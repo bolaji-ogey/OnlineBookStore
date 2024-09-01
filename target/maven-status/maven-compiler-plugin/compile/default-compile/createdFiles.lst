@@ -1,5 +1,6 @@
 vertx\email\examples\MailHeaders.class
 i\ogeyingbo\online\bookstore\model\objects\Payment.class
+i\ogeyingbo\enterprise\wallet\entities\OperationalSwiftWallet.class
 i\ogeyingbo\online\bookstore\model\objects\UserPurchase.class
 vertx\validation\example\CreatePostCommand.class
 i\ogeyingbo\online\bookstore\model\InventoryBook.class
@@ -10,6 +11,7 @@ i\ogeyingbo\online\bookstore\model\objects\OnlineBookStore.class
 i\ogeyingbo\online\bookstore\api\BookStoreAPI$1.class
 i\ogeyingbo\online\bookstore\api\BookStoreAPI$5.class
 i\ogeyingbo\online\bookstore\dao\VertxPgPoolClientHandler.class
+i\ogeyingbo\enterprise\wallet\entities\AbstractEntity.class
 i\ogeyingbo\online\bookstore\dao\PGDataRetriever.class
 i\ogeyingbo\onlinebookstore\SqlClientDataHandler.class
 vertx\validation\example\Post.class
@@ -18,12 +20,14 @@ i\ogeyingbo\online\bookstore\model\objects\UserPurchaseHistory.class
 i\ogeyingbo\online\bookstore\api\BookStoreAPIPlus$2.class
 i\ogeyingbo\online\bookstore\api\BookStoreAPI$6.class
 vertx\validation\example\DataInitializer.class
+i\ogeyingbo\enterprise\wallet\entities\AgentSwiftWallet.class
 i\ogeyingbo\online\bookstore\model\objects\CustomerSecurity.class
 i\ogeyingbo\online\bookstore\api\BookStoreAPIPlus$5.class
 MerchantSecurityHandler.class
 vertx\validation\example\PostNotFoundException.class
 vertx\validation\example\Post$PostBuilder.class
 i\ogeyingbo\security\CustomerSecurityHandler.class
+i\ogeyingbo\enterprise\wallet\entities\MerchantSwiftWallet.class
 vertx\validation\example\PostsHandler.class
 i\ogeyingbo\online\bookstore\model\objects\Genre.class
 i\ogeyingbo\online\bookstore\api\BookStoreAPIPlus$6.class
@@ -35,11 +39,13 @@ i\ogeyingbo\security\MerchSecurityVault.class
 i\ogeyingbo\online\bookstore\model\objects\ShoppingCart.class
 i\ogeyingbo\online\bookstore\model\objects\ObjectBody.class
 i\ogeyingbo\enterprise\trxn\entities\TransactionRegister.class
+i\ogeyingbo\enterprise\wallet\entities\CustomerSwiftWallet.class
 vertx\email\examples\SqlClientExample.class
 i\ogeyingbo\online\bookstore\model\objects\Whisky.class
 i\ogeyingbo\enterprise\trxn\entities\Journal.class
 vertx\validation\example\MainVerticle.class
 i\ogeyingbo\online\bookstore\model\objects\InventoryBook.class
+i\ogeyingbo\enterprise\wallet\entities\PosSwiftWallet.class
 i\ogeyingbo\online\bookstore\api\BookStoreAPIPlus$4.class
 vertx\email\examples\MailLocalHost.class
 i\ogeyingbo\online\bookstore\model\objects\Employee$EmployeeBuilder.class

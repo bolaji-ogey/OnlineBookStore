@@ -2,10 +2,13 @@ C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\enterprise\trxn\entities\AbstractEntity.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\email\examples\MailLocalHost.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\Whisky.java
+C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\enterprise\wallet\entities\AbstractEntity.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\ObjectBody.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\Genre.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\enterprise\trxn\entities\TransactionRegister.java
+C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\enterprise\wallet\entities\MerchantSwiftWallet.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\Employee.java
+C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\enterprise\wallet\entities\AgentSwiftWallet.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\enterprise\trxn\entities\JournalLine.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\ResultBody.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\dao\PGDataSource.java
@@ -19,6 +22,7 @@ C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\dao\V
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\api\BookStoreAPI.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\validation\example\DataInitializer.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\email\examples\LocalSmtpServer.java
+C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\enterprise\wallet\entities\OperationalSwiftWallet.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\email\examples\MailImages.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\Book.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\validation\example\PostNotFoundException.java
@@ -46,6 +50,8 @@ C:\DBConnectors\OnlineBookStore\src\main\java\vertx\email\examples\MyMessageList
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\Book.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\security\MerchantSecurityHandler.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\online\bookstore\model\objects\InventoryBook.java
+C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\enterprise\wallet\entities\PosSwiftWallet.java
+C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\enterprise\wallet\entities\CustomerSwiftWallet.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\example\core\future\ComposeExample.java
 C:\DBConnectors\OnlineBookStore\src\main\java\vertx\validation\example\MainVerticle.java
 C:\DBConnectors\OnlineBookStore\src\main\java\i\ogeyingbo\security\CustomerSecurityHandler.java
