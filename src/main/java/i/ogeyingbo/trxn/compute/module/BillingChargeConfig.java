@@ -61,7 +61,7 @@ public class BillingChargeConfig {
         BigDecimal    bankCommission  =  computeAndGetBankCommission(totalCharge).getChargValue();
         BigDecimal    partnerCommission  =  computeAndGetPartnerCommission(totalCharge).getChargValue();
         
-        BigDecimal    loyaltyBonus  =  computeAndGetPartnerCommission(totalCharge).getChargValue();
+        BigDecimal    loyaltyBonus  =  computeAndGetLoyaltyBonus(totalCharge).getChargValue();
         
         trxnCharges.setTotalCharges(totalCharge);
         trxnCharges.setTaxCharge(taxCharge);
@@ -193,7 +193,34 @@ public class BillingChargeConfig {
       
       
       
-      
+     
+
+   
+ private  TrxnChargeObject   computeAndGetLoyaltyBonus(BigDecimal   inTotalTrxnCharge){
+      TrxnChargeObject trxnChargeObject =  new  TrxnChargeObject();
+       /***  
+        BigDecimal computedPartnerCommission = null;
+        BigDecimal  totalChargeValue  =   inTotalTrxnCharge;  
+       
+            // COmpute tax Charge
+             if(partnerCommissionPercentageOrFixedValue.compareTo(new BigDecimal(0.00)) == 1){
+                 if(usePercentageForPartnerCommission == true){
+                     computedPartnerCommission  =  totalChargeValue.multiply(partnerCommissionPercentageOrFixedValue.divide(new BigDecimal(100.00)));
+                     if((computedPartnerCommission.compareTo(partnerCommissionShareCap)  == 1) || (partnerCommissionShareCap.compareTo(new BigDecimal(0.00)) == 0)){
+                         trxnChargeObject.setChargValue(partnerCommissionShareCap);
+                     }else{   trxnChargeObject.setChargValue(computedPartnerCommission);  }
+                 }else{
+                     if(partnerCommissionPercentageOrFixedValue.compareTo(partnerCommissionShareCap)  == 1) {
+                           trxnChargeObject.setChargValue(partnerCommissionShareCap);
+                     }else{   trxnChargeObject.setChargValue(partnerCommissionPercentageOrFixedValue);  }                    
+                 }
+             } 
+            trxnChargeObject.setIsComputed(true); 
+            ***/
+      return   trxnChargeObject;      
+    }
+
+ 
       
     
      
