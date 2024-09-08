@@ -59,9 +59,45 @@ public class Partner {
     
     
     
+     
+    
+    
+    
+    
+    
+    public  long   getId(){
+       return    id;
+    }
     
     public  String   getPartnerCode(){
-        return  partnerCode;
+       return    partnerCode;
     }
+    
+    public  String   getPartnerName(){
+       return    partnerName;
+    }
+    
+    public  String   getPartnerPoolBankCode(){
+       return    partnerPoolBankCode;
+    }
+    
+    public  String   getPartnerPoolBank(){
+       return    partnerPoolBank;
+    }
+    
+    public  String   getPartnerPoolAccountNumber(){
+       return    partnerPoolAccountNumber;
+    }
+    
+    public  String   getPartnerRcNumber(){
+       return    partnerRcNumber;
+    }
+    
+    
+    public  boolean   getIsActive(){
+        return   isActive;
+    }
+    
+    
     
 }

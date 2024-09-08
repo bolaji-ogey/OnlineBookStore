@@ -19,8 +19,9 @@ public class Scheme {
    private  boolean  useSchemeKey  = false;
    private  String   poolBankCode;
    
-   private  BigDecimal   poolAccountBalance = new BigDecimal(0.00);
-   private  String       poolAccountBalancePlain;
+   private  String       poolAccountNumber;
+   private  String       poolAccountBalance;
+   private  BigDecimal       poolAccountBalancePlain = new BigDecimal(0.00);
    
    private  String       schemeEncryKey;
    private  String       lastTrxnBankPostingDate;   
@@ -62,13 +63,15 @@ public class Scheme {
         poolBankCode = inPoolBankCode;
     }
     
-    
+    public  void   setPoolAccountNumber(String   inPoolAccountNumber){
+        poolAccountNumber = inPoolAccountNumber;
+    }
    
-    public  void   setPoolAccountBalance(BigDecimal    inPoolAccountBalance){
+    public  void   setPoolAccountBalance(String    inPoolAccountBalance){
         poolAccountBalance = inPoolAccountBalance;
     }
     
-    public  void   setPoolAccountBalancePlain(String   inPoolAccountBalancePlain){
+    public  void   setPoolAccountBalancePlain(BigDecimal  inPoolAccountBalancePlain){
         poolAccountBalancePlain = inPoolAccountBalancePlain;
     }
     
@@ -152,12 +155,16 @@ public class Scheme {
     }
     
     
+    public  String   getPoolAccountNumber(){
+        return  poolAccountNumber;
+    }
+    
    
-    public  BigDecimal   getPoolAccountBalance(){
+    public  String   getPoolAccountBalance(){
         return  poolAccountBalance;
     }
     
-    public  String   getPoolAccountBalancePlain(){
+    public   BigDecimal  getPoolAccountBalancePlain(){
         return  poolAccountBalancePlain;
     }
     

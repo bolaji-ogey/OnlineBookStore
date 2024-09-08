@@ -133,8 +133,8 @@ public class BillingConfigListDao {
                 e.printStackTrace();
             }  finally{ 
                sbQuery = null;
-               stmnt.close();  rs.close();
-                stmnt = null;   rs = null;
+               try{  stmnt.close();  rs.close();  }catch(Exception ex){  ex.printStackTrace();  }
+               stmnt = null;   rs = null;
             } 
            return   billingConfigs;
        }
@@ -151,12 +151,12 @@ public class BillingConfigListDao {
            ArrayList<Scheme>   schemes =   new ArrayList<>();
             
            try {  
-            
+                
                 sbQuery.append(" SELECT   id,  scheme_name,  scheme_code, era_id,  use_scheme_key,  pool_bank_code, ");
                 sbQuery.append("  pool_account_number, pool_account_balance, pool_account_balance_plain,    ");
-                sbQuery.append(" use_percentage, percentage_or_fixedvalue, trxn_charge_cap, date_configured,  use_percentage_for_tax,  "); 
-                sbQuery.append(" tax_percentage_or_fixedvalue,  tax_charge_cap, use_percentage_for_bank_commission,  ");  
-                sbQuery.append(" FROM  schemes  ");  
+                sbQuery.append(" scheme_encry_key, last_trxn_bank_posting_date, last_trxn_bank_posting_time,  "); 
+                sbQuery.append(" scheme_create_date, api_key, secret_key,  call_back_url,  is_active,  promotions,   ");  
+                sbQuery.append(" make_scheme_incur_customer_charges  FROM  schemes  ");  
                
                 stmnt =    con.createStatement();
                 rs = stmnt.executeQuery(String.format(sbQuery.toString()));
@@ -169,9 +169,20 @@ public class BillingConfigListDao {
                     scheme.setId(rs.getLong("id"));
                     scheme.setSchemeName(rs.getString("scheme_name"));
                     scheme.setSchemeCode(rs.getString("scheme_code"));
-                    scheme.setIsActive(rs.getBoolean("is_active"));
-                    scheme.setServiceId(rs.getString("service_id"));
-                    scheme.setServiceName(rs.getString("service_name")); 
+                    scheme.setEraId(rs.getInt("era_id"));
+                    scheme.setUseSchemeKey(rs.getBoolean("use_scheme_key"));
+                    scheme.setPoolBankCode(rs.getString("pool_bank_code"));
+                    scheme.setPoolAccountNumber(rs.getString("pool_account_number")); 
+                    
+                    scheme.setPoolAccountBalance(rs.getString("pool_account_balance"));
+                    scheme.setPoolAccountBalancePlain(rs.getBigDecimal("pool_account_balance_plain"));
+                    
+                    scheme.setSchemeEncryKey(rs.getString("scheme_encry_key")); 
+                    scheme.setCallBackUrl(rs.getString("call_back_url")); 
+                    scheme.setIsActive(rs.getBoolean("is_active")); 
+                    
+                    scheme.setPromotions(rs.getInt("promotions")); 
+                    scheme.setMakeSchemeIncurCustomerCharges(rs.getBoolean("make_scheme_incur_customer_charges")); 
                      
                     schemes.add(scheme); 
                 } 
@@ -179,7 +190,7 @@ public class BillingConfigListDao {
                 e.printStackTrace();
             }  finally{ 
                sbQuery = null;
-               stmnt.close();  rs.close();
+               try{  stmnt.close();  rs.close();  }catch(Exception ex){  ex.printStackTrace();  }
                 stmnt = null;   rs = null;
             } 
            return   schemes; 
@@ -228,7 +239,7 @@ public class BillingConfigListDao {
                 e.printStackTrace();
             }  finally{ 
                sbQuery = null;
-               stmnt.close();  rs.close();
+               try{  stmnt.close();  rs.close();  }catch(Exception ex){  ex.printStackTrace();  }
                 stmnt = null;   rs = null;
             } 
            return   partners; 
