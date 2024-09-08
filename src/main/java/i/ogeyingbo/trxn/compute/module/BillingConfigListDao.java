@@ -167,8 +167,8 @@ public class BillingConfigListDao {
                     Scheme   scheme  =  new  Scheme();
                     
                     scheme.setId(rs.getLong("id"));
-                    scheme.setSchemeName(rs.getString("billing_code"));
-                    scheme.setSchemeCode(rs.getString("partner_code"));
+                    scheme.setSchemeName(rs.getString("scheme_name"));
+                    scheme.setSchemeCode(rs.getString("scheme_code"));
                     scheme.setIsActive(rs.getBoolean("is_active"));
                     scheme.setServiceId(rs.getString("service_id"));
                     scheme.setServiceName(rs.getString("service_name")); 
@@ -199,11 +199,10 @@ public class BillingConfigListDao {
             
            try {  
             
-                sbQuery.append(" SELECT   id,  scheme_name,  scheme_code, era_id,  use_scheme_key,  pool_bank_code, ");
-                sbQuery.append("  pool_account_number, pool_account_balance, pool_account_balance_plain,    ");
-                sbQuery.append(" use_percentage, percentage_or_fixedvalue, trxn_charge_cap, date_configured,  use_percentage_for_tax,  "); 
-                sbQuery.append(" tax_percentage_or_fixedvalue,  tax_charge_cap, use_percentage_for_bank_commission,  ");  
-                sbQuery.append(" FROM  schemes  ");  
+                sbQuery.append(" SELECT   id,  partner_code,  partner_name, partner_pool_bank_code, ");
+                sbQuery.append("  partner_pool_bank, pool_accpartner_pool_account_number,  ount_balance,  ");
+                sbQuery.append(" partner_rc_number,   is_active,  ");    
+                sbQuery.append(" FROM  partners  ");  
                
                 stmnt =    con.createStatement();
                 rs = stmnt.executeQuery(String.format(sbQuery.toString()));
@@ -212,14 +211,17 @@ public class BillingConfigListDao {
                 while (rs.next()) {
                     
                     Partner   partner  =  new  Partner();
-                    
-                    partner.setId(rs.getLong("id"));
-                    partner.setSchemeName(rs.getString("billing_code"));
-                    partner.setSchemeCode(rs.getString("partner_code"));
-                    partner.setIsActive(rs.getBoolean("is_active"));
-                    partner.setServiceId(rs.getString("service_id"));
-                    partner.setServiceName(rs.getString("service_name")); 
                      
+                    partner.setId(rs.getLong("id"));
+                    partner.setPartnerCode(rs.getString("partner_code"));
+                    partner.setPartnerName(rs.getString("partner_name"));
+                    partner.setPartnerPoolBankCode(rs.getString("partner_pool_bank_code"));
+                    
+                    partner.setPartnerPoolBank(rs.getString("partner_pool_bank"));
+                    partner.setPartnerPoolAccountNumber(rs.getString("partner_pool_account_number"));
+                    partner.setPartnerRcNumber(rs.getString("partner_rc_number"));
+                    partner.setIsActive(rs.getBoolean("is_active"));
+                    
                     partners.add(partner); 
                 } 
             } catch (Exception e) {

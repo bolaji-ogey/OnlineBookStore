@@ -10,7 +10,54 @@ package i.ogeyingbo.trxn.compute.module;
  */
 public class Partner {
     
+    private   long   id = -1;
     private   String  partnerCode;
+    private   String  partnerName;
+    
+    private   String  partnerPoolBankCode;
+    private   String  partnerPoolBank;
+    private   String  partnerPoolAccountNumber;
+    
+    private   String  partnerRcNumber;
+    
+    private  boolean  isActive  = false;
+    
+    
+    
+    public  void   setId(long  inId){
+        id = inId;
+    }
+    
+    public  void   setPartnerCode(String  inPartnerCode){
+        partnerCode = inPartnerCode;
+    }
+    
+    public  void   setPartnerName(String  inPartnerName){
+        partnerName = inPartnerName;
+    }
+    
+    public  void   setPartnerPoolBankCode(String  inPartnerPoolBankCode){
+        partnerPoolBankCode = inPartnerPoolBankCode;
+    }
+    
+    public  void   setPartnerPoolBank(String  inPartnerPoolBank){
+        partnerPoolBank = inPartnerPoolBank;
+    }
+    
+    public  void   setPartnerPoolAccountNumber(String  inPartnerPoolAccountNumber){
+        partnerPoolAccountNumber = inPartnerPoolAccountNumber;
+    }
+    
+    public  void   setPartnerRcNumber(String  inPartnerRcNumber){
+        partnerRcNumber = inPartnerRcNumber;
+    }
+    
+    
+    public  void   setIsActive(boolean  inIsActive){
+        isActive = inIsActive;
+    }
+    
+    
     
     
     public  String   getPartnerCode(){
