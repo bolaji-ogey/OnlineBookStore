@@ -45,6 +45,10 @@ public class BillingChargeConfig {
     private   BigDecimal  partnerCommissionPercentageOrFixedValue =  new  BigDecimal(0.00);
     private   BigDecimal  partnerCommissionShareCap =  new  BigDecimal(0.00);
     
+    private   boolean     useSaveInvestPercentage  =  false; 
+    private   BigDecimal  saveInvestPercentageOrFixedValue =  new  BigDecimal(0.00);
+    private   BigDecimal  saveInvestCap =  new  BigDecimal(0.00);
+    
     private   BigDecimal  bonusShare =  new  BigDecimal(0.00);
     private   boolean    bonusAccelerate  =  false; 
      
@@ -54,25 +58,64 @@ public class BillingChargeConfig {
     
     public  TrxnCharge    computeAndGetTrxnCharges(BigDecimal   inTrxnAmount){
         
-        TrxnCharge   trxnCharges   = new  TrxnCharge();
+        TrxnCharge   trxnCharges   = null;
+          
+        if(inTrxnAmount.compareTo(lowerLimitValue) == 1   &&   inTrxnAmount.compareTo(upperLimitValue) <=  0){
+                 trxnCharges   = new  TrxnCharge();
+                 
+                /***
+                BigDecimal    totalCharge  =  computeAndGetTotalTrxnCharge(inTrxnAmount).getChargValue();
+                BigDecimal    taxCharge  =  computeAndGetTaxCharge(totalCharge).getChargValue();
+                BigDecimal    bankCommission  =  computeAndGetBankCommission(totalCharge).getChargValue();
+                BigDecimal    partnerCommission  =  computeAndGetPartnerCommission(totalCharge).getChargValue();
+
+                BigDecimal    loyaltyBonus  =  computeAndGetLoyaltyBonus(totalCharge).getChargValue();
+                **/
+
+                TrxnChargeObject    totalTrxnCharge  =  computeAndGetTotalTrxnCharge(inTrxnAmount);
+                TrxnChargeObject    taxCharge  =  computeAndGetTaxCharge(totalTrxnCharge.getChargValue());
+                TrxnChargeObject    bankComm  =  computeAndGetBankCommission(totalTrxnCharge.getChargValue());
+                TrxnChargeObject    partnerCommission  =  computeAndGetPartnerCommission(totalTrxnCharge.getChargValue());
+
+                TrxnChargeObject    loyaltyBonus  =  computeAndGetLoyaltyBonus(totalTrxnCharge.getChargValue());
                 
-        BigDecimal    totalCharge  =  computeAndGetTotalTrxnCharge(inTrxnAmount).getChargValue();
-        BigDecimal    taxCharge  =  computeAndGetTaxCharge(totalCharge).getChargValue();
-        BigDecimal    bankCommission  =  computeAndGetBankCommission(totalCharge).getChargValue();
-        BigDecimal    partnerCommission  =  computeAndGetPartnerCommission(totalCharge).getChargValue();
-        
-        BigDecimal    loyaltyBonus  =  computeAndGetLoyaltyBonus(totalCharge).getChargValue();
-        
-        trxnCharges.setTotalCharges(totalCharge);
-        trxnCharges.setTaxCharge(taxCharge);
-        trxnCharges.setBankCommission(bankCommission);
-        trxnCharges.setPartnerCommission(partnerCommission);
-        
-        trxnCharges.setLoyaltyBonus(loyaltyBonus);
-        
-        trxnCharges.setIncome(totalCharge.subtract(taxCharge.add(bankCommission)
-                                             .add(partnerCommission).add(loyaltyBonus)));
-        
+                TrxnChargeObject    saveInvestAmount  =  computeAndGetSaveInvestPerSpend(inTrxnAmount);
+
+
+
+                trxnCharges.setTotalCharges(totalTrxnCharge.getChargValue());
+                trxnCharges.setTaxCharge(taxCharge.getChargValue());
+                trxnCharges.setBankCommission(bankComm.getChargValue());
+                trxnCharges.setPartnerCommission(partnerCommission.getChargValue());
+                
+                trxnCharges.setSaveInvestPerSpend(saveInvestAmount.getChargValue());
+
+                TrxnChargeObject    income   =   computeAndGetIncome(trxnCharges);
+                trxnCharges.setIncome(income.getIncome());
+                
+                BigDecimal  totalToDebit  = trxnCharges.computeTotalToDebit();
+                
+                System.out.println("Total to DEBIT  -->>> "+totalToDebit);
+
+               // trxnCharges.setLoyaltyBonus(loyaltyBonus);
+
+               // trxnCharges  =  computeAndGetIncome(trxnCharges);
+                System.out.println("Is Income Computed = "+income.getIsComputed()+"\n\n");
+
+                  System.out.println("Is Total Trxn Charges Computed = "+totalTrxnCharge.getIsComputed());
+                System.out.println("Is Tax Charge Computed = "+taxCharge.getIsComputed());
+                System.out.println("Is Bank Commission Charges Computed = "+bankComm.getIsComputed());
+                 System.out.println("Is Partner Commission Computed = "+partnerCommission.getIsComputed());
+
+                  System.out.println("Is Income Computed = "+partnerCommission.getIsComputed());
+
+                 /***
+                trxnCharges.setIncome(totalCharge.subtract(taxCharge.add(bankCommission)
+                                                     .add(partnerCommission).add(loyaltyBonus)));
+                **/
+        }else{
+            System.out.println("Cannot compute:  Transaction value out of range >>>> "+inTrxnAmount);
+        }
         return   trxnCharges;
     }
     
@@ -87,6 +130,9 @@ public class BillingChargeConfig {
         BigDecimal  totalChargeValue  =  new BigDecimal(0.00); 
         
         TrxnChargeObject trxnChargeObject =  new  TrxnChargeObject();
+        trxnChargeObject.setIsComputed(false); 
+        
+        System.out.println("trxnAmount:  "+trxnAmount);
         
         // Confirm Transaction amount is within range
          if((trxnAmount.compareTo(lowerLimitValue) == 1) && (trxnAmount .compareTo(upperLimitValue) == -1)){
@@ -94,17 +140,23 @@ public class BillingChargeConfig {
              // COmpute total Charges
               if(percentageOrFixedValue.compareTo(new BigDecimal(0.00)) == 1){
                   if(usePercentage == true){
+                      System.out.println("Got Here");
                       totalChargeValue  =  trxnAmount.multiply(percentageOrFixedValue.divide(new BigDecimal(100.00)));
-                      if((totalChargeValue.compareTo(trxnChargeCap)  == 1) || (trxnChargeCap.compareTo(new BigDecimal(0.00)) == 0)){
+                      System.out.println("totalChargeValue:  "+totalChargeValue);
+                     // if((totalChargeValue.compareTo(trxnChargeCap)  == 1) && (!(trxnChargeCap.compareTo(new BigDecimal(0.00)) == 0))){
+                     if(totalChargeValue.compareTo(trxnChargeCap)  == 1) {
+                          System.out.println("Got CAP Here");
                           trxnChargeObject.setChargValue(trxnChargeCap);
                       }else{   trxnChargeObject.setChargValue(totalChargeValue);  }
-                  }else{
+                  }else if(usePercentage == false){
+                       System.out.println("Are we here");
                       if(percentageOrFixedValue.compareTo(trxnChargeCap)  == 1) {
                             trxnChargeObject.setChargValue(trxnChargeCap);
                       }else{   trxnChargeObject.setChargValue(percentageOrFixedValue);  }                    
                   }
+               trxnChargeObject.setIsComputed(true);
               } 
-            trxnChargeObject.setIsComputed(true);
+            
          } 
       return   trxnChargeObject;      
     }
@@ -119,20 +171,24 @@ public class BillingChargeConfig {
         BigDecimal  totalChargeValue  =   inTotalTrxnCharge; 
          
         TrxnChargeObject trxnChargeObject =  new  TrxnChargeObject();
+        trxnChargeObject.setIsComputed(false); 
             // COmpute tax Charge
              if(taxPercentageOrFixedValue.compareTo(new BigDecimal(0.00)) == 1){
                  if(usePercentageForTax == true){
                      computedTaxCharge  =  totalChargeValue.multiply(taxPercentageOrFixedValue.divide(new BigDecimal(100.00)));
-                     if((computedTaxCharge.compareTo(taxChargeCap)  == 1) || (taxChargeCap.compareTo(new BigDecimal(0.00)) == 0)){
+                     if((computedTaxCharge.compareTo(taxChargeCap)  == 1) && (taxChargeCap.compareTo(new BigDecimal(0.00)) == 1)){
+                         System.out.println("Got CAP Here");
                          trxnChargeObject.setChargValue(taxChargeCap);
                      }else{   trxnChargeObject.setChargValue(computedTaxCharge);  }
-                 }else{
-                     if(taxPercentageOrFixedValue.compareTo(taxChargeCap)  == 1) {
+                 }else if(usePercentageForTax == false){
+                     if((taxPercentageOrFixedValue.compareTo(taxChargeCap)  == 1) && (taxChargeCap.compareTo(new BigDecimal(0.00)) == 1)){
                            trxnChargeObject.setChargValue(taxChargeCap);
                      }else{   trxnChargeObject.setChargValue(taxPercentageOrFixedValue);  }                    
                  }
+                trxnChargeObject.setIsComputed(true);
              } 
-            trxnChargeObject.setIsComputed(true); 
+            // System.out.println(taxPercentageOrFixedValue);
+             
       return   trxnChargeObject;      
     }
      
@@ -145,20 +201,21 @@ public class BillingChargeConfig {
         BigDecimal  totalChargeValue  =   inTotalTrxnCharge; 
          
         TrxnChargeObject trxnChargeObject =  new  TrxnChargeObject();
+        trxnChargeObject.setIsComputed(false); 
             // COmpute tax Charge
              if(bankCommissionPercentageOrFixedValue.compareTo(new BigDecimal(0.00)) == 1){
                  if(usePercentageForBankCommission == true){
                      computedBankCommission  =  totalChargeValue.multiply(bankCommissionPercentageOrFixedValue.divide(new BigDecimal(100.00)));
-                     if((computedBankCommission.compareTo(bankCommissionShareCap)  == 1) || (bankCommissionShareCap.compareTo(new BigDecimal(0.00)) == 0)){
+                     if((computedBankCommission.compareTo(bankCommissionShareCap)  == 1)  && (bankCommissionShareCap.compareTo(new BigDecimal(0.00)) == 1)){
                          trxnChargeObject.setChargValue(bankCommissionShareCap);
                      }else{   trxnChargeObject.setChargValue(computedBankCommission);  }
-                 }else{
-                     if(bankCommissionPercentageOrFixedValue.compareTo(bankCommissionShareCap)  == 1) {
+                 }else if(usePercentageForBankCommission == false){
+                     if((bankCommissionPercentageOrFixedValue.compareTo(bankCommissionShareCap)  == 1)  && (bankCommissionShareCap.compareTo(new BigDecimal(0.00)) == 1)){
                            trxnChargeObject.setChargValue(bankCommissionShareCap);
                      }else{   trxnChargeObject.setChargValue(bankCommissionPercentageOrFixedValue);  }                    
                  }
-             } 
-            trxnChargeObject.setIsComputed(true); 
+                 trxnChargeObject.setIsComputed(true);
+             }  
       return   trxnChargeObject;      
     }
      
@@ -174,20 +231,22 @@ public class BillingChargeConfig {
         BigDecimal  totalChargeValue  =   inTotalTrxnCharge; 
          
         TrxnChargeObject trxnChargeObject =  new  TrxnChargeObject();
+        trxnChargeObject.setIsComputed(false); 
+        
             // COmpute tax Charge
              if(partnerCommissionPercentageOrFixedValue.compareTo(new BigDecimal(0.00)) == 1){
                  if(usePercentageForPartnerCommission == true){
                      computedPartnerCommission  =  totalChargeValue.multiply(partnerCommissionPercentageOrFixedValue.divide(new BigDecimal(100.00)));
-                     if((computedPartnerCommission.compareTo(partnerCommissionShareCap)  == 1) || (partnerCommissionShareCap.compareTo(new BigDecimal(0.00)) == 0)){
+                     if((computedPartnerCommission.compareTo(partnerCommissionShareCap)  == 1) && (partnerCommissionShareCap.compareTo(new BigDecimal(0.00)) == 1)){
                          trxnChargeObject.setChargValue(partnerCommissionShareCap);
                      }else{   trxnChargeObject.setChargValue(computedPartnerCommission);  }
-                 }else{
-                     if(partnerCommissionPercentageOrFixedValue.compareTo(partnerCommissionShareCap)  == 1) {
+                 }else if(usePercentageForPartnerCommission == false){
+                     if((partnerCommissionPercentageOrFixedValue.compareTo(partnerCommissionShareCap)  == 1) && (partnerCommissionShareCap.compareTo(new BigDecimal(0.00)) == 1)){
                            trxnChargeObject.setChargValue(partnerCommissionShareCap);
                      }else{   trxnChargeObject.setChargValue(partnerCommissionPercentageOrFixedValue);  }                    
                  }
-             } 
-            trxnChargeObject.setIsComputed(true); 
+                 trxnChargeObject.setIsComputed(true); 
+             }             
       return   trxnChargeObject;      
     }
       
@@ -221,8 +280,67 @@ public class BillingChargeConfig {
     }
 
  
-      
-    
+ 
+ 
+ 
+ private  TrxnChargeObject   computeAndGetIncome(TrxnCharge  inTrxnCharge){ 
+     
+     TrxnChargeObject trxnChargeObject =  new  TrxnChargeObject();
+     trxnChargeObject.setIncome(inTrxnCharge.getTotalCharges().subtract(
+                        inTrxnCharge.getTaxCharge().add(inTrxnCharge.getBankCommission()
+                                    .add(inTrxnCharge.getPartnerCommission().add(inTrxnCharge.getLoyaltyBonus())))));
+                                     
+      return   trxnChargeObject;      
+ }
+  
+  
+   
+
+ /***
+ private  TrxnCharge   computeAndGetIncome(TrxnCharge  inTrxnCharge){ 
+     
+     inTrxnCharge.setIncome(inTrxnCharge.getTotalCharges().subtract(
+                        inTrxnCharge.getTaxCharge().add(inTrxnCharge.getBankCommission()
+                                    .add(inTrxnCharge.getPartnerCommission().add(inTrxnCharge.getLoyaltyBonus())))));
+                                     
+      return   inTrxnCharge;      
+ }
+***/
+
+
+
+ private  TrxnChargeObject   computeAndGetSaveInvestPerSpend(BigDecimal   inTrxnAmount){
+        
+        BigDecimal trxnAmount  =  inTrxnAmount; 
+        BigDecimal  saveInvestAmount  =  null; 
+        
+        TrxnChargeObject trxnChargeObject =  new  TrxnChargeObject();
+        trxnChargeObject.setIsComputed(false); 
+        
+        System.out.println("Save Invest  trxnAmount:  "+trxnAmount);
+           
+             // COmpute total Charges
+              if(saveInvestPercentageOrFixedValue.compareTo(new BigDecimal(0.00)) == 1){
+                  if(useSaveInvestPercentage == true){
+                      System.out.println("Save Invest Got Here");
+                      saveInvestAmount  =  trxnAmount.multiply(saveInvestPercentageOrFixedValue.divide(new BigDecimal(100.00)));
+                      System.out.println("saveInvestAmount:  "+saveInvestAmount);
+                     if((saveInvestAmount.compareTo(saveInvestCap)  == 1) && (saveInvestCap.compareTo(new BigDecimal(0.00)) == 1)){ 
+                          System.out.println("Save Invest Got CAP Here");
+                          trxnChargeObject.setChargValue(saveInvestCap);
+                      }else{   trxnChargeObject.setChargValue(saveInvestAmount);  }
+                  }else if(useSaveInvestPercentage == false){
+                       System.out.println("Save Invest Are we here");
+                      if((saveInvestPercentageOrFixedValue.compareTo(saveInvestCap)  == 1) && (saveInvestCap.compareTo(new BigDecimal(0.00)) == 1)){ 
+                            trxnChargeObject.setChargValue(saveInvestCap);
+                      }else{   trxnChargeObject.setChargValue(saveInvestPercentageOrFixedValue);  }                    
+                  }
+               trxnChargeObject.setIsComputed(true);
+              } 
+             
+      return   trxnChargeObject;      
+    }
+ 
      
     public  void   setId(long inId){
         id = inId;
@@ -329,6 +447,18 @@ public class BillingChargeConfig {
         partnerCommissionShareCap  =  inPartnerCommissionShareCap;
     }
     
+    
+    public  void  setUseSaveInvestPercentage(boolean  inUseSaveInvestPercentage){
+        useSaveInvestPercentage = inUseSaveInvestPercentage;
+    }
+    
+    public  void  setSaveInvestPercentageOrFixedValue(BigDecimal  inSaveInvestPercentageOrFixedValue){
+       saveInvestPercentageOrFixedValue = inSaveInvestPercentageOrFixedValue;
+    }
+    
+    public  void  setSaveInvestCap(BigDecimal  inSaveInvestCap){
+        saveInvestCap = inSaveInvestCap;
+    }
     
     public  void  setBonusShare(BigDecimal  inBonusShare){
         bonusShare  =  inBonusShare;
@@ -453,6 +583,20 @@ public class BillingChargeConfig {
     
     public  BigDecimal  getPartnerCommissionShareCap(){
        return    partnerCommissionShareCap;
+    }
+    
+     
+    
+   public  boolean  getUseSaveInvestPercentage(){
+       return    useSaveInvestPercentage;
+    }
+    
+    public  BigDecimal  getSaveInvestPercentageOrFixedValue(){
+       return    saveInvestPercentageOrFixedValue;
+    }
+    
+    public  BigDecimal  getSaveInvestCap(){
+       return    saveInvestCap;
     }
     
     

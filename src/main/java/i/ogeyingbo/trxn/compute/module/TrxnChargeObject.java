@@ -12,12 +12,19 @@ import java.math.BigDecimal;
  */
 public class TrxnChargeObject {
     
-    private   BigDecimal  inChargeValue =  new  BigDecimal(0.00);
+    private   BigDecimal  income =  new  BigDecimal(0.00);
+    private   BigDecimal  chargeValue =  new  BigDecimal(0.00);
     private   boolean  isComputed   = false;
     
     
+    
+    public  void  setIncome(BigDecimal  inIncome){
+       income =  inIncome;
+    }
+    
+    
     public  void  setChargValue(BigDecimal  inChargeValue){
-       inChargeValue =  inChargeValue;
+       chargeValue =  inChargeValue;
     }
     
     
@@ -30,8 +37,15 @@ public class TrxnChargeObject {
     
     
     
+    
+    public  BigDecimal  getIncome(){
+      return   income;
+    }
+    
+    
+    
     public  BigDecimal  getChargValue(){
-      return   inChargeValue;
+      return   chargeValue;
     }
     
     

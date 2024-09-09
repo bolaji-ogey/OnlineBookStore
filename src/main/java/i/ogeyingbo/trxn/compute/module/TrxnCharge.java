@@ -14,6 +14,12 @@ public class TrxnCharge {
     
     private   BigDecimal  trxnValue =  new  BigDecimal(0.00); 
     
+    private   BigDecimal  totalToDebit =  new  BigDecimal(0.00); 
+    private   boolean     isTotalToDebitComputed  =  false;
+            
+    private   BigDecimal  saveInvestPerSpend =  new  BigDecimal(0.00); 
+    private   boolean     isSaveInvestPerSpendComputed  =  false;
+    
     private   boolean     computeSuccessfull  =  false;
     
     private   BigDecimal  totalCharges =  new  BigDecimal(0.00); 
@@ -36,8 +42,30 @@ public class TrxnCharge {
     
     
    
+    public  final BigDecimal    computeTotalToDebit(){
+          totalToDebit  =  trxnValue.add(totalCharges).add(saveInvestPerSpend);
+       return   totalToDebit;
+    }
     
    
+    public  final  BigDecimal   computeAndGetIncome(){ 
+      
+            income  = totalCharges.subtract(taxCharge.add(bankCommission
+                                    .add(partnerCommission.add(loyaltyBonus))));
+                                     
+      return   income;      
+   }
+    
+    
+    
+    public  void  setTotalToDebit(BigDecimal  inTotalToDebit){
+       totalToDebit =  inTotalToDebit;
+    }
+    
+    
+    public  void  setSaveInvestPerSpend(BigDecimal  inSaveInvestPerSpend){
+       saveInvestPerSpend =  inSaveInvestPerSpend;
+    }
     
     
     public  void  setTotalCharges(BigDecimal  inTotalCharges){
@@ -111,9 +139,18 @@ public class TrxnCharge {
     
     
     
+    public  BigDecimal  getTotalToDebit(){
+       return   totalToDebit;
+    }
     
     
-     public  BigDecimal  getTotalCharges(){
+    public  BigDecimal  getSaveInvestPerSpend(){
+       return   saveInvestPerSpend;
+    }
+    
+    
+    
+    public  BigDecimal  getTotalCharges(){
        return   totalCharges;
     }
     

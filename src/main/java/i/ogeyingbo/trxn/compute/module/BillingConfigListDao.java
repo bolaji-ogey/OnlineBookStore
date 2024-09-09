@@ -4,6 +4,9 @@
  */
 package i.ogeyingbo.trxn.compute.module;
 
+import i.ogeyingbo.online.bookstore.dao.PGDataRetriever;
+import i.ogeyingbo.online.bookstore.dao.PGDataSource;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -16,6 +19,60 @@ import java.util.ArrayList;
 public class BillingConfigListDao {
     
     
+    private   static  final   PGDataSource   pgDataSource  = PGDataSource.getInstance();
+    
+    private  static  BillingConfigListDao   billingConfigListDao; 
+    
+    
+    public static  BillingConfigListDao  getInstance()
+    {
+        if (billingConfigListDao == null)
+        {
+            synchronized (BillingConfigListDao.class)
+            {
+                billingConfigListDao = new BillingConfigListDao();
+            } 
+        }
+        return   billingConfigListDao;
+    }
+   
+    
+    private   BillingConfigListDao(){}
+    
+    
+    
+    public  static  void  main(String[]   args){
+        
+        BillingConfigListDao   billingConfigListDao  =   BillingConfigListDao.getInstance();
+        
+        try{
+           BillingConfigList   billingConfigs  =  billingConfigListDao
+                                                   .getBillingConfigListsByTrxnType(pgDataSource.getConnect(), 
+                                   "ndoadndadd",  "jahddd",  "WalletToBank");
+           
+           System.out.println(billingConfigs.size());
+           
+          BillingChargeConfig    billingChargeConfig  =  billingConfigs.get(0);
+          TrxnCharge    trxnCharge  =  billingChargeConfig.computeAndGetTrxnCharges(new BigDecimal(4999.00));
+          
+          if(trxnCharge !=  null){
+                System.out.println("Income  = "+trxnCharge.getIncome()+"\n\n");
+
+                System.out.println("Total Trxn Charges = "+trxnCharge.getTotalCharges());
+                System.out.println("Tax Charge = "+trxnCharge.getTaxCharge());
+                System.out.println("Bank Commission = "+trxnCharge.getBankCommission());
+                System.out.println("Partner Commission = "+trxnCharge.getPartnerCommission()+"\n\n"); 
+                System.out.println("Income = "+trxnCharge.getIncome());
+                
+                 System.out.println("Save and Invest per spend = "+trxnCharge.getSaveInvestPerSpend());
+
+                System.out.println("Test DIVIDE = "+(new BigDecimal(500.00).divide(new BigDecimal(20.00))));
+                System.out.println("Test MULTIPLE = "+(new BigDecimal(80.00)).multiply((new BigDecimal(20.00).divide(new BigDecimal(500.00)))));
+           }
+        }catch(Exception  ex){
+            ex.printStackTrace();
+        }
+    }
     
     
      public   static  SchemeBillingConfigs  getSchemeBillingConfigs(Connection  con){
@@ -81,10 +138,11 @@ public class BillingConfigListDao {
                 sbQuery.append(" use_percentage, percentage_or_fixedvalue, trxn_charge_cap, date_configured,  use_percentage_for_tax,  "); 
                 sbQuery.append(" tax_percentage_or_fixedvalue,  tax_charge_cap, use_percentage_for_bank_commission,  "); 
                 sbQuery.append(" bank_commission_percentage_or_fixedvalue,  bank_commission_share_cap, use_percentage_for_partner_commission,  "); 
-                sbQuery.append(" partner_commission_percentage_or_fixedvalue,  partner_commission_share_cap, bonus_share,  bonus_accelerate "); 
+                sbQuery.append(" partner_commission_percentage_or_fixedvalue,  partner_commission_share_cap,  use_save_invest_percentage, "); 
+                sbQuery.append(" save_invest_percentage_or_fixedvalue,  save_invest_cap, bonus_share,  bonus_accelerate "); 
                 sbQuery.append(" FROM  billing_charges_config  WHERE   (scheme_code  =  '%s') AND (is_active = true) ");  
                 sbQuery.append("   AND  (partner_code  =  '%s')  AND   (applicable_trxn_type = '%s')  ");  
-               
+                
                 stmnt =    con.createStatement();
                 rs = stmnt.executeQuery(String.format(sbQuery.toString(), inSchemeCode, inPartnerCode, inTrxnType));
                   
@@ -123,6 +181,10 @@ public class BillingConfigListDao {
                     billingChargeConfig.setUsePercentageForPartnerCommission(rs.getBoolean("use_percentage_for_partner_commission"));                      
                     billingChargeConfig.setPartnerCommissionPercentageOrFixedValue(rs.getBigDecimal("partner_commission_percentage_or_fixedvalue")); 
                     billingChargeConfig.setPartnerCommissionShareCap(rs.getBigDecimal("partner_commission_share_cap")); 
+                    
+                    billingChargeConfig.setUseSaveInvestPercentage(rs.getBoolean("use_save_invest_percentage"));                      
+                    billingChargeConfig.setSaveInvestPercentageOrFixedValue(rs.getBigDecimal("save_invest_percentage_or_fixedvalue")); 
+                    billingChargeConfig.setSaveInvestCap(rs.getBigDecimal("save_invest_cap")); 
                      
                     billingChargeConfig.setBonusShare(rs.getBigDecimal("bonus_share")); 
                     billingChargeConfig.setBonusAccelerate(rs.getBoolean("bonus_accelerate"));  
