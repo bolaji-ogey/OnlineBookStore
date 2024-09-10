@@ -105,14 +105,14 @@ public class BillingChargeConfigPlus {
                       System.out.println("Got Here");
                       totalChargeValue  =  inTrxnCharges.getTrxnValue().multiply(percentageOrFixedValue.divide(new BigDecimal(100.00)));
                       System.out.println("totalChargeValue:  "+totalChargeValue);
-                     // if((totalChargeValue.compareTo(trxnChargeCap)  == 1) && (!(trxnChargeCap.compareTo(new BigDecimal(0.00)) == 0))){
-                     if(totalChargeValue.compareTo(trxnChargeCap)  == 1) {
+                     
+                     if((totalChargeValue.compareTo(trxnChargeCap)  == 1)  && (trxnChargeCap.compareTo(new BigDecimal(0.00)) == 1)){
                           System.out.println("Got CAP Here");
                           inTrxnCharges.setTotalCharges(trxnChargeCap);
                       }else{   inTrxnCharges.setTotalCharges(totalChargeValue);  }
                   }else if(usePercentage == false){
                        System.out.println("Are we here");
-                      if(percentageOrFixedValue.compareTo(trxnChargeCap)  == 1) {
+                      if((percentageOrFixedValue.compareTo(trxnChargeCap)  == 1)  && (trxnChargeCap.compareTo(new BigDecimal(0.00)) == 1)){
                             inTrxnCharges.setTotalCharges(trxnChargeCap);
                       }else{   inTrxnCharges.setTotalCharges(percentageOrFixedValue);  }                    
                   }

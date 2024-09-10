@@ -143,14 +143,14 @@ public class BillingChargeConfig {
                       System.out.println("Got Here");
                       totalChargeValue  =  trxnAmount.multiply(percentageOrFixedValue.divide(new BigDecimal(100.00)));
                       System.out.println("totalChargeValue:  "+totalChargeValue);
-                     // if((totalChargeValue.compareTo(trxnChargeCap)  == 1) && (!(trxnChargeCap.compareTo(new BigDecimal(0.00)) == 0))){
-                     if(totalChargeValue.compareTo(trxnChargeCap)  == 1) {
+                     
+                     if((totalChargeValue.compareTo(trxnChargeCap)  == 1)  && (trxnChargeCap.compareTo(new BigDecimal(0.00)) == 1)){
                           System.out.println("Got CAP Here");
                           trxnChargeObject.setChargValue(trxnChargeCap);
                       }else{   trxnChargeObject.setChargValue(totalChargeValue);  }
                   }else if(usePercentage == false){
                        System.out.println("Are we here");
-                      if(percentageOrFixedValue.compareTo(trxnChargeCap)  == 1) {
+                      if((percentageOrFixedValue.compareTo(trxnChargeCap)  == 1)  && (trxnChargeCap.compareTo(new BigDecimal(0.00)) == 1)){
                             trxnChargeObject.setChargValue(trxnChargeCap);
                       }else{   trxnChargeObject.setChargValue(percentageOrFixedValue);  }                    
                   }
