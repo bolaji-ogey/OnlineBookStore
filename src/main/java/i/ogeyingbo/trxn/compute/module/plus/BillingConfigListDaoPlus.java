@@ -2,8 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package i.ogeyingbo.trxn.compute.module;
- 
+package i.ogeyingbo.trxn.compute.module.plus;
+
 import i.ogeyingbo.online.bookstore.dao.PGDataRetriever;
 import i.ogeyingbo.online.bookstore.dao.PGDataSource;
 import java.math.BigDecimal;
@@ -16,43 +16,44 @@ import java.util.ArrayList;
  *
  * @author BOLAJI-OGEYINGBO
  */
-public class BillingConfigListDao {
+public class BillingConfigListDaoPlus {
     
     
     private   static  final   PGDataSource   pgDataSource  = PGDataSource.getInstance();
     
-    private  static  BillingConfigListDao   billingConfigListDao; 
+    private  static  BillingConfigListDaoPlus   billingConfigListDaoPlus; 
     
     
-    public static  BillingConfigListDao  getInstance()
+    public static  BillingConfigListDaoPlus  getInstance()
     {
-        if (billingConfigListDao == null)
+        if (billingConfigListDaoPlus == null)
         {
-            synchronized (BillingConfigListDao.class)
+            synchronized (BillingConfigListDaoPlus.class)
             {
-                billingConfigListDao = new BillingConfigListDao();
+                billingConfigListDaoPlus = new BillingConfigListDaoPlus();
             } 
         }
-        return   billingConfigListDao;
+        return   billingConfigListDaoPlus;
     }
    
     
-    private   BillingConfigListDao(){}
+    private   BillingConfigListDaoPlus(){}
     
     
     
     public  static  void  main(String[]   args){
         
-        BillingConfigListDao   billingConfigListDao  =   BillingConfigListDao.getInstance();
+        BillingConfigListDaoPlus   billingConfigListDao  =   BillingConfigListDaoPlus.getInstance();
         
         try{
-           BillingConfigList   billingConfigs  =  billingConfigListDao
+           BillingConfigListPlus   billingConfigs  =  billingConfigListDao
                                                    .getBillingConfigListsByTrxnType(pgDataSource.getConnect(), 
                                    "ndoadndadd",  "jahddd",  "WalletToBank");
            
            System.out.println(billingConfigs.size());
            
-          BillingChargeConfig    billingChargeConfig  =  billingConfigs.get(0); 
+         // BillingChargeConfig    billingChargeConfig  =  billingConfigs.get(0);
+          BillingChargeConfigPlus    billingChargeConfig  =  billingConfigs.get(0);
           TrxnCharge    trxnCharge  =  billingChargeConfig.computeAndGetTrxnCharges(new BigDecimal(4999.00));
           
           if(trxnCharge !=  null){
@@ -73,6 +74,9 @@ public class BillingConfigListDao {
             ex.printStackTrace();
         }
     }
+    
+    
+    
     
     
      public   static  SchemeBillingConfigs  getSchemeBillingConfigs(Connection  con){
@@ -105,10 +109,10 @@ public class BillingConfigListDao {
     
     
     
-    private   static  BillingConfigTrxnTypes getBillingConfigTrxnTypes(Connection  con, final String inSchemeCode,  
+    private   static  BillingConfigTrxnTypesPlus getBillingConfigTrxnTypes(Connection  con, final String inSchemeCode,  
                                                                   final String inPartnerCode){
         
-        BillingConfigTrxnTypes    billingConfigTrxnTypes   =  new  BillingConfigTrxnTypes();
+        BillingConfigTrxnTypesPlus    billingConfigTrxnTypes   =  new  BillingConfigTrxnTypesPlus();
         final  String[]    trxnTypes   =   {"WalletToWallet", "WalletToBank", "BankToWallet", ""};
          
             for(int u= 0; u < trxnTypes.length;  u++){
@@ -120,7 +124,7 @@ public class BillingConfigListDao {
     
     
    
-    private   static  BillingConfigList   getBillingConfigListsByTrxnType(Connection  con, final String inSchemeCode,  
+    private   static  BillingConfigListPlus   getBillingConfigListsByTrxnType(Connection  con, final String inSchemeCode,  
                                                                   final String inPartnerCode,  final String  inTrxnType){
              
            int index =  0; 
@@ -129,7 +133,7 @@ public class BillingConfigListDao {
            ResultSet rs = null;
            
            
-           BillingConfigList   billingConfigs =   new BillingConfigList();
+           BillingConfigListPlus   billingConfigs =   new BillingConfigListPlus();
             
            try {  
             
@@ -149,7 +153,7 @@ public class BillingConfigListDao {
                 // Parameters start with 1
                 while (rs.next()) {
                     
-                    BillingChargeConfig   billingChargeConfig  =  new  BillingChargeConfig();
+                    BillingChargeConfigPlus   billingChargeConfig  =  new  BillingChargeConfigPlus();
                     
                     billingChargeConfig.setId(rs.getLong("id"));
                     billingChargeConfig.setBillingCode(rs.getString("billing_code"));
