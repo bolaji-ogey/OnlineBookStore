@@ -49,7 +49,7 @@ public class TrxnCharge {
     
    
     public  final BigDecimal    computeTotalToDebit(){
-          totalToDebit  =  trxnValue.add(totalCharges).add(saveInvestPerSpend);
+          totalToDebit  =  totalCharges.add(saveInvestPerSpend).add(loyaltyBonus);
        return   totalToDebit;
     }
     
