@@ -49,6 +49,7 @@ public class BillingChargeConfigPlus {
     
     private   boolean     useSaveInvestPercentage  =  false; 
     private   BigDecimal  saveInvestPercentageOrFixedValue =  new  BigDecimal(0.00);
+    private   BigDecimal  minimumSaveInvest =  new  BigDecimal(0.00);
     private   BigDecimal  saveInvestCap =  new  BigDecimal(0.00);
     
     private   BigDecimal  bonusShare =  new  BigDecimal(0.00);
@@ -237,12 +238,16 @@ public class BillingChargeConfigPlus {
                      if((saveInvestAmount.compareTo(saveInvestCap)  == 1) && (saveInvestCap.compareTo(new BigDecimal(0.00)) == 1)){ 
                           System.out.println("Save Invest Got CAP Here");
                           inTrxnCharge.setSaveInvestPerSpend(saveInvestCap);
-                      }else{   inTrxnCharge.setSaveInvestPerSpend(saveInvestAmount);  }
+                      }else if((saveInvestAmount.compareTo(minimumSaveInvest)  == -1) && (minimumSaveInvest.compareTo(new BigDecimal(0.00)) == 1)){   
+                          inTrxnCharge.setSaveInvestPerSpend(minimumSaveInvest);
+                     }else {     inTrxnCharge.setSaveInvestPerSpend(saveInvestAmount);      }
                   }else if(useSaveInvestPercentage == false){
                        System.out.println("Save Invest Are we here");
                       if((saveInvestPercentageOrFixedValue.compareTo(saveInvestCap)  == 1) && (saveInvestCap.compareTo(new BigDecimal(0.00)) == 1)){ 
                             inTrxnCharge.setSaveInvestPerSpend(saveInvestCap);
-                      }else{   inTrxnCharge.setSaveInvestPerSpend(saveInvestPercentageOrFixedValue);  }                    
+                      }else if((saveInvestPercentageOrFixedValue.compareTo(minimumSaveInvest)  == -1) && (minimumSaveInvest.compareTo(new BigDecimal(0.00)) == 1)){   
+                          inTrxnCharge.setSaveInvestPerSpend(minimumSaveInvest);
+                      }else{  inTrxnCharge.setSaveInvestPerSpend(saveInvestPercentageOrFixedValue);  }                    
                   }                  
                   inTrxnCharge.setIsSaveInvestPerSpendComputed(true); 
               }  
@@ -363,6 +368,11 @@ public class BillingChargeConfigPlus {
     
     public  void  setSaveInvestPercentageOrFixedValue(BigDecimal  inSaveInvestPercentageOrFixedValue){
        saveInvestPercentageOrFixedValue = inSaveInvestPercentageOrFixedValue;
+    }
+    
+    
+    public  void  setMinimumSaveInvest(BigDecimal  inMinimumSaveInvest){
+        minimumSaveInvest = inMinimumSaveInvest;
     }
     
     public  void  setSaveInvestCap(BigDecimal  inSaveInvestCap){
@@ -502,6 +512,11 @@ public class BillingChargeConfigPlus {
     
     public  BigDecimal  getSaveInvestPercentageOrFixedValue(){
        return    saveInvestPercentageOrFixedValue;
+    }
+    
+    
+    public  BigDecimal  getMinimumSaveInvest(){
+        return    minimumSaveInvest;
     }
     
     public  BigDecimal  getSaveInvestCap(){

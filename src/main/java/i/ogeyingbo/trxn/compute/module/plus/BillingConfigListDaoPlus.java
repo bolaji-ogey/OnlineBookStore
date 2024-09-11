@@ -143,7 +143,7 @@ public class BillingConfigListDaoPlus {
                 sbQuery.append(" tax_percentage_or_fixedvalue,  tax_charge_cap, use_percentage_for_bank_commission,  "); 
                 sbQuery.append(" bank_commission_percentage_or_fixedvalue,  bank_commission_share_cap, use_percentage_for_partner_commission,  "); 
                 sbQuery.append(" partner_commission_percentage_or_fixedvalue,  partner_commission_share_cap,  use_save_invest_percentage, "); 
-                sbQuery.append(" save_invest_percentage_or_fixedvalue,  save_invest_cap, bonus_share,  bonus_accelerate "); 
+                sbQuery.append(" save_invest_percentage_or_fixedvalue,  minimum_save_invest, save_invest_cap, bonus_share,  bonus_accelerate "); 
                 sbQuery.append(" FROM  billing_charges_config  WHERE   (scheme_code  =  '%s') AND (is_active = true) ");  
                 sbQuery.append("   AND  (partner_code  =  '%s')  AND   (applicable_trxn_type = '%s')  ");  
                 
@@ -188,7 +188,9 @@ public class BillingConfigListDaoPlus {
                     
                     billingChargeConfig.setUseSaveInvestPercentage(rs.getBoolean("use_save_invest_percentage"));                      
                     billingChargeConfig.setSaveInvestPercentageOrFixedValue(rs.getBigDecimal("save_invest_percentage_or_fixedvalue")); 
+                    billingChargeConfig.setMinimumSaveInvest(rs.getBigDecimal("minimum_save_invest")); 
                     billingChargeConfig.setSaveInvestCap(rs.getBigDecimal("save_invest_cap")); 
+                    
                      
                     billingChargeConfig.setBonusShare(rs.getBigDecimal("bonus_share")); 
                     billingChargeConfig.setBonusAccelerate(rs.getBoolean("bonus_accelerate"));  

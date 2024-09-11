@@ -2,8 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package i.ogeyingbo.trxn.compute.module;
-
+package i.ogeyingbo.trxn.compute.module.old.archive;
+ 
 import i.ogeyingbo.online.bookstore.dao.PGDataRetriever;
 import i.ogeyingbo.online.bookstore.dao.PGDataSource;
 import java.math.BigDecimal;
@@ -21,7 +21,7 @@ public class BillingConfigListDao {
     
     private   static  final   PGDataSource   pgDataSource  = PGDataSource.getInstance();
     
-    private  static  BillingConfigListDao    billingConfigListDao; 
+    private  static  BillingConfigListDao   billingConfigListDao; 
     
     
     public static  BillingConfigListDao  getInstance()
@@ -42,16 +42,17 @@ public class BillingConfigListDao {
     
     
     public  static  void  main(String[]   args){
-         
+        
+        BillingConfigListDao   billingConfigListDao  =   BillingConfigListDao.getInstance();
+        
         try{
-            
-           BillingConfigList   billingConfigs  =  BillingConfigListDao
+           BillingConfigList   billingConfigs  =  billingConfigListDao
                                                    .getBillingConfigListsByTrxnType(pgDataSource.getConnect(), 
                                    "ndoadndadd",  "jahddd",  "WalletToBank");
            
-           System.out.println(billingConfigs.size());           
-          
-          BillingChargeConfig    billingChargeConfig  =  billingConfigs.get(0);
+           System.out.println(billingConfigs.size());
+           
+          BillingChargeConfig    billingChargeConfig  =  billingConfigs.get(0); 
           TrxnCharge    trxnCharge  =  billingChargeConfig.computeAndGetTrxnCharges(new BigDecimal(4999.00));
           
           if(trxnCharge !=  null){
@@ -72,9 +73,6 @@ public class BillingConfigListDao {
             ex.printStackTrace();
         }
     }
-    
-    
-    
     
     
      public   static  SchemeBillingConfigs  getSchemeBillingConfigs(Connection  con){
@@ -107,7 +105,7 @@ public class BillingConfigListDao {
     
     
     
-    private   static  BillingConfigTrxnTypes   getBillingConfigTrxnTypes(Connection  con, final String inSchemeCode,  
+    private   static  BillingConfigTrxnTypes getBillingConfigTrxnTypes(Connection  con, final String inSchemeCode,  
                                                                   final String inPartnerCode){
         
         BillingConfigTrxnTypes    billingConfigTrxnTypes   =  new  BillingConfigTrxnTypes();
@@ -122,7 +120,7 @@ public class BillingConfigListDao {
     
     
    
-    private   static  BillingConfigList    getBillingConfigListsByTrxnType(Connection  con, final String inSchemeCode,  
+    private   static  BillingConfigList   getBillingConfigListsByTrxnType(Connection  con, final String inSchemeCode,  
                                                                   final String inPartnerCode,  final String  inTrxnType){
              
            int index =  0; 
@@ -151,7 +149,7 @@ public class BillingConfigListDao {
                 // Parameters start with 1
                 while (rs.next()) {
                     
-                    BillingChargeConfig  billingChargeConfig  =  new  BillingChargeConfig();
+                    BillingChargeConfig   billingChargeConfig  =  new  BillingChargeConfig();
                     
                     billingChargeConfig.setId(rs.getLong("id"));
                     billingChargeConfig.setBillingCode(rs.getString("billing_code"));
@@ -188,7 +186,6 @@ public class BillingConfigListDao {
                     billingChargeConfig.setSaveInvestPercentageOrFixedValue(rs.getBigDecimal("save_invest_percentage_or_fixedvalue")); 
                     billingChargeConfig.setMinimumSaveInvest(rs.getBigDecimal("minimum_save_invest")); 
                     billingChargeConfig.setSaveInvestCap(rs.getBigDecimal("save_invest_cap")); 
-                    
                      
                     billingChargeConfig.setBonusShare(rs.getBigDecimal("bonus_share")); 
                     billingChargeConfig.setBonusAccelerate(rs.getBoolean("bonus_accelerate"));  

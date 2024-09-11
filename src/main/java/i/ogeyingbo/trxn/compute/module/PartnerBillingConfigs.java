@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package i.ogeyingbo.trxn.compute.module;
-
+ 
 import java.util.concurrent.ConcurrentHashMap;
 
 /**

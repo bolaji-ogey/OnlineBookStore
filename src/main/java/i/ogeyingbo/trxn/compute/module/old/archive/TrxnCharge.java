@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package i.ogeyingbo.trxn.compute.module.plus;
+package i.ogeyingbo.trxn.compute.module.old.archive;
 
 import java.math.BigDecimal;
 
@@ -48,7 +48,7 @@ public class TrxnCharge {
     
    
     public  final BigDecimal    computeTotalToDebit(){
-          totalToDebit  =  totalCharges.add(saveInvestPerSpend).add(loyaltyBonus);
+          totalToDebit  =  trxnValue.add(totalCharges).add(saveInvestPerSpend);
        return   totalToDebit;
     }
     
