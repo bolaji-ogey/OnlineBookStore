@@ -27,7 +27,7 @@ public class BillingChargeConfig  {
     private   String  trxnBand; 
     
     private   BigDecimal  lowerLimitValue =  new  BigDecimal(0.00); 
-    private   BigDecimal  upperLimitValue =  new  BigDecimal(0.00);  
+    private   BigDecimal  upperLimitValue =  new  BigDecimal(0.00);   
     
     private   boolean     usePercentage  =  false; 
     private   BigDecimal  percentageOrFixedValue =  new  BigDecimal(0.00);
@@ -79,7 +79,7 @@ public class BillingChargeConfig  {
   
                     this.computeAndGetIncome(trxnCharges); 
                 
-                BigDecimal  totalToDebit  = trxnCharges.computeTotalToDebit();                
+                BigDecimal  totalToDebit  = trxnCharges.computeTotalToDebit();                 
                 System.out.println("Total to DEBIT  -->>> "+totalToDebit); 
                 
         }else{
@@ -196,6 +196,7 @@ public class BillingChargeConfig  {
                            inTrxnCharge.setPartnerCommission(partnerCommissionShareCap);
                      }else{   inTrxnCharge.setPartnerCommission(partnerCommissionPercentageOrFixedValue);  }                    
                  }
+                 
                 inTrxnCharge.setPartnerCommissionComputed(true); 
              }              
     }

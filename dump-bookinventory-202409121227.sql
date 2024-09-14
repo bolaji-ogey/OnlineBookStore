@@ -5,7 +5,7 @@
 -- Dumped from database version 14.5
 -- Dumped by pg_dump version 14.5
 
--- Started on 2024-09-09 22:12:32
+-- Started on 2024-09-12 12:27:37
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -29,7 +29,7 @@ CREATE SCHEMA public;
 ALTER SCHEMA public OWNER TO postgres;
 
 --
--- TOC entry 3656 (class 0 OID 0)
+-- TOC entry 3657 (class 0 OID 0)
 -- Dependencies: 3
 -- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
 --
@@ -42,7 +42,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 239 (class 1259 OID 97804)
+-- TOC entry 239 (class 1259 OID 97922)
 -- Name: billing_charges_config; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -73,8 +73,9 @@ CREATE TABLE public.billing_charges_config (
     partner_commission_share_cap numeric(15,2) DEFAULT '-1.00'::numeric,
     use_save_invest_percentage boolean DEFAULT true NOT NULL,
     save_invest_percentage_or_fixedvalue numeric(15,2) DEFAULT 0.00,
-    save_invest_cap numeric(15,2) DEFAULT '-1.00'::numeric,
-    bonus_share numeric(15,2) DEFAULT '-1.00'::numeric,
+    minimum_save_invest numeric(15,2) DEFAULT 0.00,
+    save_invest_cap numeric(15,2) DEFAULT 0.00,
+    bonus_share numeric(15,2) DEFAULT 0.00,
     bonus_accelerate boolean DEFAULT true NOT NULL
 );
 
@@ -210,7 +211,7 @@ CREATE SEQUENCE public.customer_request_security_id_seq
 ALTER TABLE public.customer_request_security_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3657 (class 0 OID 0)
+-- TOC entry 3658 (class 0 OID 0)
 -- Dependencies: 223
 -- Name: customer_request_security_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -295,7 +296,7 @@ CREATE SEQUENCE public.journal_id_seq
 ALTER TABLE public.journal_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3658 (class 0 OID 0)
+-- TOC entry 3659 (class 0 OID 0)
 -- Dependencies: 229
 -- Name: journal_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -349,7 +350,7 @@ CREATE SEQUENCE public.journal_line_id_seq
 ALTER TABLE public.journal_line_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3659 (class 0 OID 0)
+-- TOC entry 3660 (class 0 OID 0)
 -- Dependencies: 233
 -- Name: journal_line_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -432,7 +433,7 @@ CREATE SEQUENCE public.journal_line_summary_id_seq
 ALTER TABLE public.journal_line_summary_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3660 (class 0 OID 0)
+-- TOC entry 3661 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: journal_line_summary_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -725,18 +726,18 @@ ALTER TABLE ONLY public.journal_line_summary ALTER COLUMN id SET DEFAULT nextval
 
 
 --
--- TOC entry 3650 (class 0 OID 97804)
+-- TOC entry 3651 (class 0 OID 97922)
 -- Dependencies: 239
 -- Data for Name: billing_charges_config; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.billing_charges_config (id, billing_code, partner_code, is_active, service_id, service_name, scheme_code, applicable_trxn_type, trxn_band, lower_limit_value, upper_limit_value, use_percentage, percentage_or_fixedvalue, trxn_charge_cap, date_configured, use_percentage_for_tax, tax_percentage_or_fixedvalue, tax_charge_cap, use_percentage_for_bank_commission, bank_commission_percentage_or_fixedvalue, bank_commission_share_cap, use_percentage_for_partner_commission, partner_commission_percentage_or_fixedvalue, partner_commission_share_cap, use_save_invest_percentage, save_invest_percentage_or_fixedvalue, save_invest_cap, bonus_share, bonus_accelerate) FROM stdin;
-1	HJSW                	jahddd              	t	1	test-billing        	ndoadndadd  	WalletToBank        	LOW       	1.00	5000.00	t	20.00	50.00	2024-09-09	t	5.00	10.00	t	3.00	0.00	t	40.00	0.00	t	50.00	0.00	0.00	f
+COPY public.billing_charges_config (id, billing_code, partner_code, is_active, service_id, service_name, scheme_code, applicable_trxn_type, trxn_band, lower_limit_value, upper_limit_value, use_percentage, percentage_or_fixedvalue, trxn_charge_cap, date_configured, use_percentage_for_tax, tax_percentage_or_fixedvalue, tax_charge_cap, use_percentage_for_bank_commission, bank_commission_percentage_or_fixedvalue, bank_commission_share_cap, use_percentage_for_partner_commission, partner_commission_percentage_or_fixedvalue, partner_commission_share_cap, use_save_invest_percentage, save_invest_percentage_or_fixedvalue, minimum_save_invest, save_invest_cap, bonus_share, bonus_accelerate) FROM stdin;
+1	HJSW                	jahddd              	t	1	test-billing        	ndoadndadd  	WalletToBank        	LOW       	1.00	5000.00	t	20.00	100.00	2024-09-11	f	1.00	100.00	f	10.00	0.00	t	15.00	0.00	f	50.00	500.00	500.00	0.00	f
 \.
 
 
 --
--- TOC entry 3621 (class 0 OID 88179)
+-- TOC entry 3622 (class 0 OID 88179)
 -- Dependencies: 210
 -- Data for Name: book_inventory; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -747,7 +748,7 @@ COPY public.book_inventory (id, title, genre, isbn, author, year_published) FROM
 
 
 --
--- TOC entry 3623 (class 0 OID 88192)
+-- TOC entry 3624 (class 0 OID 88192)
 -- Dependencies: 212
 -- Data for Name: book_prices; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -758,7 +759,7 @@ COPY public.book_prices (id, book_id, isbn, price, units_in_stock) FROM stdin;
 
 
 --
--- TOC entry 3636 (class 0 OID 96655)
+-- TOC entry 3637 (class 0 OID 96655)
 -- Dependencies: 225
 -- Data for Name: company; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -769,7 +770,7 @@ COPY public.company (id, name, version) FROM stdin;
 
 
 --
--- TOC entry 3638 (class 0 OID 96690)
+-- TOC entry 3639 (class 0 OID 96690)
 -- Dependencies: 227
 -- Data for Name: contact; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -780,7 +781,7 @@ COPY public.contact (id, first_name, last_name, company_id, status_id, email, ve
 
 
 --
--- TOC entry 3635 (class 0 OID 96385)
+-- TOC entry 3636 (class 0 OID 96385)
 -- Dependencies: 224
 -- Data for Name: customer_request_security; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -790,7 +791,7 @@ COPY public.customer_request_security (id, customer_reference, request_ip, secre
 
 
 --
--- TOC entry 3632 (class 0 OID 96316)
+-- TOC entry 3633 (class 0 OID 96316)
 -- Dependencies: 221
 -- Data for Name: faculty; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -803,7 +804,7 @@ COPY public.faculty (faculty_id, faculty, datecreated, f_code) FROM stdin;
 
 
 --
--- TOC entry 3641 (class 0 OID 97258)
+-- TOC entry 3642 (class 0 OID 97258)
 -- Dependencies: 230
 -- Data for Name: journal; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -813,7 +814,7 @@ COPY public.journal (id, trxn_request_id, trxn_reference, external_trxn_referenc
 
 
 --
--- TOC entry 3645 (class 0 OID 97337)
+-- TOC entry 3646 (class 0 OID 97337)
 -- Dependencies: 234
 -- Data for Name: journal_line; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -823,7 +824,7 @@ COPY public.journal_line (id, profile_id, profile_type_code, journal_action, cre
 
 
 --
--- TOC entry 3643 (class 0 OID 97285)
+-- TOC entry 3644 (class 0 OID 97285)
 -- Dependencies: 232
 -- Data for Name: journal_line_summary; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -833,7 +834,7 @@ COPY public.journal_line_summary (id, journal_id, journal_action, debit_profile_
 
 
 --
--- TOC entry 3647 (class 0 OID 97424)
+-- TOC entry 3648 (class 0 OID 97424)
 -- Dependencies: 236
 -- Data for Name: merchant_access_whitelist; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -843,7 +844,7 @@ COPY public.merchant_access_whitelist (ip_address, merchant_full_name, merchant_
 
 
 --
--- TOC entry 3649 (class 0 OID 97442)
+-- TOC entry 3650 (class 0 OID 97442)
 -- Dependencies: 238
 -- Data for Name: partner_access_blacklist; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -853,7 +854,7 @@ COPY public.partner_access_blacklist (ip_address, user_full_name, user_mobile_nu
 
 
 --
--- TOC entry 3648 (class 0 OID 97433)
+-- TOC entry 3649 (class 0 OID 97433)
 -- Dependencies: 237
 -- Data for Name: partner_access_whitelist; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -863,7 +864,7 @@ COPY public.partner_access_whitelist (ip_address, partner_full_name, partner_mob
 
 
 --
--- TOC entry 3629 (class 0 OID 88345)
+-- TOC entry 3630 (class 0 OID 88345)
 -- Dependencies: 218
 -- Data for Name: shopping_cart; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -873,7 +874,7 @@ COPY public.shopping_cart (id, order_serial, total_price, total_books_in_cart, p
 
 
 --
--- TOC entry 3631 (class 0 OID 88357)
+-- TOC entry 3632 (class 0 OID 88357)
 -- Dependencies: 220
 -- Data for Name: shopping_cart_books; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -883,7 +884,7 @@ COPY public.shopping_cart_books (id, order_serial, title, genre, isbn, author, y
 
 
 --
--- TOC entry 3637 (class 0 OID 96674)
+-- TOC entry 3638 (class 0 OID 96674)
 -- Dependencies: 226
 -- Data for Name: status; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -898,7 +899,7 @@ COPY public.status (id, name, version) FROM stdin;
 
 
 --
--- TOC entry 3633 (class 0 OID 96321)
+-- TOC entry 3634 (class 0 OID 96321)
 -- Dependencies: 222
 -- Data for Name: test; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -910,7 +911,7 @@ COPY public.test (id, name) FROM stdin;
 
 
 --
--- TOC entry 3646 (class 0 OID 97418)
+-- TOC entry 3647 (class 0 OID 97418)
 -- Dependencies: 235
 -- Data for Name: user_access_whitelist_test; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -922,7 +923,7 @@ COPY public.user_access_whitelist_test (ip_address, user_full_name, is_active) F
 
 
 --
--- TOC entry 3625 (class 0 OID 88313)
+-- TOC entry 3626 (class 0 OID 88313)
 -- Dependencies: 214
 -- Data for Name: user_profile; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -932,7 +933,7 @@ COPY public.user_profile (id, username, user_password, full_name, mobile, email,
 
 
 --
--- TOC entry 3627 (class 0 OID 88326)
+-- TOC entry 3628 (class 0 OID 88326)
 -- Dependencies: 216
 -- Data for Name: user_purchase_history; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -942,7 +943,7 @@ COPY public.user_purchase_history (id, order_serial, title, genre, isbn, author,
 
 
 --
--- TOC entry 3639 (class 0 OID 96835)
+-- TOC entry 3640 (class 0 OID 96835)
 -- Dependencies: 228
 -- Data for Name: user_sessions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -952,7 +953,7 @@ COPY public.user_sessions (ip_address, profile_type_code, customer_ref, partner_
 
 
 --
--- TOC entry 3661 (class 0 OID 0)
+-- TOC entry 3662 (class 0 OID 0)
 -- Dependencies: 209
 -- Name: book_inventory_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -961,7 +962,7 @@ SELECT pg_catalog.setval('public.book_inventory_id_seq', 1, true);
 
 
 --
--- TOC entry 3662 (class 0 OID 0)
+-- TOC entry 3663 (class 0 OID 0)
 -- Dependencies: 211
 -- Name: book_prices_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -970,7 +971,7 @@ SELECT pg_catalog.setval('public.book_prices_id_seq', 1, true);
 
 
 --
--- TOC entry 3663 (class 0 OID 0)
+-- TOC entry 3664 (class 0 OID 0)
 -- Dependencies: 223
 -- Name: customer_request_security_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -979,7 +980,7 @@ SELECT pg_catalog.setval('public.customer_request_security_id_seq', 1, false);
 
 
 --
--- TOC entry 3664 (class 0 OID 0)
+-- TOC entry 3665 (class 0 OID 0)
 -- Dependencies: 229
 -- Name: journal_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -988,7 +989,7 @@ SELECT pg_catalog.setval('public.journal_id_seq', 1, false);
 
 
 --
--- TOC entry 3665 (class 0 OID 0)
+-- TOC entry 3666 (class 0 OID 0)
 -- Dependencies: 233
 -- Name: journal_line_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -997,7 +998,7 @@ SELECT pg_catalog.setval('public.journal_line_id_seq', 1, false);
 
 
 --
--- TOC entry 3666 (class 0 OID 0)
+-- TOC entry 3667 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: journal_line_summary_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1006,7 +1007,7 @@ SELECT pg_catalog.setval('public.journal_line_summary_id_seq', 1, false);
 
 
 --
--- TOC entry 3667 (class 0 OID 0)
+-- TOC entry 3668 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: shopping_cart_books_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1015,7 +1016,7 @@ SELECT pg_catalog.setval('public.shopping_cart_books_id_seq', 1, false);
 
 
 --
--- TOC entry 3668 (class 0 OID 0)
+-- TOC entry 3669 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: shopping_cart_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1024,7 +1025,7 @@ SELECT pg_catalog.setval('public.shopping_cart_id_seq', 1, false);
 
 
 --
--- TOC entry 3669 (class 0 OID 0)
+-- TOC entry 3670 (class 0 OID 0)
 -- Dependencies: 213
 -- Name: user_profile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1033,7 +1034,7 @@ SELECT pg_catalog.setval('public.user_profile_id_seq', 1, false);
 
 
 --
--- TOC entry 3670 (class 0 OID 0)
+-- TOC entry 3671 (class 0 OID 0)
 -- Dependencies: 215
 -- Name: user_purchase_history_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1042,7 +1043,7 @@ SELECT pg_catalog.setval('public.user_purchase_history_id_seq', 1, false);
 
 
 --
--- TOC entry 3473 (class 2606 OID 97832)
+-- TOC entry 3474 (class 2606 OID 97951)
 -- Name: billing_charges_config billing_charges_config_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1051,7 +1052,7 @@ ALTER TABLE ONLY public.billing_charges_config
 
 
 --
--- TOC entry 3455 (class 2606 OID 96398)
+-- TOC entry 3456 (class 2606 OID 96398)
 -- Name: customer_request_security customer_reference_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1060,7 +1061,7 @@ ALTER TABLE ONLY public.customer_request_security
 
 
 --
--- TOC entry 3457 (class 2606 OID 96396)
+-- TOC entry 3458 (class 2606 OID 96396)
 -- Name: customer_request_security customer_request_security_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1069,7 +1070,7 @@ ALTER TABLE ONLY public.customer_request_security
 
 
 --
--- TOC entry 3443 (class 2606 OID 88188)
+-- TOC entry 3444 (class 2606 OID 88188)
 -- Name: book_inventory id_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1078,7 +1079,7 @@ ALTER TABLE ONLY public.book_inventory
 
 
 --
--- TOC entry 3445 (class 2606 OID 88190)
+-- TOC entry 3446 (class 2606 OID 88190)
 -- Name: book_inventory isbn_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1087,7 +1088,7 @@ ALTER TABLE ONLY public.book_inventory
 
 
 --
--- TOC entry 3465 (class 2606 OID 97358)
+-- TOC entry 3466 (class 2606 OID 97358)
 -- Name: journal_line journal_line_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1096,7 +1097,7 @@ ALTER TABLE ONLY public.journal_line
 
 
 --
--- TOC entry 3463 (class 2606 OID 97329)
+-- TOC entry 3464 (class 2606 OID 97329)
 -- Name: journal_line_summary journal_line_summary_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1105,7 +1106,7 @@ ALTER TABLE ONLY public.journal_line_summary
 
 
 --
--- TOC entry 3461 (class 2606 OID 97283)
+-- TOC entry 3462 (class 2606 OID 97283)
 -- Name: journal journal_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1114,7 +1115,7 @@ ALTER TABLE ONLY public.journal
 
 
 --
--- TOC entry 3467 (class 2606 OID 97432)
+-- TOC entry 3468 (class 2606 OID 97432)
 -- Name: merchant_access_whitelist merchant_access_whitelist_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1123,7 +1124,7 @@ ALTER TABLE ONLY public.merchant_access_whitelist
 
 
 --
--- TOC entry 3449 (class 2606 OID 88355)
+-- TOC entry 3450 (class 2606 OID 88355)
 -- Name: shopping_cart order_serial_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1132,7 +1133,7 @@ ALTER TABLE ONLY public.shopping_cart
 
 
 --
--- TOC entry 3469 (class 2606 OID 97441)
+-- TOC entry 3470 (class 2606 OID 97441)
 -- Name: partner_access_whitelist partner_access_whitelist_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1141,7 +1142,7 @@ ALTER TABLE ONLY public.partner_access_whitelist
 
 
 --
--- TOC entry 3451 (class 2606 OID 88353)
+-- TOC entry 3452 (class 2606 OID 88353)
 -- Name: shopping_cart shopping_cart_id_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1150,7 +1151,7 @@ ALTER TABLE ONLY public.shopping_cart
 
 
 --
--- TOC entry 3453 (class 2606 OID 96325)
+-- TOC entry 3454 (class 2606 OID 96325)
 -- Name: test test_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1159,7 +1160,7 @@ ALTER TABLE ONLY public.test
 
 
 --
--- TOC entry 3471 (class 2606 OID 97450)
+-- TOC entry 3472 (class 2606 OID 97450)
 -- Name: partner_access_blacklist user_access_blacklist_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1168,7 +1169,7 @@ ALTER TABLE ONLY public.partner_access_blacklist
 
 
 --
--- TOC entry 3447 (class 2606 OID 88324)
+-- TOC entry 3448 (class 2606 OID 88324)
 -- Name: user_profile user_profile_id_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1177,7 +1178,7 @@ ALTER TABLE ONLY public.user_profile
 
 
 --
--- TOC entry 3459 (class 2606 OID 96854)
+-- TOC entry 3460 (class 2606 OID 96854)
 -- Name: user_sessions user_session_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1186,7 +1187,7 @@ ALTER TABLE ONLY public.user_sessions
 
 
 --
--- TOC entry 3480 (class 2606 OID 97359)
+-- TOC entry 3481 (class 2606 OID 97359)
 -- Name: journal_line FKq1qkwi3bp726yehudbih8xe5b; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1195,7 +1196,7 @@ ALTER TABLE ONLY public.journal_line
 
 
 --
--- TOC entry 3474 (class 2606 OID 88199)
+-- TOC entry 3475 (class 2606 OID 88199)
 -- Name: book_prices fk_book_inventory_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1204,7 +1205,7 @@ ALTER TABLE ONLY public.book_prices
 
 
 --
--- TOC entry 3475 (class 2606 OID 88204)
+-- TOC entry 3476 (class 2606 OID 88204)
 -- Name: book_prices fk_book_isbn; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1213,7 +1214,7 @@ ALTER TABLE ONLY public.book_prices
 
 
 --
--- TOC entry 3479 (class 2606 OID 97330)
+-- TOC entry 3480 (class 2606 OID 97330)
 -- Name: journal_line_summary fk_journal_line_summary_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1222,7 +1223,7 @@ ALTER TABLE ONLY public.journal_line_summary
 
 
 --
--- TOC entry 3478 (class 2606 OID 88372)
+-- TOC entry 3479 (class 2606 OID 88372)
 -- Name: shopping_cart_books fk_shopping_cart_book_order_isbn; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1231,7 +1232,7 @@ ALTER TABLE ONLY public.shopping_cart_books
 
 
 --
--- TOC entry 3477 (class 2606 OID 88367)
+-- TOC entry 3478 (class 2606 OID 88367)
 -- Name: shopping_cart_books fk_shopping_cart_book_order_serial; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1240,7 +1241,7 @@ ALTER TABLE ONLY public.shopping_cart_books
 
 
 --
--- TOC entry 3476 (class 2606 OID 88339)
+-- TOC entry 3477 (class 2606 OID 88339)
 -- Name: user_purchase_history fk_user_purchase_history_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1248,7 +1249,7 @@ ALTER TABLE ONLY public.user_purchase_history
     ADD CONSTRAINT fk_user_purchase_history_user_id FOREIGN KEY (user_id) REFERENCES public.user_profile(id);
 
 
--- Completed on 2024-09-09 22:12:32
+-- Completed on 2024-09-12 12:27:38
 
 --
 -- PostgreSQL database dump complete

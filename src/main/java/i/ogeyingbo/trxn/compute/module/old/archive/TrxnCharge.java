@@ -12,12 +12,12 @@ import java.math.BigDecimal;
  */
 public class TrxnCharge {
     
-    private   BigDecimal  trxnValue =  new  BigDecimal(0.00); 
+    private   BigDecimal  trxnValue =  new  BigDecimal(0.00);  
     
     private   BigDecimal  totalToDebit =  new  BigDecimal(0.00); 
     private   boolean     isTotalToDebitComputed  =  false;
             
-    private   BigDecimal  saveInvestPerSpend =  new  BigDecimal(0.00); 
+    private   BigDecimal  saveInvestPerSpend =  new  BigDecimal(0.00);  
     private   boolean     isSaveInvestPerSpendComputed  =  false;
     
     private   boolean     computeSuccessfull  =  false;
@@ -25,31 +25,31 @@ public class TrxnCharge {
     private   BigDecimal  totalCharges =  new  BigDecimal(0.00); 
     private   boolean  isTotalChargesComputed   = false;
     
-    private   BigDecimal  taxCharge =  new  BigDecimal(0.00); 
+    private   BigDecimal  taxCharge =  new  BigDecimal(0.00);  
     private   boolean  isTaxChargeComputed   = false;
     
     private   BigDecimal   bankCommission =  new  BigDecimal(0.00); 
     private   boolean  isBankCommissionComputed   = false;
     
-    private   BigDecimal   partnerCommission =  new  BigDecimal(0.00); 
+    private   BigDecimal   partnerCommission =  new  BigDecimal(0.00);  
     private   boolean  isPartnerCommissionComputed   = false;
     
-    private   BigDecimal   loyaltyBonus  =  new  BigDecimal(0.00);
+    private   BigDecimal   loyaltyBonus  =  new  BigDecimal(0.00); 
     private   boolean  isLoyaltyBonusComputed   = false;
     
-    private   BigDecimal  income =  new  BigDecimal(0.00);
+    private   BigDecimal  income =  new  BigDecimal(0.00); 
     private   boolean  isIncomeComputed   = false;
     
     
     
     public  TrxnCharge(BigDecimal  inReqTrxnAmount){
-        trxnValue = inReqTrxnAmount;
+        trxnValue = inReqTrxnAmount; 
     }
     
    
     public  final BigDecimal    computeTotalToDebit(){
-          totalToDebit  =  trxnValue.add(totalCharges).add(saveInvestPerSpend);
-       return   totalToDebit;
+          totalToDebit  =  totalCharges.add(saveInvestPerSpend).add(loyaltyBonus);
+       return   totalToDebit; 
     }
     
    
@@ -58,48 +58,48 @@ public class TrxnCharge {
             income  = totalCharges.subtract(taxCharge.add(bankCommission
                                     .add(partnerCommission.add(loyaltyBonus))));
                                      
-      return   income;      
+      return   income;       
    }
     
     
     
     public  void  setTotalToDebit(BigDecimal  inTotalToDebit){
-       totalToDebit =  inTotalToDebit;
+       totalToDebit =  inTotalToDebit; 
     }
     
     
     public  void  setSaveInvestPerSpend(BigDecimal  inSaveInvestPerSpend){
-       saveInvestPerSpend =  inSaveInvestPerSpend;
+       saveInvestPerSpend =  inSaveInvestPerSpend; 
     }
     
     
     public  void  setTotalCharges(BigDecimal  inTotalCharges){
-       totalCharges =  inTotalCharges;
+       totalCharges =  inTotalCharges; 
     }
     
     
     public  void  setTaxCharge(BigDecimal  inTaxCharge){
-       taxCharge =  inTaxCharge;
+       taxCharge =  inTaxCharge; 
     }
     
     
     public  void  setPartnerCommission(BigDecimal  inPartnerCommission){
-       partnerCommission =  inPartnerCommission;
+       partnerCommission =  inPartnerCommission; 
     }
     
     
     public  void  setBankCommission(BigDecimal  inBankCommission){
-       bankCommission =  inBankCommission;
+       bankCommission =  inBankCommission; 
     }
     
     
     public  void  setLoyaltyBonus(BigDecimal  inLoyaltyBonus){
-       loyaltyBonus =  inLoyaltyBonus;
+       loyaltyBonus =  inLoyaltyBonus; 
     }
     
     
     public  void  setIncome(BigDecimal  inIncome){
-       income =  inIncome;
+       income =  inIncome; 
     }
     
     
