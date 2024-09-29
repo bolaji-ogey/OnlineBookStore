@@ -28,7 +28,7 @@ import lombok.Setter;
 @Table(name="transaction_registers")
 public class  TransactionRegister extends AbstractEntity {
     
-     
+      /***
 	wallet_id int8 NOT NULL DEFAULT '-1'::integer,
 	wallet_accnt_number bpchar(15) NOT NULL DEFAULT '-'::bpchar,
 	customer_reference bpchar(60) NOT NULL DEFAULT '-'::bpchar,
@@ -153,7 +153,7 @@ public class  TransactionRegister extends AbstractEntity {
 	reciever_accnt_num_9 bpchar(15) NOT NULL DEFAULT '-'::bpchar,
 	reciever_bank_code_9 bpchar(3) NOT NULL DEFAULT '-'::bpchar
  
-    
+     ****/
     
     
 }

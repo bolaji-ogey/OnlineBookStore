@@ -54,6 +54,55 @@ public class BillingChargeConfig  {
     
     private   BigDecimal  bonusShare =  new  BigDecimal(0.00);
     private   boolean    bonusAccelerate  =  false; 
+    
+    
+    private   boolean     useDonationPercentage  =  false; 
+    private   BigDecimal  donationPercentageOrFixedValue =  new  BigDecimal(0.00);
+    private   BigDecimal  minimumDonation =  new  BigDecimal(0.00);
+    private   BigDecimal  donationCap =  new  BigDecimal(0.00);
+    
+    
+    
+    private   boolean     useCommunicationPercentage  =  false; 
+    private   BigDecimal  communicationPercentageOrFixedValue =  new  BigDecimal(0.00);
+    private   BigDecimal  minimumCommunicationSaving =  new  BigDecimal(0.00);
+    private   BigDecimal  communicationSaveCap =  new  BigDecimal(0.00);
+    
+    
+    
+    private   boolean     useUtilityPercentage  =  false; 
+    private   BigDecimal  utilityPercentageOrFixedValue =  new  BigDecimal(0.00);
+    private   BigDecimal  minimumUtilitySaving  =  new  BigDecimal(0.00);
+    private   BigDecimal  utilitySaveCap =  new  BigDecimal(0.00);
+    
+    
+    
+    private   boolean     useHealthCarePercentage  =  false; 
+    private   BigDecimal  healthCarePercentageOrFixedValue =  new  BigDecimal(0.00);
+    private   BigDecimal  minimumHealthCareSaving  =  new  BigDecimal(0.00);
+    private   BigDecimal  healthCareSaveCap =  new  BigDecimal(0.00);
+    
+    
+    
+    private   boolean     useLegalPercentage  =  false; 
+    private   BigDecimal  legalPercentageOrFixedValue =  new  BigDecimal(0.00);
+    private   BigDecimal  minimumLegalSaving  =  new  BigDecimal(0.00);
+    private   BigDecimal  legalSaveCap =  new  BigDecimal(0.00);
+    
+    
+    
+    private   boolean     useHousingPercentage  =  false; 
+    private   BigDecimal  housingPercentageOrFixedValue =  new  BigDecimal(0.00);
+    private   BigDecimal  minimumHousingSaving  =  new  BigDecimal(0.00);
+    private   BigDecimal  housingSaveCap =  new  BigDecimal(0.00);
+    
+    
+    
+    private   boolean     useHousingAssetPercentage  =  false; 
+    private   BigDecimal  housingAssetPercentageOrFixedValue =  new  BigDecimal(0.00);
+    private   BigDecimal  minimumHousingAssetSaving  =  new  BigDecimal(0.00);
+    private   BigDecimal  housingAssetSaveCap =  new  BigDecimal(0.00);
+    
      
     
     
@@ -72,10 +121,17 @@ public class BillingChargeConfig  {
                         trxnCharges.setLoyaltyBonus(bonusShare);
                     }                
                    
-                    this.computeAndGetTotalTrxnCharge(trxnCharges);
+                    this.computeAndGetTrxnCharge(trxnCharges);
                     this.computeAndGetTaxCharge(trxnCharges);
                     this.computeAndGetBankCommission(trxnCharges);
                     this.computeAndGetPartnerCommission(trxnCharges);
+                    this.computeAndGetDonation(trxnCharges);
+                    this.computeAndGetCommunicationSaving(trxnCharges);
+                    this.computeAndGetUtilitySaving(trxnCharges);
+                    this.computeAndGetLegalSaving(trxnCharges);
+                    this.computeAndGetHealthCareSaving(trxnCharges);
+                    this.computeAndGetHousingSaving(trxnCharges);
+                    this.computeAndGetHousingAssetSaving(trxnCharges);
   
                     this.computeAndGetIncome(trxnCharges); 
                 
@@ -92,7 +148,7 @@ public class BillingChargeConfig  {
     
     
      
-    private  final void   computeAndGetTotalTrxnCharge(TrxnCharge   inTrxnCharges){
+    private  final void   computeAndGetTrxnCharge(TrxnCharge   inTrxnCharges){
          
         BigDecimal totalChargeValue = null;           
         inTrxnCharges.setTotalChargesComputed(false);           
@@ -219,10 +275,7 @@ public class BillingChargeConfig  {
   
   
    
-
  
-
-
 
  private  final void   computeAndGetSaveInvestPerSpend(TrxnCharge   inTrxnCharge){
          
@@ -256,6 +309,243 @@ public class BillingChargeConfig  {
  
  
  
+ 
+ 
+    private  final void   computeAndGetDonation(TrxnCharge   inTrxnCharge){
+         
+        BigDecimal  donationAmount  =  null;          
+        inTrxnCharge.setIsDonationComputed(false);         
+        System.out.println("Donation  trxnAmount:  "+inTrxnCharge.getTrxnValue());
+           
+             // COmpute total Charges
+              if(donationPercentageOrFixedValue.compareTo(new BigDecimal(0.00)) == 1){
+                  if(useDonationPercentage == true){
+                      System.out.println("Donation Got Here");
+                      donationAmount  =  inTrxnCharge.getTrxnValue().multiply(donationPercentageOrFixedValue.divide(new BigDecimal(100.00)));
+                      System.out.println("donationAmount:  "+donationAmount);
+                     if((donationAmount.compareTo(donationCap)  == 1) && (donationCap.compareTo(new BigDecimal(0.00)) == 1)){ 
+                          System.out.println("Donation Got CAP Here");
+                          inTrxnCharge.setDonation(donationCap);
+                      }else if((donationAmount.compareTo(minimumDonation)  == -1) && (minimumDonation.compareTo(new BigDecimal(0.00)) == 1)){   
+                          inTrxnCharge.setDonation(minimumDonation);
+                     }else {     inTrxnCharge.setDonation(donationAmount);      }
+                  }else if(useDonationPercentage == false){
+                       System.out.println("DOnation Are we here");
+                      if((donationPercentageOrFixedValue.compareTo(donationCap)  == 1) && (donationCap.compareTo(new BigDecimal(0.00)) == 1)){ 
+                            inTrxnCharge.setDonation(donationCap);
+                      }else if((donationPercentageOrFixedValue.compareTo(minimumDonation)  == -1) && (minimumDonation.compareTo(new BigDecimal(0.00)) == 1)){   
+                          inTrxnCharge.setDonation(minimumDonation);
+                      }else{  inTrxnCharge.setDonation(donationPercentageOrFixedValue);  }                    
+                  }                  
+                  inTrxnCharge.setIsDonationComputed(true); 
+              }  
+    }
+       
+       
+       
+    
+    
+    private  final void   computeAndGetCommunicationSaving(TrxnCharge   inTrxnCharge){
+         
+        BigDecimal  communicationAmount  =  null;          
+        inTrxnCharge.setIsCommunicationComputed(false);         
+        System.out.println("Communication  trxnAmount:  "+inTrxnCharge.getTrxnValue());
+           
+             // Compute total Charges
+              if(communicationPercentageOrFixedValue.compareTo(new BigDecimal(0.00)) == 1){
+                  if(useCommunicationPercentage == true){
+                      System.out.println("Communication Got Here");
+                      communicationAmount  =  inTrxnCharge.getTrxnValue().multiply(communicationPercentageOrFixedValue.divide(new BigDecimal(100.00)));
+                      System.out.println("CommunicationAmount:  "+communicationAmount);
+                     if((communicationAmount.compareTo(communicationSaveCap)  == 1) && (communicationSaveCap.compareTo(new BigDecimal(0.00)) == 1)){ 
+                          System.out.println("Communication Got CAP Here");
+                          inTrxnCharge.setCommunication(communicationSaveCap);
+                      }else if((communicationAmount.compareTo(minimumCommunicationSaving)  == -1) && (minimumCommunicationSaving.compareTo(new BigDecimal(0.00)) == 1)){   
+                          inTrxnCharge.setCommunication(minimumCommunicationSaving);
+                     }else {     inTrxnCharge.setCommunication(communicationAmount);      }
+                  }else if(useCommunicationPercentage == false){
+                       System.out.println("Communication Are we here");
+                      if((communicationPercentageOrFixedValue.compareTo(communicationSaveCap)  == 1) && (communicationSaveCap.compareTo(new BigDecimal(0.00)) == 1)){ 
+                            inTrxnCharge.setCommunication(communicationSaveCap);
+                      }else if((communicationPercentageOrFixedValue.compareTo(minimumCommunicationSaving)  == -1) && (minimumCommunicationSaving.compareTo(new BigDecimal(0.00)) == 1)){   
+                          inTrxnCharge.setCommunication(minimumCommunicationSaving);
+                      }else{  inTrxnCharge.setCommunication(communicationPercentageOrFixedValue);  }                    
+                  }                  
+                  inTrxnCharge.setIsCommunicationComputed(true); 
+              }  
+    }
+        
+        
+     
+        
+          
+    private  final void   computeAndGetUtilitySaving(TrxnCharge   inTrxnCharge){
+         
+        BigDecimal  utilityAmount  =  null;          
+        inTrxnCharge.setIsUtilityComputed(false);         
+        System.out.println("Utility  trxnAmount:  "+inTrxnCharge.getTrxnValue());
+           
+             // COmpute total Charges
+              if(utilityPercentageOrFixedValue.compareTo(new BigDecimal(0.00)) == 1){
+                  if(useUtilityPercentage == true){
+                      System.out.println("Utility Got Here");
+                      utilityAmount  =  inTrxnCharge.getTrxnValue().multiply(utilityPercentageOrFixedValue.divide(new BigDecimal(100.00)));
+                      System.out.println("UtilityAmount:  "+utilityAmount);
+                     if((utilityAmount.compareTo(utilitySaveCap)  == 1) && (utilitySaveCap.compareTo(new BigDecimal(0.00)) == 1)){ 
+                          System.out.println("Utility Got CAP Here");
+                          inTrxnCharge.setUtility(utilitySaveCap);
+                      }else if((utilityAmount.compareTo(minimumUtilitySaving)  == -1) && (minimumUtilitySaving.compareTo(new BigDecimal(0.00)) == 1)){   
+                          inTrxnCharge.setUtility(minimumUtilitySaving);
+                     }else {     inTrxnCharge.setUtility(utilityAmount);      }
+                  }else if(useUtilityPercentage == false){
+                       System.out.println("Utility Are we here");
+                      if((utilityPercentageOrFixedValue.compareTo(utilitySaveCap)  == 1) && (utilitySaveCap.compareTo(new BigDecimal(0.00)) == 1)){ 
+                            inTrxnCharge.setUtility(utilitySaveCap);
+                      }else if((utilityPercentageOrFixedValue.compareTo(minimumUtilitySaving)  == -1) && (minimumUtilitySaving.compareTo(new BigDecimal(0.00)) == 1)){   
+                          inTrxnCharge.setUtility(minimumUtilitySaving);
+                      }else{  inTrxnCharge.setUtility(utilityPercentageOrFixedValue);  }                    
+                  }                  
+                  inTrxnCharge.setIsUtilityComputed(true); 
+              }  
+    }
+            
+    
+     
+   
+    
+    private  final void   computeAndGetLegalSaving(TrxnCharge   inTrxnCharge){
+         
+        BigDecimal  legalAmount  =  null;          
+        inTrxnCharge.setIsLegalComputed(false);         
+        System.out.println("Legal  trxnAmount:  "+inTrxnCharge.getTrxnValue());
+           
+             // Compute total Charges
+              if(legalPercentageOrFixedValue.compareTo(new BigDecimal(0.00)) == 1){
+                  if(useLegalPercentage == true){
+                      System.out.println("Legal Got Here");
+                      legalAmount  =  inTrxnCharge.getTrxnValue().multiply(legalPercentageOrFixedValue.divide(new BigDecimal(100.00)));
+                      System.out.println("LegalAmount:  "+legalAmount);
+                     if((legalAmount.compareTo(legalSaveCap)  == 1) && (legalSaveCap.compareTo(new BigDecimal(0.00)) == 1)){ 
+                          System.out.println("Legal Got CAP Here");
+                          inTrxnCharge.setLegal(legalSaveCap);
+                      }else if((legalAmount.compareTo(minimumLegalSaving)  == -1) && (minimumLegalSaving.compareTo(new BigDecimal(0.00)) == 1)){   
+                          inTrxnCharge.setLegal(minimumLegalSaving);
+                     }else {     inTrxnCharge.setLegal(legalAmount);      }
+                  }else if(useLegalPercentage == false){
+                       System.out.println("Legal Are we here");
+                      if((legalPercentageOrFixedValue.compareTo(legalSaveCap)  == 1) && (legalSaveCap.compareTo(new BigDecimal(0.00)) == 1)){ 
+                            inTrxnCharge.setLegal(legalSaveCap);
+                      }else if((legalPercentageOrFixedValue.compareTo(minimumLegalSaving)  == -1) && (minimumLegalSaving.compareTo(new BigDecimal(0.00)) == 1)){   
+                          inTrxnCharge.setLegal(minimumLegalSaving);
+                      }else{  inTrxnCharge.setLegal(legalPercentageOrFixedValue);  }                    
+                  }                  
+                  inTrxnCharge.setIsLegalComputed(true); 
+              }  
+    }
+        
+        
+        
+        
+    private  final void   computeAndGetHealthCareSaving(TrxnCharge   inTrxnCharge){
+         
+        BigDecimal  healthCareAmount  =  null;          
+        inTrxnCharge.setIsHealthCareComputed(false);         
+        System.out.println("HealthCare  trxnAmount:  "+inTrxnCharge.getTrxnValue());
+           
+             // COmpute total Charges
+              if(healthCarePercentageOrFixedValue.compareTo(new BigDecimal(0.00)) == 1){
+                  if(useHealthCarePercentage == true){
+                      System.out.println("HealthCare Got Here");
+                      healthCareAmount  =  inTrxnCharge.getTrxnValue().multiply(healthCarePercentageOrFixedValue.divide(new BigDecimal(100.00)));
+                      System.out.println("HealthCareAmount:  "+healthCareAmount);
+                     if((healthCareAmount.compareTo(healthCareSaveCap)  == 1) && (healthCareSaveCap.compareTo(new BigDecimal(0.00)) == 1)){ 
+                          System.out.println("HealthCare Got CAP Here");
+                          inTrxnCharge.setHealthCare(healthCareSaveCap);
+                      }else if((healthCareAmount.compareTo(minimumHealthCareSaving)  == -1) && (minimumHealthCareSaving.compareTo(new BigDecimal(0.00)) == 1)){   
+                          inTrxnCharge.setHealthCare(minimumHealthCareSaving);
+                     }else {     inTrxnCharge.setHealthCare(healthCareAmount);      }
+                  }else if(useHealthCarePercentage == false){
+                       System.out.println("HealthCare Are we here");
+                      if((healthCarePercentageOrFixedValue.compareTo(healthCareSaveCap)  == 1) && (healthCareSaveCap.compareTo(new BigDecimal(0.00)) == 1)){ 
+                            inTrxnCharge.setHealthCare(healthCareSaveCap);
+                      }else if((healthCarePercentageOrFixedValue.compareTo(minimumHealthCareSaving)  == -1) && (minimumHealthCareSaving.compareTo(new BigDecimal(0.00)) == 1)){   
+                          inTrxnCharge.setHealthCare(minimumHealthCareSaving);
+                      }else{  inTrxnCharge.setHealthCare(healthCarePercentageOrFixedValue);  }                    
+                  }                  
+                  inTrxnCharge.setIsHealthCareComputed(true); 
+              }  
+    }
+       
+        
+        
+        
+        
+    private  final void   computeAndGetHousingSaving(TrxnCharge   inTrxnCharge){
+         
+        BigDecimal  housingAmount  =  null;          
+        inTrxnCharge.setIsHousingComputed(false);         
+        System.out.println("Housing  trxnAmount:  "+inTrxnCharge.getTrxnValue());
+           
+             // Compute total Charges
+              if(housingPercentageOrFixedValue.compareTo(new BigDecimal(0.00)) == 1){
+                  if(useHousingPercentage == true){
+                      System.out.println("Housing Got Here");
+                      housingAmount  =  inTrxnCharge.getTrxnValue().multiply(housingPercentageOrFixedValue.divide(new BigDecimal(100.00)));
+                      System.out.println("HousingAmount:  "+housingAmount);
+                     if((housingAmount.compareTo(housingSaveCap)  == 1) && (housingSaveCap.compareTo(new BigDecimal(0.00)) == 1)){ 
+                          System.out.println("Housing Got CAP Here");
+                          inTrxnCharge.setHousing(housingSaveCap);
+                      }else if((housingAmount.compareTo(minimumHousingSaving)  == -1) && (minimumHousingSaving.compareTo(new BigDecimal(0.00)) == 1)){   
+                          inTrxnCharge.setHousing(minimumHousingSaving);
+                     }else {     inTrxnCharge.setHousing(housingAmount);      }
+                  }else if(useHousingPercentage == false){
+                       System.out.println("Housing Are we here");
+                      if((housingPercentageOrFixedValue.compareTo(housingSaveCap)  == 1) && (housingSaveCap.compareTo(new BigDecimal(0.00)) == 1)){ 
+                            inTrxnCharge.setHousing(housingSaveCap);
+                      }else if((housingPercentageOrFixedValue.compareTo(minimumHousingSaving)  == -1) && (minimumHousingSaving.compareTo(new BigDecimal(0.00)) == 1)){   
+                          inTrxnCharge.setHousing(minimumHousingSaving);
+                      }else{  inTrxnCharge.setHousing(housingPercentageOrFixedValue);  }                    
+                  }                  
+                  inTrxnCharge.setIsHousingComputed(true); 
+              }  
+    }
+        
+        
+        
+        
+    private  final void   computeAndGetHousingAssetSaving(TrxnCharge   inTrxnCharge){
+         
+        BigDecimal  housingAssetAmount  =  null;          
+        inTrxnCharge.setIsHousingAssetComputed(false);         
+        System.out.println("HousingAsset  trxnAmount:  "+inTrxnCharge.getTrxnValue());
+           
+             // COmpute total Charges
+              if(housingAssetPercentageOrFixedValue.compareTo(new BigDecimal(0.00)) == 1){
+                  if(useHousingAssetPercentage == true){
+                      System.out.println("HousingAsset Got Here");
+                      housingAssetAmount  =  inTrxnCharge.getTrxnValue().multiply(housingAssetPercentageOrFixedValue.divide(new BigDecimal(100.00)));
+                      System.out.println("HousingAssetAmount:  "+housingAssetAmount);
+                     if((housingAssetAmount.compareTo(housingAssetSaveCap)  == 1) && (housingAssetSaveCap.compareTo(new BigDecimal(0.00)) == 1)){ 
+                          System.out.println("HousingAsset Got CAP Here");
+                          inTrxnCharge.setHousingAsset(housingAssetSaveCap);
+                      }else if((housingAssetAmount.compareTo(minimumHousingAssetSaving)  == -1) && (minimumHousingAssetSaving.compareTo(new BigDecimal(0.00)) == 1)){   
+                          inTrxnCharge.setHousingAsset(minimumHousingAssetSaving);
+                     }else {     inTrxnCharge.setHousingAsset(housingAssetAmount);      }
+                  }else if(useHousingAssetPercentage == false){
+                       System.out.println("HousingAsset Are we here");
+                      if((housingAssetPercentageOrFixedValue.compareTo(housingAssetSaveCap)  == 1) && (housingAssetSaveCap.compareTo(new BigDecimal(0.00)) == 1)){ 
+                            inTrxnCharge.setHousingAsset(housingAssetSaveCap);
+                      }else if((housingAssetPercentageOrFixedValue.compareTo(minimumHousingAssetSaving)  == -1) && (minimumHousingAssetSaving.compareTo(new BigDecimal(0.00)) == 1)){   
+                          inTrxnCharge.setHousingAsset(minimumHousingAssetSaving);
+                      }else{  inTrxnCharge.setHousingAsset(housingAssetPercentageOrFixedValue);  }                    
+                  }                  
+                  inTrxnCharge.setIsHousingAssetComputed(true); 
+              }  
+    }
+       
+        
+        
+         
      
     public  void   setId(long inId){
         id = inId;
