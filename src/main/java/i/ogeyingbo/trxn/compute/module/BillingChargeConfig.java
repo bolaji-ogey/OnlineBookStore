@@ -103,6 +103,12 @@ public class BillingChargeConfig  {
     private   BigDecimal  minimumHousingAssetSaving  =  new  BigDecimal(0.00);
     private   BigDecimal  housingAssetSaveCap =  new  BigDecimal(0.00);
     
+    
+    private   boolean     useEducationTrainingPercentage  =  false; 
+    private   BigDecimal  educationTrainingPercentageOrFixedValue =  new  BigDecimal(0.00);
+    private   BigDecimal  minimumEducationTrainingSaving  =  new  BigDecimal(0.00);
+    private   BigDecimal  educationTrainingSaveCap =  new  BigDecimal(0.00);
+    
      
     
     
@@ -132,6 +138,7 @@ public class BillingChargeConfig  {
                     this.computeAndGetHealthCareSaving(trxnCharges);
                     this.computeAndGetHousingSaving(trxnCharges);
                     this.computeAndGetHousingAssetSaving(trxnCharges);
+                    this.computeAndGetEducationTrainingSaving(trxnCharges);
   
                     this.computeAndGetIncome(trxnCharges); 
                 
@@ -545,7 +552,40 @@ public class BillingChargeConfig  {
        
         
         
+       
+    
+    private  final void   computeAndGetEducationTrainingSaving(TrxnCharge   inTrxnCharge){
          
+        BigDecimal  EducationTrainingAmount  =  null;          
+        inTrxnCharge.setIsEducationTrainingComputed(false);         
+        System.out.println("EducationTraining  trxnAmount:  "+inTrxnCharge.getTrxnValue());
+           
+             // COmpute total Charges
+              if(educationTrainingPercentageOrFixedValue.compareTo(new BigDecimal(0.00)) == 1){
+                  if(useEducationTrainingPercentage == true){
+                      System.out.println("EducationTraining Got Here");
+                      EducationTrainingAmount  =  inTrxnCharge.getTrxnValue().multiply(educationTrainingPercentageOrFixedValue.divide(new BigDecimal(100.00)));
+                      System.out.println("EducationTrainingAmount:  "+EducationTrainingAmount);
+                     if((EducationTrainingAmount.compareTo(educationTrainingSaveCap)  == 1) && (educationTrainingSaveCap.compareTo(new BigDecimal(0.00)) == 1)){ 
+                          System.out.println("EducationTraining Got CAP Here");
+                          inTrxnCharge.setEducationTraining(educationTrainingSaveCap);
+                      }else if((EducationTrainingAmount.compareTo(minimumEducationTrainingSaving)  == -1) && (minimumEducationTrainingSaving.compareTo(new BigDecimal(0.00)) == 1)){   
+                          inTrxnCharge.setEducationTraining(minimumEducationTrainingSaving);
+                     }else {     inTrxnCharge.setEducationTraining(EducationTrainingAmount);      }
+                  }else if(useEducationTrainingPercentage == false){
+                       System.out.println("EducationTraining Are we here");
+                      if((educationTrainingPercentageOrFixedValue.compareTo(educationTrainingSaveCap)  == 1) && (educationTrainingSaveCap.compareTo(new BigDecimal(0.00)) == 1)){ 
+                            inTrxnCharge.setEducationTraining(educationTrainingSaveCap);
+                      }else if((educationTrainingPercentageOrFixedValue.compareTo(minimumEducationTrainingSaving)  == -1) && (minimumEducationTrainingSaving.compareTo(new BigDecimal(0.00)) == 1)){   
+                          inTrxnCharge.setEducationTraining(minimumEducationTrainingSaving);
+                      }else{  inTrxnCharge.setEducationTraining(educationTrainingPercentageOrFixedValue);  }                    
+                  }                  
+                  inTrxnCharge.setIsEducationTrainingComputed(true); 
+              }  
+    }
+    
+    
+    
      
     public  void   setId(long inId){
         id = inId;

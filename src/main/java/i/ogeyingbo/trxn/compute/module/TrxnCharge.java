@@ -64,6 +64,9 @@ public class TrxnCharge {
     private   BigDecimal  housingAsset =  new  BigDecimal(0.00); 
     private   boolean     isHousingAssetComputed   = false;
     
+    private   BigDecimal   educationTraining =  new  BigDecimal(0.00); 
+    private   boolean     isEducationTrainingComputed   = false;
+    
     
     
     public  TrxnCharge(BigDecimal  inReqTrxnAmount){
@@ -76,7 +79,7 @@ public class TrxnCharge {
                                .add(donation).add(communication)
                                   .add(utility).add(legal)
                                     .add(healthCare).add(housing)
-                                        .add(housingAsset);
+                                        .add(housingAsset).add(educationTraining);
        return   totalToDebit; 
     }
     
@@ -204,6 +207,16 @@ public class TrxnCharge {
        isHousingAssetComputed =  inIsHousingAssetComputed; 
     }
     
+    
+    
+    public  void  setEducationTraining(BigDecimal  inEducationTraining){
+       educationTraining =  inEducationTraining; 
+    }
+    
+    
+    public  void  setIsEducationTrainingComputed(boolean  inIsEducationTrainingComputed){
+       isEducationTrainingComputed =  inIsEducationTrainingComputed; 
+    }
     
     
     public  void  setComputeSuccessfull(boolean  inComputeSuccessfull){
@@ -375,6 +388,14 @@ public class TrxnCharge {
     
     
     
+    public  BigDecimal  getEducationTraining(){
+       return   educationTraining; 
+    }
+    
+    
+    public  boolean  getIsEducationTrainingComputed(){
+       return   isEducationTrainingComputed; 
+    }
     
     
     
