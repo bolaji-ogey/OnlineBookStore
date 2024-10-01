@@ -5,7 +5,7 @@
 -- Dumped from database version 14.5
 -- Dumped by pg_dump version 14.5
 
--- Started on 2024-09-12 12:28:31
+-- Started on 2024-10-01 01:12:40
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -29,7 +29,7 @@ CREATE SCHEMA public;
 ALTER SCHEMA public OWNER TO postgres;
 
 --
--- TOC entry 8821 (class 0 OID 0)
+-- TOC entry 8853 (class 0 OID 0)
 -- Dependencies: 5
 -- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
 --
@@ -181,7 +181,7 @@ CREATE SEQUENCE public.admin_user_device_sessions_id_seq
 ALTER TABLE public.admin_user_device_sessions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8822 (class 0 OID 0)
+-- TOC entry 8854 (class 0 OID 0)
 -- Dependencies: 404
 -- Name: admin_user_device_sessions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -258,7 +258,7 @@ CREATE SEQUENCE public.agent_profile_details_id_seq
 ALTER TABLE public.agent_profile_details_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8823 (class 0 OID 0)
+-- TOC entry 8855 (class 0 OID 0)
 -- Dependencies: 370
 -- Name: agent_profile_details_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -312,7 +312,7 @@ CREATE SEQUENCE public.agent_profiles_id_seq
 ALTER TABLE public.agent_profiles_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8824 (class 0 OID 0)
+-- TOC entry 8856 (class 0 OID 0)
 -- Dependencies: 350
 -- Name: agent_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -336,7 +336,7 @@ CREATE SEQUENCE public.agent_profiles_profile_sys_id_seq
 ALTER TABLE public.agent_profiles_profile_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8825 (class 0 OID 0)
+-- TOC entry 8857 (class 0 OID 0)
 -- Dependencies: 352
 -- Name: agent_profiles_profile_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -360,7 +360,7 @@ CREATE SEQUENCE public.agent_profiles_user_sys_id_seq
 ALTER TABLE public.agent_profiles_user_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8826 (class 0 OID 0)
+-- TOC entry 8858 (class 0 OID 0)
 -- Dependencies: 351
 -- Name: agent_profiles_user_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -477,7 +477,7 @@ CREATE SEQUENCE public.agent_user_device_sessions_id_seq
 ALTER TABLE public.agent_user_device_sessions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8827 (class 0 OID 0)
+-- TOC entry 8859 (class 0 OID 0)
 -- Dependencies: 394
 -- Name: agent_user_device_sessions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -547,7 +547,7 @@ CREATE SEQUENCE public.agent_users_id_seq
 ALTER TABLE public.agent_users_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8828 (class 0 OID 0)
+-- TOC entry 8860 (class 0 OID 0)
 -- Dependencies: 248
 -- Name: agent_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -571,7 +571,7 @@ CREATE SEQUENCE public.agent_users_profile_sys_id_seq
 ALTER TABLE public.agent_users_profile_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8829 (class 0 OID 0)
+-- TOC entry 8861 (class 0 OID 0)
 -- Dependencies: 249
 -- Name: agent_users_profile_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1059,7 +1059,7 @@ CREATE TABLE public.biller_settlement_accounts (
 ALTER TABLE public.biller_settlement_accounts OWNER TO postgres;
 
 --
--- TOC entry 512 (class 1259 OID 98044)
+-- TOC entry 512 (class 1259 OID 98202)
 -- Name: billing_charges_config; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1093,7 +1093,39 @@ CREATE TABLE public.billing_charges_config (
     minimum_save_invest numeric(15,2) DEFAULT 0.00,
     save_invest_cap numeric(15,2) DEFAULT 0.00,
     bonus_share numeric(15,2) DEFAULT 0.00,
-    bonus_accelerate boolean DEFAULT true NOT NULL
+    bonus_accelerate boolean DEFAULT true NOT NULL,
+    use_donation_percentage boolean DEFAULT true NOT NULL,
+    donation_percentage_or_fixedvalue numeric(15,2) DEFAULT 0.00,
+    minimum_donation numeric(15,2) DEFAULT 0.00,
+    donation_cap numeric(15,2) DEFAULT 0.00,
+    use_communication_percentage boolean DEFAULT true NOT NULL,
+    communication_percentage_or_fixedvalue numeric(15,2) DEFAULT 0.00,
+    minimum_communication_saving numeric(15,2) DEFAULT 0.00,
+    communication_save_cap numeric(15,2) DEFAULT 0.00,
+    use_utility_percentage boolean DEFAULT true NOT NULL,
+    utility_percentage_or_fixedvalue numeric(15,2) DEFAULT 0.00,
+    minimum_utility_saving numeric(15,2) DEFAULT 0.00,
+    utility_save_cap numeric(15,2) DEFAULT 0.00,
+    use_healthcare_percentage boolean DEFAULT true NOT NULL,
+    healthcare_percentage_or_fixedvalue numeric(15,2) DEFAULT 0.00,
+    minimum_healthcare_saving numeric(15,2) DEFAULT 0.00,
+    healthcare_save_cap numeric(15,2) DEFAULT 0.00,
+    use_legal_percentage boolean DEFAULT true NOT NULL,
+    legal_percentage_or_fixedvalue numeric(15,2) DEFAULT 0.00,
+    minimum_legal_saving numeric(15,2) DEFAULT 0.00,
+    legal_save_cap numeric(15,2) DEFAULT 0.00,
+    use_housing_percentage boolean DEFAULT true NOT NULL,
+    housing_percentage_or_fixedvalue numeric(15,2) DEFAULT 0.00,
+    minimum_housing_saving numeric(15,2) DEFAULT 0.00,
+    housing_save_cap numeric(15,2) DEFAULT 0.00,
+    use_housing_asset_percentage boolean DEFAULT true NOT NULL,
+    housing_asset_percentage_or_fixedvalue numeric(15,2) DEFAULT 0.00,
+    minimum_housing_asset_saving numeric(15,2) DEFAULT 0.00,
+    housing_asset_save_cap numeric(15,2) DEFAULT 0.00,
+    use_education_training_percentage boolean DEFAULT true NOT NULL,
+    education_training_percentage_or_fixedvalue numeric(15,2) DEFAULT 0.00,
+    minimum_education_training_saving numeric(15,2) DEFAULT 0.00,
+    education_training_save_cap numeric(15,2) DEFAULT 0.00
 );
 
 
@@ -1148,7 +1180,7 @@ CREATE SEQUENCE public.billing_id_seq
 ALTER TABLE public.billing_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8830 (class 0 OID 0)
+-- TOC entry 8862 (class 0 OID 0)
 -- Dependencies: 213
 -- Name: billing_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1284,7 +1316,7 @@ CREATE SEQUENCE public.customer_profile_details_id_seq
 ALTER TABLE public.customer_profile_details_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8831 (class 0 OID 0)
+-- TOC entry 8863 (class 0 OID 0)
 -- Dependencies: 368
 -- Name: customer_profile_details_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1326,7 +1358,7 @@ CREATE SEQUENCE public.customer_request_security_id_seq
 ALTER TABLE public.customer_request_security_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8832 (class 0 OID 0)
+-- TOC entry 8864 (class 0 OID 0)
 -- Dependencies: 497
 -- Name: customer_request_security_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1459,7 +1491,7 @@ CREATE SEQUENCE public.customer_tier_1_profile_details_id_seq
 ALTER TABLE public.customer_tier_1_profile_details_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8833 (class 0 OID 0)
+-- TOC entry 8865 (class 0 OID 0)
 -- Dependencies: 378
 -- Name: customer_tier_1_profile_details_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1513,7 +1545,7 @@ CREATE SEQUENCE public.customer_tier_1_profiles_id_seq
 ALTER TABLE public.customer_tier_1_profiles_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8834 (class 0 OID 0)
+-- TOC entry 8866 (class 0 OID 0)
 -- Dependencies: 358
 -- Name: customer_tier_1_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1537,7 +1569,7 @@ CREATE SEQUENCE public.customer_tier_1_profiles_profile_sys_id_seq
 ALTER TABLE public.customer_tier_1_profiles_profile_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8835 (class 0 OID 0)
+-- TOC entry 8867 (class 0 OID 0)
 -- Dependencies: 360
 -- Name: customer_tier_1_profiles_profile_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1561,7 +1593,7 @@ CREATE SEQUENCE public.customer_tier_1_profiles_user_sys_id_seq
 ALTER TABLE public.customer_tier_1_profiles_user_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8836 (class 0 OID 0)
+-- TOC entry 8868 (class 0 OID 0)
 -- Dependencies: 359
 -- Name: customer_tier_1_profiles_user_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1678,7 +1710,7 @@ CREATE SEQUENCE public.customer_tier_1_user_device_sessions_id_seq
 ALTER TABLE public.customer_tier_1_user_device_sessions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8837 (class 0 OID 0)
+-- TOC entry 8869 (class 0 OID 0)
 -- Dependencies: 408
 -- Name: customer_tier_1_user_device_sessions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1752,7 +1784,7 @@ CREATE SEQUENCE public.customer_tier_1_users_customer_no_seq
 ALTER TABLE public.customer_tier_1_users_customer_no_seq OWNER TO postgres;
 
 --
--- TOC entry 8838 (class 0 OID 0)
+-- TOC entry 8870 (class 0 OID 0)
 -- Dependencies: 336
 -- Name: customer_tier_1_users_customer_no_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1776,7 +1808,7 @@ CREATE SEQUENCE public.customer_tier_1_users_id_seq
 ALTER TABLE public.customer_tier_1_users_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8839 (class 0 OID 0)
+-- TOC entry 8871 (class 0 OID 0)
 -- Dependencies: 334
 -- Name: customer_tier_1_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1800,7 +1832,7 @@ CREATE SEQUENCE public.customer_tier_1_users_profile_sys_id_seq
 ALTER TABLE public.customer_tier_1_users_profile_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8840 (class 0 OID 0)
+-- TOC entry 8872 (class 0 OID 0)
 -- Dependencies: 335
 -- Name: customer_tier_1_users_profile_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1924,7 +1956,7 @@ CREATE SEQUENCE public.customer_user_device_sessions_id_seq
 ALTER TABLE public.customer_user_device_sessions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8841 (class 0 OID 0)
+-- TOC entry 8873 (class 0 OID 0)
 -- Dependencies: 396
 -- Name: customer_user_device_sessions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1993,7 +2025,7 @@ CREATE SEQUENCE public.users_profile_sys_id_seq
 ALTER TABLE public.users_profile_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8842 (class 0 OID 0)
+-- TOC entry 8874 (class 0 OID 0)
 -- Dependencies: 240
 -- Name: users_profile_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2062,7 +2094,7 @@ CREATE SEQUENCE public.customer_users_id_seq
 ALTER TABLE public.customer_users_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8843 (class 0 OID 0)
+-- TOC entry 8875 (class 0 OID 0)
 -- Dependencies: 386
 -- Name: customer_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2550,7 +2582,7 @@ CREATE SEQUENCE public.inter_node_wallet_trxn_log_0_id_seq
 ALTER TABLE public.inter_node_wallet_trxn_log_0_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8844 (class 0 OID 0)
+-- TOC entry 8876 (class 0 OID 0)
 -- Dependencies: 276
 -- Name: inter_node_wallet_trxn_log_0_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2615,7 +2647,7 @@ CREATE SEQUENCE public.inter_node_wallet_trxn_log_1_id_seq
 ALTER TABLE public.inter_node_wallet_trxn_log_1_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8845 (class 0 OID 0)
+-- TOC entry 8877 (class 0 OID 0)
 -- Dependencies: 270
 -- Name: inter_node_wallet_trxn_log_1_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2680,7 +2712,7 @@ CREATE SEQUENCE public.inter_node_wallet_trxn_log_2_id_seq
 ALTER TABLE public.inter_node_wallet_trxn_log_2_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8846 (class 0 OID 0)
+-- TOC entry 8878 (class 0 OID 0)
 -- Dependencies: 272
 -- Name: inter_node_wallet_trxn_log_2_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2745,7 +2777,7 @@ CREATE SEQUENCE public.inter_node_wallet_trxn_log_3_id_seq
 ALTER TABLE public.inter_node_wallet_trxn_log_3_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8847 (class 0 OID 0)
+-- TOC entry 8879 (class 0 OID 0)
 -- Dependencies: 274
 -- Name: inter_node_wallet_trxn_log_3_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2810,7 +2842,7 @@ CREATE SEQUENCE public.inter_node_wallet_trxn_log_4_id_seq
 ALTER TABLE public.inter_node_wallet_trxn_log_4_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8848 (class 0 OID 0)
+-- TOC entry 8880 (class 0 OID 0)
 -- Dependencies: 278
 -- Name: inter_node_wallet_trxn_log_4_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2875,7 +2907,7 @@ CREATE SEQUENCE public.inter_node_wallet_trxn_log_5_id_seq
 ALTER TABLE public.inter_node_wallet_trxn_log_5_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8849 (class 0 OID 0)
+-- TOC entry 8881 (class 0 OID 0)
 -- Dependencies: 280
 -- Name: inter_node_wallet_trxn_log_5_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -2940,7 +2972,7 @@ CREATE SEQUENCE public.intra_node_wallet_trxn_log_0_id_seq
 ALTER TABLE public.intra_node_wallet_trxn_log_0_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8850 (class 0 OID 0)
+-- TOC entry 8882 (class 0 OID 0)
 -- Dependencies: 290
 -- Name: intra_node_wallet_trxn_log_0_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3005,7 +3037,7 @@ CREATE SEQUENCE public.intra_node_wallet_trxn_log_1_id_seq
 ALTER TABLE public.intra_node_wallet_trxn_log_1_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8851 (class 0 OID 0)
+-- TOC entry 8883 (class 0 OID 0)
 -- Dependencies: 288
 -- Name: intra_node_wallet_trxn_log_1_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3070,7 +3102,7 @@ CREATE SEQUENCE public.intra_node_wallet_trxn_log_2_id_seq
 ALTER TABLE public.intra_node_wallet_trxn_log_2_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8852 (class 0 OID 0)
+-- TOC entry 8884 (class 0 OID 0)
 -- Dependencies: 286
 -- Name: intra_node_wallet_trxn_log_2_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3135,7 +3167,7 @@ CREATE SEQUENCE public.intra_node_wallet_trxn_log_3_id_seq
 ALTER TABLE public.intra_node_wallet_trxn_log_3_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8853 (class 0 OID 0)
+-- TOC entry 8885 (class 0 OID 0)
 -- Dependencies: 284
 -- Name: intra_node_wallet_trxn_log_3_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3200,7 +3232,7 @@ CREATE SEQUENCE public.intra_node_wallet_trxn_log_4_id_seq
 ALTER TABLE public.intra_node_wallet_trxn_log_4_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8854 (class 0 OID 0)
+-- TOC entry 8886 (class 0 OID 0)
 -- Dependencies: 282
 -- Name: intra_node_wallet_trxn_log_4_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3265,7 +3297,7 @@ CREATE SEQUENCE public.intra_node_wallet_trxn_log_5_id_seq
 ALTER TABLE public.intra_node_wallet_trxn_log_5_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8855 (class 0 OID 0)
+-- TOC entry 8887 (class 0 OID 0)
 -- Dependencies: 304
 -- Name: intra_node_wallet_trxn_log_5_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3320,7 +3352,7 @@ CREATE SEQUENCE public.inventory_id_seq
 ALTER TABLE public.inventory_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8856 (class 0 OID 0)
+-- TOC entry 8888 (class 0 OID 0)
 -- Dependencies: 313
 -- Name: inventory_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3373,7 +3405,7 @@ CREATE SEQUENCE public.inventory_items_id_seq
 ALTER TABLE public.inventory_items_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8857 (class 0 OID 0)
+-- TOC entry 8889 (class 0 OID 0)
 -- Dependencies: 325
 -- Name: inventory_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3397,7 +3429,7 @@ CREATE SEQUENCE public.inventory_items_profile_sys_id_seq
 ALTER TABLE public.inventory_items_profile_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8858 (class 0 OID 0)
+-- TOC entry 8890 (class 0 OID 0)
 -- Dependencies: 327
 -- Name: inventory_items_profile_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3421,7 +3453,7 @@ CREATE SEQUENCE public.inventory_items_user_sys_id_seq
 ALTER TABLE public.inventory_items_user_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8859 (class 0 OID 0)
+-- TOC entry 8891 (class 0 OID 0)
 -- Dependencies: 326
 -- Name: inventory_items_user_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3445,7 +3477,7 @@ CREATE SEQUENCE public.inventory_profile_sys_id_seq
 ALTER TABLE public.inventory_profile_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8860 (class 0 OID 0)
+-- TOC entry 8892 (class 0 OID 0)
 -- Dependencies: 315
 -- Name: inventory_profile_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3469,7 +3501,7 @@ CREATE SEQUENCE public.inventory_user_sys_id_seq
 ALTER TABLE public.inventory_user_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8861 (class 0 OID 0)
+-- TOC entry 8893 (class 0 OID 0)
 -- Dependencies: 314
 -- Name: inventory_user_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3539,7 +3571,7 @@ CREATE SEQUENCE public.journal_id_seq
 ALTER TABLE public.journal_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8862 (class 0 OID 0)
+-- TOC entry 8894 (class 0 OID 0)
 -- Dependencies: 503
 -- Name: journal_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3593,7 +3625,7 @@ CREATE SEQUENCE public.journal_line_id_seq
 ALTER TABLE public.journal_line_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8863 (class 0 OID 0)
+-- TOC entry 8895 (class 0 OID 0)
 -- Dependencies: 507
 -- Name: journal_line_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3676,7 +3708,7 @@ CREATE SEQUENCE public.journal_line_summary_id_seq
 ALTER TABLE public.journal_line_summary_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8864 (class 0 OID 0)
+-- TOC entry 8896 (class 0 OID 0)
 -- Dependencies: 505
 -- Name: journal_line_summary_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3768,7 +3800,7 @@ CREATE SEQUENCE public.merchant_profile_details_id_seq
 ALTER TABLE public.merchant_profile_details_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8865 (class 0 OID 0)
+-- TOC entry 8897 (class 0 OID 0)
 -- Dependencies: 376
 -- Name: merchant_profile_details_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3822,7 +3854,7 @@ CREATE SEQUENCE public.merchant_profiles_id_seq
 ALTER TABLE public.merchant_profiles_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8866 (class 0 OID 0)
+-- TOC entry 8898 (class 0 OID 0)
 -- Dependencies: 382
 -- Name: merchant_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3846,7 +3878,7 @@ CREATE SEQUENCE public.merchant_profiles_user_sys_id_seq
 ALTER TABLE public.merchant_profiles_user_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8867 (class 0 OID 0)
+-- TOC entry 8899 (class 0 OID 0)
 -- Dependencies: 383
 -- Name: merchant_profiles_user_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3962,7 +3994,7 @@ CREATE SEQUENCE public.merchant_user_device_sessions_id_seq
 ALTER TABLE public.merchant_user_device_sessions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8868 (class 0 OID 0)
+-- TOC entry 8900 (class 0 OID 0)
 -- Dependencies: 398
 -- Name: merchant_user_device_sessions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -4031,7 +4063,7 @@ CREATE SEQUENCE public.merchant_users_id_seq
 ALTER TABLE public.merchant_users_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8869 (class 0 OID 0)
+-- TOC entry 8901 (class 0 OID 0)
 -- Dependencies: 380
 -- Name: merchant_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -4401,7 +4433,7 @@ CREATE SEQUENCE public.partner_user_device_sessions_id_seq
 ALTER TABLE public.partner_user_device_sessions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8870 (class 0 OID 0)
+-- TOC entry 8902 (class 0 OID 0)
 -- Dependencies: 406
 -- Name: partner_user_device_sessions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -5930,7 +5962,7 @@ CREATE SEQUENCE public.pos_profile_details_id_seq
 ALTER TABLE public.pos_profile_details_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8871 (class 0 OID 0)
+-- TOC entry 8903 (class 0 OID 0)
 -- Dependencies: 374
 -- Name: pos_profile_details_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -5984,7 +6016,7 @@ CREATE SEQUENCE public.pos_profiles_id_seq
 ALTER TABLE public.pos_profiles_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8872 (class 0 OID 0)
+-- TOC entry 8904 (class 0 OID 0)
 -- Dependencies: 346
 -- Name: pos_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -6008,7 +6040,7 @@ CREATE SEQUENCE public.pos_profiles_profile_sys_id_seq
 ALTER TABLE public.pos_profiles_profile_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8873 (class 0 OID 0)
+-- TOC entry 8905 (class 0 OID 0)
 -- Dependencies: 348
 -- Name: pos_profiles_profile_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -6032,7 +6064,7 @@ CREATE SEQUENCE public.pos_profiles_user_sys_id_seq
 ALTER TABLE public.pos_profiles_user_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8874 (class 0 OID 0)
+-- TOC entry 8906 (class 0 OID 0)
 -- Dependencies: 347
 -- Name: pos_profiles_user_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -6149,7 +6181,7 @@ CREATE SEQUENCE public.pos_user_device_sessions_id_seq
 ALTER TABLE public.pos_user_device_sessions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8875 (class 0 OID 0)
+-- TOC entry 8907 (class 0 OID 0)
 -- Dependencies: 400
 -- Name: pos_user_device_sessions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -6218,7 +6250,7 @@ CREATE SEQUENCE public.pos_users_id_seq
 ALTER TABLE public.pos_users_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8876 (class 0 OID 0)
+-- TOC entry 8908 (class 0 OID 0)
 -- Dependencies: 338
 -- Name: pos_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -6242,7 +6274,7 @@ CREATE SEQUENCE public.pos_users_profile_sys_id_seq
 ALTER TABLE public.pos_users_profile_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8877 (class 0 OID 0)
+-- TOC entry 8909 (class 0 OID 0)
 -- Dependencies: 339
 -- Name: pos_users_profile_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -6392,7 +6424,7 @@ CREATE SEQUENCE public.product_scheme_recycle_id_seq
 ALTER TABLE public.product_scheme_recycle_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8878 (class 0 OID 0)
+-- TOC entry 8910 (class 0 OID 0)
 -- Dependencies: 390
 -- Name: product_scheme_recycle_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -6447,7 +6479,7 @@ CREATE SEQUENCE public.product_schemes_id_seq
 ALTER TABLE public.product_schemes_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8879 (class 0 OID 0)
+-- TOC entry 8911 (class 0 OID 0)
 -- Dependencies: 388
 -- Name: product_schemes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -6541,7 +6573,7 @@ CREATE SEQUENCE public.profile_details_id_seq
 ALTER TABLE public.profile_details_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8880 (class 0 OID 0)
+-- TOC entry 8912 (class 0 OID 0)
 -- Dependencies: 366
 -- Name: profile_details_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -6612,7 +6644,7 @@ CREATE SEQUENCE public.profile_details_model_id_seq
 ALTER TABLE public.profile_details_model_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8881 (class 0 OID 0)
+-- TOC entry 8913 (class 0 OID 0)
 -- Dependencies: 235
 -- Name: profile_details_model_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -6666,7 +6698,7 @@ CREATE SEQUENCE public.profile_types_id_seq
 ALTER TABLE public.profile_types_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8882 (class 0 OID 0)
+-- TOC entry 8914 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: profile_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -6851,7 +6883,7 @@ CREATE SEQUENCE public.sales_inventory_id_seq
 ALTER TABLE public.sales_inventory_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8883 (class 0 OID 0)
+-- TOC entry 8915 (class 0 OID 0)
 -- Dependencies: 317
 -- Name: sales_inventory_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -6875,7 +6907,7 @@ CREATE SEQUENCE public.sales_inventory_profile_sys_id_seq
 ALTER TABLE public.sales_inventory_profile_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8884 (class 0 OID 0)
+-- TOC entry 8916 (class 0 OID 0)
 -- Dependencies: 319
 -- Name: sales_inventory_profile_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -6899,7 +6931,7 @@ CREATE SEQUENCE public.sales_inventory_user_sys_id_seq
 ALTER TABLE public.sales_inventory_user_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8885 (class 0 OID 0)
+-- TOC entry 8917 (class 0 OID 0)
 -- Dependencies: 318
 -- Name: sales_inventory_user_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -6955,7 +6987,7 @@ CREATE SEQUENCE public.sales_items_id_seq
 ALTER TABLE public.sales_items_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8886 (class 0 OID 0)
+-- TOC entry 8918 (class 0 OID 0)
 -- Dependencies: 321
 -- Name: sales_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -6979,7 +7011,7 @@ CREATE SEQUENCE public.sales_items_profile_sys_id_seq
 ALTER TABLE public.sales_items_profile_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8887 (class 0 OID 0)
+-- TOC entry 8919 (class 0 OID 0)
 -- Dependencies: 323
 -- Name: sales_items_profile_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -7003,7 +7035,7 @@ CREATE SEQUENCE public.sales_items_user_sys_id_seq
 ALTER TABLE public.sales_items_user_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8888 (class 0 OID 0)
+-- TOC entry 8920 (class 0 OID 0)
 -- Dependencies: 322
 -- Name: sales_items_user_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -7089,7 +7121,7 @@ CREATE SEQUENCE public.scheme_recycle_id_seq
 ALTER TABLE public.scheme_recycle_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8889 (class 0 OID 0)
+-- TOC entry 8921 (class 0 OID 0)
 -- Dependencies: 264
 -- Name: scheme_recycle_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -7144,7 +7176,7 @@ CREATE SEQUENCE public.schemes_id_seq
 ALTER TABLE public.schemes_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8890 (class 0 OID 0)
+-- TOC entry 8922 (class 0 OID 0)
 -- Dependencies: 229
 -- Name: schemes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -7185,7 +7217,7 @@ CREATE SEQUENCE public.service_channels_id_seq
 ALTER TABLE public.service_channels_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8891 (class 0 OID 0)
+-- TOC entry 8923 (class 0 OID 0)
 -- Dependencies: 233
 -- Name: service_channels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -7226,7 +7258,7 @@ CREATE SEQUENCE public.services_id_seq
 ALTER TABLE public.services_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8892 (class 0 OID 0)
+-- TOC entry 8924 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: services_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -7303,7 +7335,7 @@ CREATE SEQUENCE public.super_agent_profile_details_id_seq
 ALTER TABLE public.super_agent_profile_details_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8893 (class 0 OID 0)
+-- TOC entry 8925 (class 0 OID 0)
 -- Dependencies: 372
 -- Name: super_agent_profile_details_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -7374,7 +7406,7 @@ CREATE SEQUENCE public.super_agent_profile_details_model_id_seq
 ALTER TABLE public.super_agent_profile_details_model_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8894 (class 0 OID 0)
+-- TOC entry 8926 (class 0 OID 0)
 -- Dependencies: 237
 -- Name: super_agent_profile_details_model_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -7428,7 +7460,7 @@ CREATE SEQUENCE public.super_agent_profiles_id_seq
 ALTER TABLE public.super_agent_profiles_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8895 (class 0 OID 0)
+-- TOC entry 8927 (class 0 OID 0)
 -- Dependencies: 354
 -- Name: super_agent_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -7452,7 +7484,7 @@ CREATE SEQUENCE public.super_agent_profiles_profile_sys_id_seq
 ALTER TABLE public.super_agent_profiles_profile_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8896 (class 0 OID 0)
+-- TOC entry 8928 (class 0 OID 0)
 -- Dependencies: 356
 -- Name: super_agent_profiles_profile_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -7476,7 +7508,7 @@ CREATE SEQUENCE public.super_agent_profiles_user_sys_id_seq
 ALTER TABLE public.super_agent_profiles_user_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8897 (class 0 OID 0)
+-- TOC entry 8929 (class 0 OID 0)
 -- Dependencies: 355
 -- Name: super_agent_profiles_user_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -7593,7 +7625,7 @@ CREATE SEQUENCE public.super_agent_user_device_sessions_id_seq
 ALTER TABLE public.super_agent_user_device_sessions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8898 (class 0 OID 0)
+-- TOC entry 8930 (class 0 OID 0)
 -- Dependencies: 402
 -- Name: super_agent_user_device_sessions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -7662,7 +7694,7 @@ CREATE SEQUENCE public.super_agent_users_id_seq
 ALTER TABLE public.super_agent_users_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8899 (class 0 OID 0)
+-- TOC entry 8931 (class 0 OID 0)
 -- Dependencies: 245
 -- Name: super_agent_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -7735,7 +7767,7 @@ CREATE SEQUENCE public.super_agent_users_model_id_seq
 ALTER TABLE public.super_agent_users_model_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8900 (class 0 OID 0)
+-- TOC entry 8932 (class 0 OID 0)
 -- Dependencies: 242
 -- Name: super_agent_users_model_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -7759,7 +7791,7 @@ CREATE SEQUENCE public.super_agent_users_model_profile_sys_id_seq
 ALTER TABLE public.super_agent_users_model_profile_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8901 (class 0 OID 0)
+-- TOC entry 8933 (class 0 OID 0)
 -- Dependencies: 243
 -- Name: super_agent_users_model_profile_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -7783,7 +7815,7 @@ CREATE SEQUENCE public.super_agent_users_profile_sys_id_seq
 ALTER TABLE public.super_agent_users_profile_sys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8902 (class 0 OID 0)
+-- TOC entry 8934 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: super_agent_users_profile_sys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -7942,7 +7974,7 @@ CREATE SEQUENCE public.sys_app_key_era_id_seq
 ALTER TABLE public.sys_app_key_era_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8903 (class 0 OID 0)
+-- TOC entry 8935 (class 0 OID 0)
 -- Dependencies: 227
 -- Name: sys_app_key_era_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -8012,7 +8044,7 @@ CREATE SEQUENCE public.system_boundary_log_id_seq
 ALTER TABLE public.system_boundary_log_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8904 (class 0 OID 0)
+-- TOC entry 8936 (class 0 OID 0)
 -- Dependencies: 259
 -- Name: system_boundary_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -8069,7 +8101,7 @@ CREATE SEQUENCE public.system_log_summary_id_seq
 ALTER TABLE public.system_log_summary_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8905 (class 0 OID 0)
+-- TOC entry 8937 (class 0 OID 0)
 -- Dependencies: 261
 -- Name: system_log_summary_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -8361,7 +8393,7 @@ CREATE SEQUENCE public.u_p_id_seq
 ALTER TABLE public.u_p_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8906 (class 0 OID 0)
+-- TOC entry 8938 (class 0 OID 0)
 -- Dependencies: 251
 -- Name: u_p_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -8398,7 +8430,7 @@ CREATE SEQUENCE public.u_s_id_seq
 ALTER TABLE public.u_s_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8907 (class 0 OID 0)
+-- TOC entry 8939 (class 0 OID 0)
 -- Dependencies: 253
 -- Name: u_s_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -8437,7 +8469,7 @@ CREATE SEQUENCE public.unique_bearer_tokens_id_seq
 ALTER TABLE public.unique_bearer_tokens_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8908 (class 0 OID 0)
+-- TOC entry 8940 (class 0 OID 0)
 -- Dependencies: 255
 -- Name: unique_bearer_tokens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -8476,7 +8508,7 @@ CREATE SEQUENCE public.unique_customer_keys_id_seq
 ALTER TABLE public.unique_customer_keys_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8909 (class 0 OID 0)
+-- TOC entry 8941 (class 0 OID 0)
 -- Dependencies: 257
 -- Name: unique_customer_keys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -8567,7 +8599,7 @@ CREATE SEQUENCE public.user_profile_details_id_seq
 ALTER TABLE public.user_profile_details_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8910 (class 0 OID 0)
+-- TOC entry 8942 (class 0 OID 0)
 -- Dependencies: 364
 -- Name: user_profile_details_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -8617,7 +8649,7 @@ CREATE SEQUENCE public.users_id_seq
 ALTER TABLE public.users_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8911 (class 0 OID 0)
+-- TOC entry 8943 (class 0 OID 0)
 -- Dependencies: 239
 -- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -8828,7 +8860,7 @@ CREATE SEQUENCE public.wallet_to_bank_trxn_log_0_id_seq
 ALTER TABLE public.wallet_to_bank_trxn_log_0_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8912 (class 0 OID 0)
+-- TOC entry 8944 (class 0 OID 0)
 -- Dependencies: 292
 -- Name: wallet_to_bank_trxn_log_0_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -8893,7 +8925,7 @@ CREATE SEQUENCE public.wallet_to_bank_trxn_log_1_id_seq
 ALTER TABLE public.wallet_to_bank_trxn_log_1_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8913 (class 0 OID 0)
+-- TOC entry 8945 (class 0 OID 0)
 -- Dependencies: 294
 -- Name: wallet_to_bank_trxn_log_1_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -8958,7 +8990,7 @@ CREATE SEQUENCE public.wallet_to_bank_trxn_log_2_id_seq
 ALTER TABLE public.wallet_to_bank_trxn_log_2_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8914 (class 0 OID 0)
+-- TOC entry 8946 (class 0 OID 0)
 -- Dependencies: 296
 -- Name: wallet_to_bank_trxn_log_2_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -9023,7 +9055,7 @@ CREATE SEQUENCE public.wallet_to_bank_trxn_log_3_id_seq
 ALTER TABLE public.wallet_to_bank_trxn_log_3_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8915 (class 0 OID 0)
+-- TOC entry 8947 (class 0 OID 0)
 -- Dependencies: 298
 -- Name: wallet_to_bank_trxn_log_3_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -9088,7 +9120,7 @@ CREATE SEQUENCE public.wallet_to_bank_trxn_log_4_id_seq
 ALTER TABLE public.wallet_to_bank_trxn_log_4_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8916 (class 0 OID 0)
+-- TOC entry 8948 (class 0 OID 0)
 -- Dependencies: 300
 -- Name: wallet_to_bank_trxn_log_4_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -9151,7 +9183,7 @@ CREATE SEQUENCE public.wallet_to_bank_trxn_log_5_id_seq
 ALTER TABLE public.wallet_to_bank_trxn_log_5_id_seq OWNER TO postgres;
 
 --
--- TOC entry 8917 (class 0 OID 0)
+-- TOC entry 8949 (class 0 OID 0)
 -- Dependencies: 302
 -- Name: wallet_to_bank_trxn_log_5_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -9928,7 +9960,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_5 ALTER COLUMN id SET DEFAULT ne
 
 
 --
--- TOC entry 8783 (class 0 OID 86783)
+-- TOC entry 8815 (class 0 OID 86783)
 -- Dependencies: 479
 -- Data for Name: account_credit_history; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -9938,7 +9970,7 @@ COPY public.account_credit_history (id, init_company_id, partner_code, applicati
 
 
 --
--- TOC entry 8515 (class 0 OID 16396)
+-- TOC entry 8547 (class 0 OID 16396)
 -- Dependencies: 211
 -- Data for Name: actual_bonus_log; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -9948,7 +9980,7 @@ COPY public.actual_bonus_log (id, amount, remark, journal_id, profile_id, bonus_
 
 
 --
--- TOC entry 8709 (class 0 OID 46802)
+-- TOC entry 8741 (class 0 OID 46802)
 -- Dependencies: 405
 -- Data for Name: admin_user_device_sessions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -9958,7 +9990,7 @@ COPY public.admin_user_device_sessions (id, profile_type_code, request_partner_c
 
 
 --
--- TOC entry 8675 (class 0 OID 37813)
+-- TOC entry 8707 (class 0 OID 37813)
 -- Dependencies: 371
 -- Data for Name: agent_profile_details; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -9968,7 +10000,7 @@ COPY public.agent_profile_details (id, user_sys_id, profile_id, first_name, midd
 
 
 --
--- TOC entry 8657 (class 0 OID 37275)
+-- TOC entry 8689 (class 0 OID 37275)
 -- Dependencies: 353
 -- Data for Name: agent_profiles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -9978,7 +10010,7 @@ COPY public.agent_profiles (id, user_sys_id, profile_detail_sys_id, profile_id, 
 
 
 --
--- TOC entry 8796 (class 0 OID 87846)
+-- TOC entry 8828 (class 0 OID 87846)
 -- Dependencies: 492
 -- Data for Name: agent_swift_wallets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -9988,7 +10020,7 @@ COPY public.agent_swift_wallets (id, wallet_accnt_no, book_balance, book_balance
 
 
 --
--- TOC entry 8699 (class 0 OID 46637)
+-- TOC entry 8731 (class 0 OID 46637)
 -- Dependencies: 395
 -- Data for Name: agent_user_device_sessions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -9998,7 +10030,7 @@ COPY public.agent_user_device_sessions (id, profile_type_code, request_partner_c
 
 
 --
--- TOC entry 8554 (class 0 OID 24399)
+-- TOC entry 8586 (class 0 OID 24399)
 -- Dependencies: 250
 -- Data for Name: agent_users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10008,7 +10040,7 @@ COPY public.agent_users (id, profile_sys_id, profile_id, username, user_password
 
 
 --
--- TOC entry 8791 (class 0 OID 87772)
+-- TOC entry 8823 (class 0 OID 87772)
 -- Dependencies: 487
 -- Data for Name: agent_wallet_instance_refs; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10018,7 +10050,7 @@ COPY public.agent_wallet_instance_refs (id, wallet_accnt_no, reference_count, up
 
 
 --
--- TOC entry 8649 (class 0 OID 37034)
+-- TOC entry 8681 (class 0 OID 37034)
 -- Dependencies: 345
 -- Data for Name: agent_wallets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10028,7 +10060,7 @@ COPY public.agent_wallets (id, wallet_accnt_no, current_balance, date_opened, cu
 
 
 --
--- TOC entry 8725 (class 0 OID 64416)
+-- TOC entry 8757 (class 0 OID 64416)
 -- Dependencies: 421
 -- Data for Name: approval_item_groups; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10038,7 +10070,7 @@ COPY public.approval_item_groups (id, company_id, application_code, item_group_n
 
 
 --
--- TOC entry 8721 (class 0 OID 56183)
+-- TOC entry 8753 (class 0 OID 56183)
 -- Dependencies: 417
 -- Data for Name: approval_item_types; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10048,7 +10080,7 @@ COPY public.approval_item_types (id, company_id, application_code, approval_item
 
 
 --
--- TOC entry 8739 (class 0 OID 72595)
+-- TOC entry 8771 (class 0 OID 72595)
 -- Dependencies: 435
 -- Data for Name: approval_items; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10058,7 +10090,7 @@ COPY public.approval_items (id, company_id, application_code, approval_workflow_
 
 
 --
--- TOC entry 8723 (class 0 OID 64395)
+-- TOC entry 8755 (class 0 OID 64395)
 -- Dependencies: 419
 -- Data for Name: approval_requests; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10068,7 +10100,7 @@ COPY public.approval_requests (id, company_id, application_code, approval_workfl
 
 
 --
--- TOC entry 8731 (class 0 OID 64547)
+-- TOC entry 8763 (class 0 OID 64547)
 -- Dependencies: 427
 -- Data for Name: approval_routes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10078,7 +10110,7 @@ COPY public.approval_routes (id, company_id, application_code, item_group_id, it
 
 
 --
--- TOC entry 8727 (class 0 OID 64475)
+-- TOC entry 8759 (class 0 OID 64475)
 -- Dependencies: 423
 -- Data for Name: approval_user_groups; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10088,7 +10120,7 @@ COPY public.approval_user_groups (id, company_id, application_code, user_group_n
 
 
 --
--- TOC entry 8729 (class 0 OID 64514)
+-- TOC entry 8761 (class 0 OID 64514)
 -- Dependencies: 425
 -- Data for Name: approval_workflow; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10098,7 +10130,7 @@ COPY public.approval_workflow (id, company_id, application_code, item_group_id, 
 
 
 --
--- TOC entry 8667 (class 0 OID 37526)
+-- TOC entry 8699 (class 0 OID 37526)
 -- Dependencies: 363
 -- Data for Name: beneficiary_accounts; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10108,7 +10140,7 @@ COPY public.beneficiary_accounts (id, user_id, profile_detail_id, customer_no, p
 
 
 --
--- TOC entry 8666 (class 0 OID 37490)
+-- TOC entry 8698 (class 0 OID 37490)
 -- Dependencies: 362
 -- Data for Name: beneficiary_service_accounts; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10118,7 +10150,7 @@ COPY public.beneficiary_service_accounts (id, user_id, profile_detail_id, custom
 
 
 --
--- TOC entry 8516 (class 0 OID 16424)
+-- TOC entry 8548 (class 0 OID 16424)
 -- Dependencies: 212
 -- Data for Name: biller; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10128,7 +10160,7 @@ COPY public.biller (id, billing_reference, biller_id, biller_name, status) FROM 
 
 
 --
--- TOC entry 8530 (class 0 OID 19892)
+-- TOC entry 8562 (class 0 OID 19892)
 -- Dependencies: 226
 -- Data for Name: biller_operational_wallets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10138,7 +10170,7 @@ COPY public.biller_operational_wallets (id, scheme_code, wallet_account_type_id,
 
 
 --
--- TOC entry 8528 (class 0 OID 19593)
+-- TOC entry 8560 (class 0 OID 19593)
 -- Dependencies: 224
 -- Data for Name: biller_settlement_accounts; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10148,18 +10180,17 @@ COPY public.biller_settlement_accounts (id, biller_id, scheme_code, bank_code, a
 
 
 --
--- TOC entry 8815 (class 0 OID 98044)
+-- TOC entry 8847 (class 0 OID 98202)
 -- Dependencies: 512
 -- Data for Name: billing_charges_config; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.billing_charges_config (id, billing_code, partner_code, is_active, service_id, service_name, scheme_code, applicable_trxn_type, trxn_band, lower_limit_value, upper_limit_value, use_percentage, percentage_or_fixedvalue, trxn_charge_cap, date_configured, use_percentage_for_tax, tax_percentage_or_fixedvalue, tax_charge_cap, use_percentage_for_bank_commission, bank_commission_percentage_or_fixedvalue, bank_commission_share_cap, use_percentage_for_partner_commission, partner_commission_percentage_or_fixedvalue, partner_commission_share_cap, use_save_invest_percentage, save_invest_percentage_or_fixedvalue, minimum_save_invest, save_invest_cap, bonus_share, bonus_accelerate) FROM stdin;
-1	HJSW                	jahddd              	t	1	test-billing        	ndoadndadd  	WalletToBank        	LOW       	1.00	5000.00	t	20.00	100.00	2024-09-11	f	1.00	10.00	f	0.00	0.00	f	0.00	0.00	f	50.00	500.00	500.00	0.00	f
+COPY public.billing_charges_config (id, billing_code, partner_code, is_active, service_id, service_name, scheme_code, applicable_trxn_type, trxn_band, lower_limit_value, upper_limit_value, use_percentage, percentage_or_fixedvalue, trxn_charge_cap, date_configured, use_percentage_for_tax, tax_percentage_or_fixedvalue, tax_charge_cap, use_percentage_for_bank_commission, bank_commission_percentage_or_fixedvalue, bank_commission_share_cap, use_percentage_for_partner_commission, partner_commission_percentage_or_fixedvalue, partner_commission_share_cap, use_save_invest_percentage, save_invest_percentage_or_fixedvalue, minimum_save_invest, save_invest_cap, bonus_share, bonus_accelerate, use_donation_percentage, donation_percentage_or_fixedvalue, minimum_donation, donation_cap, use_communication_percentage, communication_percentage_or_fixedvalue, minimum_communication_saving, communication_save_cap, use_utility_percentage, utility_percentage_or_fixedvalue, minimum_utility_saving, utility_save_cap, use_healthcare_percentage, healthcare_percentage_or_fixedvalue, minimum_healthcare_saving, healthcare_save_cap, use_legal_percentage, legal_percentage_or_fixedvalue, minimum_legal_saving, legal_save_cap, use_housing_percentage, housing_percentage_or_fixedvalue, minimum_housing_saving, housing_save_cap, use_housing_asset_percentage, housing_asset_percentage_or_fixedvalue, minimum_housing_asset_saving, housing_asset_save_cap, use_education_training_percentage, education_training_percentage_or_fixedvalue, minimum_education_training_saving, education_training_save_cap) FROM stdin;
 \.
 
 
 --
--- TOC entry 8573 (class 0 OID 34387)
+-- TOC entry 8605 (class 0 OID 34387)
 -- Dependencies: 269
 -- Data for Name: billing_config_summary; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10169,7 +10200,7 @@ COPY public.billing_config_summary (id, billing_reference, is_active, service_id
 
 
 --
--- TOC entry 8803 (class 0 OID 96640)
+-- TOC entry 8835 (class 0 OID 96640)
 -- Dependencies: 500
 -- Data for Name: company; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10180,7 +10211,7 @@ COPY public.company (id, name, version) FROM stdin;
 
 
 --
--- TOC entry 8804 (class 0 OID 96646)
+-- TOC entry 8836 (class 0 OID 96646)
 -- Dependencies: 501
 -- Data for Name: contact; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10191,7 +10222,7 @@ COPY public.contact (id, firstname, lastname, company_id, status, email) FROM st
 
 
 --
--- TOC entry 8518 (class 0 OID 16464)
+-- TOC entry 8550 (class 0 OID 16464)
 -- Dependencies: 214
 -- Data for Name: customer_kyc_level; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10201,7 +10232,7 @@ COPY public.customer_kyc_level (id, description, kyc_level, phone_number_verifie
 
 
 --
--- TOC entry 8673 (class 0 OID 37760)
+-- TOC entry 8705 (class 0 OID 37760)
 -- Dependencies: 369
 -- Data for Name: customer_profile_details; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10211,7 +10242,7 @@ COPY public.customer_profile_details (id, user_sys_id, profile_id, first_name, m
 
 
 --
--- TOC entry 8801 (class 0 OID 96355)
+-- TOC entry 8833 (class 0 OID 96355)
 -- Dependencies: 498
 -- Data for Name: customer_request_security; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10221,7 +10252,7 @@ COPY public.customer_request_security (id, customer_reference, request_ip, secre
 
 
 --
--- TOC entry 8802 (class 0 OID 96590)
+-- TOC entry 8834 (class 0 OID 96590)
 -- Dependencies: 499
 -- Data for Name: customer_swift_wallets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10231,7 +10262,7 @@ COPY public.customer_swift_wallets (id, wallet_accnt_no, book_balance, book_bala
 
 
 --
--- TOC entry 8683 (class 0 OID 38019)
+-- TOC entry 8715 (class 0 OID 38019)
 -- Dependencies: 379
 -- Data for Name: customer_tier_1_profile_details; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10241,7 +10272,7 @@ COPY public.customer_tier_1_profile_details (id, user_sys_id, profile_id, first_
 
 
 --
--- TOC entry 8665 (class 0 OID 37365)
+-- TOC entry 8697 (class 0 OID 37365)
 -- Dependencies: 361
 -- Data for Name: customer_tier_1_profiles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10251,7 +10282,7 @@ COPY public.customer_tier_1_profiles (id, user_sys_id, profile_detail_sys_id, pr
 
 
 --
--- TOC entry 8798 (class 0 OID 87986)
+-- TOC entry 8830 (class 0 OID 87986)
 -- Dependencies: 494
 -- Data for Name: customer_tier_1_swift_wallets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10261,7 +10292,7 @@ COPY public.customer_tier_1_swift_wallets (id, wallet_accnt_no, book_balance, bo
 
 
 --
--- TOC entry 8713 (class 0 OID 46870)
+-- TOC entry 8745 (class 0 OID 46870)
 -- Dependencies: 409
 -- Data for Name: customer_tier_1_user_device_sessions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10271,7 +10302,7 @@ COPY public.customer_tier_1_user_device_sessions (id, profile_type_code, request
 
 
 --
--- TOC entry 8641 (class 0 OID 36381)
+-- TOC entry 8673 (class 0 OID 36381)
 -- Dependencies: 337
 -- Data for Name: customer_tier_1_users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10281,7 +10312,7 @@ COPY public.customer_tier_1_users (id, profile_sys_id, profile_id, customer_no, 
 
 
 --
--- TOC entry 8794 (class 0 OID 87793)
+-- TOC entry 8826 (class 0 OID 87793)
 -- Dependencies: 490
 -- Data for Name: customer_tier_1_wallet_instance_refs; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10291,7 +10322,7 @@ COPY public.customer_tier_1_wallet_instance_refs (id, wallet_accnt_no, reference
 
 
 --
--- TOC entry 8648 (class 0 OID 36994)
+-- TOC entry 8680 (class 0 OID 36994)
 -- Dependencies: 344
 -- Data for Name: customer_tier_1_wallets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10301,7 +10332,7 @@ COPY public.customer_tier_1_wallets (id, wallet_accnt_no, current_balance, date_
 
 
 --
--- TOC entry 8701 (class 0 OID 46670)
+-- TOC entry 8733 (class 0 OID 46670)
 -- Dependencies: 397
 -- Data for Name: customer_user_device_sessions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10311,7 +10342,7 @@ COPY public.customer_user_device_sessions (id, profile_type_code, request_partne
 
 
 --
--- TOC entry 8691 (class 0 OID 38229)
+-- TOC entry 8723 (class 0 OID 38229)
 -- Dependencies: 387
 -- Data for Name: customer_users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10321,7 +10352,7 @@ COPY public.customer_users (id, profile_id, username, user_password, first_name,
 
 
 --
--- TOC entry 8792 (class 0 OID 87779)
+-- TOC entry 8824 (class 0 OID 87779)
 -- Dependencies: 488
 -- Data for Name: customer_wallet_instance_refs; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10331,7 +10362,7 @@ COPY public.customer_wallet_instance_refs (id, wallet_accnt_no, reference_count,
 
 
 --
--- TOC entry 8647 (class 0 OID 36918)
+-- TOC entry 8679 (class 0 OID 36918)
 -- Dependencies: 343
 -- Data for Name: customer_wallets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10341,7 +10372,7 @@ COPY public.customer_wallets (id, wallet_accnt_no, current_balance, date_opened,
 
 
 --
--- TOC entry 8519 (class 0 OID 16548)
+-- TOC entry 8551 (class 0 OID 16548)
 -- Dependencies: 215
 -- Data for Name: demo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10351,7 +10382,7 @@ COPY public.demo (pw) FROM stdin;
 
 
 --
--- TOC entry 8610 (class 0 OID 35791)
+-- TOC entry 8642 (class 0 OID 35791)
 -- Dependencies: 306
 -- Data for Name: ext_credit_wallet_rqst_trxn_log_0; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10361,7 +10392,7 @@ COPY public.ext_credit_wallet_rqst_trxn_log_0 (id, trxn_request_id, external_trx
 
 
 --
--- TOC entry 8611 (class 0 OID 35817)
+-- TOC entry 8643 (class 0 OID 35817)
 -- Dependencies: 307
 -- Data for Name: ext_credit_wallet_rqst_trxn_log_1; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10371,7 +10402,7 @@ COPY public.ext_credit_wallet_rqst_trxn_log_1 (id, trxn_request_id, external_trx
 
 
 --
--- TOC entry 8612 (class 0 OID 35843)
+-- TOC entry 8644 (class 0 OID 35843)
 -- Dependencies: 308
 -- Data for Name: ext_credit_wallet_rqst_trxn_log_2; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10381,7 +10412,7 @@ COPY public.ext_credit_wallet_rqst_trxn_log_2 (id, trxn_request_id, external_trx
 
 
 --
--- TOC entry 8613 (class 0 OID 35869)
+-- TOC entry 8645 (class 0 OID 35869)
 -- Dependencies: 309
 -- Data for Name: ext_credit_wallet_rqst_trxn_log_3; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10391,7 +10422,7 @@ COPY public.ext_credit_wallet_rqst_trxn_log_3 (id, trxn_request_id, external_trx
 
 
 --
--- TOC entry 8614 (class 0 OID 35895)
+-- TOC entry 8646 (class 0 OID 35895)
 -- Dependencies: 310
 -- Data for Name: ext_credit_wallet_rqst_trxn_log_4; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10401,7 +10432,7 @@ COPY public.ext_credit_wallet_rqst_trxn_log_4 (id, trxn_request_id, external_trx
 
 
 --
--- TOC entry 8615 (class 0 OID 35921)
+-- TOC entry 8647 (class 0 OID 35921)
 -- Dependencies: 311
 -- Data for Name: ext_credit_wallet_rqst_trxn_log_5; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10411,7 +10442,7 @@ COPY public.ext_credit_wallet_rqst_trxn_log_5 (id, trxn_request_id, external_trx
 
 
 --
--- TOC entry 8637 (class 0 OID 36262)
+-- TOC entry 8669 (class 0 OID 36262)
 -- Dependencies: 333
 -- Data for Name: ext_debit_wallet_rqst_trxn_log_0; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10421,7 +10452,7 @@ COPY public.ext_debit_wallet_rqst_trxn_log_0 (id, trxn_request_id, external_trxn
 
 
 --
--- TOC entry 8636 (class 0 OID 36236)
+-- TOC entry 8668 (class 0 OID 36236)
 -- Dependencies: 332
 -- Data for Name: ext_debit_wallet_rqst_trxn_log_1; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10431,7 +10462,7 @@ COPY public.ext_debit_wallet_rqst_trxn_log_1 (id, trxn_request_id, external_trxn
 
 
 --
--- TOC entry 8635 (class 0 OID 36209)
+-- TOC entry 8667 (class 0 OID 36209)
 -- Dependencies: 331
 -- Data for Name: ext_debit_wallet_rqst_trxn_log_2; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10441,7 +10472,7 @@ COPY public.ext_debit_wallet_rqst_trxn_log_2 (id, trxn_request_id, external_trxn
 
 
 --
--- TOC entry 8634 (class 0 OID 36183)
+-- TOC entry 8666 (class 0 OID 36183)
 -- Dependencies: 330
 -- Data for Name: ext_debit_wallet_rqst_trxn_log_3; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10451,7 +10482,7 @@ COPY public.ext_debit_wallet_rqst_trxn_log_3 (id, trxn_request_id, external_trxn
 
 
 --
--- TOC entry 8633 (class 0 OID 36157)
+-- TOC entry 8665 (class 0 OID 36157)
 -- Dependencies: 329
 -- Data for Name: ext_debit_wallet_rqst_trxn_log_4; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10461,7 +10492,7 @@ COPY public.ext_debit_wallet_rqst_trxn_log_4 (id, trxn_request_id, external_trxn
 
 
 --
--- TOC entry 8616 (class 0 OID 35948)
+-- TOC entry 8648 (class 0 OID 35948)
 -- Dependencies: 312
 -- Data for Name: ext_debit_wallet_rqst_trxn_log_5; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10471,7 +10502,7 @@ COPY public.ext_debit_wallet_rqst_trxn_log_5 (id, trxn_request_id, external_trxn
 
 
 --
--- TOC entry 8581 (class 0 OID 34837)
+-- TOC entry 8613 (class 0 OID 34837)
 -- Dependencies: 277
 -- Data for Name: inter_node_wallet_trxn_log_0; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10481,7 +10512,7 @@ COPY public.inter_node_wallet_trxn_log_0 (id, trxn_originating_cust_no, trxn_req
 
 
 --
--- TOC entry 8575 (class 0 OID 34662)
+-- TOC entry 8607 (class 0 OID 34662)
 -- Dependencies: 271
 -- Data for Name: inter_node_wallet_trxn_log_1; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10491,7 +10522,7 @@ COPY public.inter_node_wallet_trxn_log_1 (id, trxn_originating_cust_no, trxn_req
 
 
 --
--- TOC entry 8577 (class 0 OID 34712)
+-- TOC entry 8609 (class 0 OID 34712)
 -- Dependencies: 273
 -- Data for Name: inter_node_wallet_trxn_log_2; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10501,7 +10532,7 @@ COPY public.inter_node_wallet_trxn_log_2 (id, trxn_originating_cust_no, trxn_req
 
 
 --
--- TOC entry 8579 (class 0 OID 34761)
+-- TOC entry 8611 (class 0 OID 34761)
 -- Dependencies: 275
 -- Data for Name: inter_node_wallet_trxn_log_3; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10511,7 +10542,7 @@ COPY public.inter_node_wallet_trxn_log_3 (id, trxn_originating_cust_no, trxn_req
 
 
 --
--- TOC entry 8583 (class 0 OID 34887)
+-- TOC entry 8615 (class 0 OID 34887)
 -- Dependencies: 279
 -- Data for Name: inter_node_wallet_trxn_log_4; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10521,7 +10552,7 @@ COPY public.inter_node_wallet_trxn_log_4 (id, trxn_originating_cust_no, trxn_req
 
 
 --
--- TOC entry 8585 (class 0 OID 34936)
+-- TOC entry 8617 (class 0 OID 34936)
 -- Dependencies: 281
 -- Data for Name: inter_node_wallet_trxn_log_5; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10531,7 +10562,7 @@ COPY public.inter_node_wallet_trxn_log_5 (id, trxn_originating_cust_no, trxn_req
 
 
 --
--- TOC entry 8595 (class 0 OID 35182)
+-- TOC entry 8627 (class 0 OID 35182)
 -- Dependencies: 291
 -- Data for Name: intra_node_wallet_trxn_log_0; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10541,7 +10572,7 @@ COPY public.intra_node_wallet_trxn_log_0 (id, trxn_originating_cust_no, trxn_req
 
 
 --
--- TOC entry 8593 (class 0 OID 35132)
+-- TOC entry 8625 (class 0 OID 35132)
 -- Dependencies: 289
 -- Data for Name: intra_node_wallet_trxn_log_1; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10551,7 +10582,7 @@ COPY public.intra_node_wallet_trxn_log_1 (id, trxn_originating_cust_no, trxn_req
 
 
 --
--- TOC entry 8591 (class 0 OID 35083)
+-- TOC entry 8623 (class 0 OID 35083)
 -- Dependencies: 287
 -- Data for Name: intra_node_wallet_trxn_log_2; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10561,7 +10592,7 @@ COPY public.intra_node_wallet_trxn_log_2 (id, trxn_originating_cust_no, trxn_req
 
 
 --
--- TOC entry 8589 (class 0 OID 35034)
+-- TOC entry 8621 (class 0 OID 35034)
 -- Dependencies: 285
 -- Data for Name: intra_node_wallet_trxn_log_3; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10571,7 +10602,7 @@ COPY public.intra_node_wallet_trxn_log_3 (id, trxn_originating_cust_no, trxn_req
 
 
 --
--- TOC entry 8587 (class 0 OID 34985)
+-- TOC entry 8619 (class 0 OID 34985)
 -- Dependencies: 283
 -- Data for Name: intra_node_wallet_trxn_log_4; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10581,7 +10612,7 @@ COPY public.intra_node_wallet_trxn_log_4 (id, trxn_originating_cust_no, trxn_req
 
 
 --
--- TOC entry 8609 (class 0 OID 35526)
+-- TOC entry 8641 (class 0 OID 35526)
 -- Dependencies: 305
 -- Data for Name: intra_node_wallet_trxn_log_5; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10591,7 +10622,7 @@ COPY public.intra_node_wallet_trxn_log_5 (id, trxn_originating_cust_no, trxn_req
 
 
 --
--- TOC entry 8620 (class 0 OID 36050)
+-- TOC entry 8652 (class 0 OID 36050)
 -- Dependencies: 316
 -- Data for Name: inventory; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10601,7 +10632,7 @@ COPY public.inventory (id, user_sys_id, profile_sys_id, customer_no, profile_typ
 
 
 --
--- TOC entry 8632 (class 0 OID 36136)
+-- TOC entry 8664 (class 0 OID 36136)
 -- Dependencies: 328
 -- Data for Name: inventory_items; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10611,7 +10642,7 @@ COPY public.inventory_items (id, user_sys_id, profile_sys_id, customer_no, profi
 
 
 --
--- TOC entry 8807 (class 0 OID 96987)
+-- TOC entry 8839 (class 0 OID 96987)
 -- Dependencies: 504
 -- Data for Name: journal; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10621,7 +10652,7 @@ COPY public.journal (id, trxn_request_id, trxn_reference, external_trxn_referenc
 
 
 --
--- TOC entry 8811 (class 0 OID 97228)
+-- TOC entry 8843 (class 0 OID 97228)
 -- Dependencies: 508
 -- Data for Name: journal_line; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10631,7 +10662,7 @@ COPY public.journal_line (id, profile_id, profile_type_code, journal_action, cre
 
 
 --
--- TOC entry 8809 (class 0 OID 97014)
+-- TOC entry 8841 (class 0 OID 97014)
 -- Dependencies: 506
 -- Data for Name: journal_line_summary; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10641,7 +10672,7 @@ COPY public.journal_line_summary (id, journal_id, journal_action, debit_profile_
 
 
 --
--- TOC entry 8812 (class 0 OID 97479)
+-- TOC entry 8844 (class 0 OID 97479)
 -- Dependencies: 509
 -- Data for Name: merchant_access_whitelist; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10651,7 +10682,7 @@ COPY public.merchant_access_whitelist (ip_address, merchant_full_name, merchant_
 
 
 --
--- TOC entry 8681 (class 0 OID 37968)
+-- TOC entry 8713 (class 0 OID 37968)
 -- Dependencies: 377
 -- Data for Name: merchant_profile_details; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10661,7 +10692,7 @@ COPY public.merchant_profile_details (id, user_sys_id, profile_id, first_name, m
 
 
 --
--- TOC entry 8688 (class 0 OID 38110)
+-- TOC entry 8720 (class 0 OID 38110)
 -- Dependencies: 384
 -- Data for Name: merchant_profiles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10671,7 +10702,7 @@ COPY public.merchant_profiles (id, user_sys_id, profile_detail_sys_id, profile_i
 
 
 --
--- TOC entry 8789 (class 0 OID 87493)
+-- TOC entry 8821 (class 0 OID 87493)
 -- Dependencies: 485
 -- Data for Name: merchant_swift_wallets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10681,7 +10712,7 @@ COPY public.merchant_swift_wallets (id, wallet_accnt_no, book_balance, book_bala
 
 
 --
--- TOC entry 8703 (class 0 OID 46703)
+-- TOC entry 8735 (class 0 OID 46703)
 -- Dependencies: 399
 -- Data for Name: merchant_user_device_sessions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10691,7 +10722,7 @@ COPY public.merchant_user_device_sessions (id, profile_type_code, request_partne
 
 
 --
--- TOC entry 8685 (class 0 OID 38071)
+-- TOC entry 8717 (class 0 OID 38071)
 -- Dependencies: 381
 -- Data for Name: merchant_users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10701,7 +10732,7 @@ COPY public.merchant_users (id, profile_detail_id, username, user_password, firs
 
 
 --
--- TOC entry 8689 (class 0 OID 38146)
+-- TOC entry 8721 (class 0 OID 38146)
 -- Dependencies: 385
 -- Data for Name: merchant_wallets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10711,7 +10742,7 @@ COPY public.merchant_wallets (id, wallet_accnt_no, current_balance, date_opened,
 
 
 --
--- TOC entry 8717 (class 0 OID 55669)
+-- TOC entry 8749 (class 0 OID 55669)
 -- Dependencies: 413
 -- Data for Name: node_in_sessions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10721,7 +10752,7 @@ COPY public.node_in_sessions (id, node_index, node_name, start_in_session_id, en
 
 
 --
--- TOC entry 8719 (class 0 OID 55677)
+-- TOC entry 8751 (class 0 OID 55677)
 -- Dependencies: 415
 -- Data for Name: node_out_sessions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10731,7 +10762,7 @@ COPY public.node_out_sessions (id, node_index, node_name, start_out_session_id, 
 
 
 --
--- TOC entry 8522 (class 0 OID 18957)
+-- TOC entry 8554 (class 0 OID 18957)
 -- Dependencies: 218
 -- Data for Name: nodes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10741,7 +10772,7 @@ COPY public.nodes (node_id, node_group_code, this_node, wallet_acct_lower_bound,
 
 
 --
--- TOC entry 8571 (class 0 OID 34322)
+-- TOC entry 8603 (class 0 OID 34322)
 -- Dependencies: 267
 -- Data for Name: operational_charges; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10751,7 +10782,7 @@ COPY public.operational_charges (id, scheme_code, charge_name, wallet_account_ty
 
 
 --
--- TOC entry 8529 (class 0 OID 19853)
+-- TOC entry 8561 (class 0 OID 19853)
 -- Dependencies: 225
 -- Data for Name: operational_wallets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10761,7 +10792,7 @@ COPY public.operational_wallets (id, scheme_code, wallet_account_type_id, wallet
 
 
 --
--- TOC entry 8814 (class 0 OID 97497)
+-- TOC entry 8846 (class 0 OID 97497)
 -- Dependencies: 511
 -- Data for Name: partner_access_blacklist; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10771,7 +10802,7 @@ COPY public.partner_access_blacklist (ip_address, user_full_name, user_mobile_nu
 
 
 --
--- TOC entry 8813 (class 0 OID 97488)
+-- TOC entry 8845 (class 0 OID 97488)
 -- Dependencies: 510
 -- Data for Name: partner_access_whitelist; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10781,7 +10812,7 @@ COPY public.partner_access_whitelist (ip_address, partner_full_name, partner_mob
 
 
 --
--- TOC entry 8735 (class 0 OID 72505)
+-- TOC entry 8767 (class 0 OID 72505)
 -- Dependencies: 431
 -- Data for Name: partner_loan_tenures; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10791,7 +10822,7 @@ COPY public.partner_loan_tenures (id, company_id, partner_code, application_code
 
 
 --
--- TOC entry 8733 (class 0 OID 72493)
+-- TOC entry 8765 (class 0 OID 72493)
 -- Dependencies: 429
 -- Data for Name: partner_loan_types; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10801,7 +10832,7 @@ COPY public.partner_loan_types (id, company_id, partner_code, application_code, 
 
 
 --
--- TOC entry 8711 (class 0 OID 46837)
+-- TOC entry 8743 (class 0 OID 46837)
 -- Dependencies: 407
 -- Data for Name: partner_user_device_sessions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10811,7 +10842,7 @@ COPY public.partner_user_device_sessions (id, profile_type_code, request_partner
 
 
 --
--- TOC entry 8745 (class 0 OID 84231)
+-- TOC entry 8777 (class 0 OID 84231)
 -- Dependencies: 441
 -- Data for Name: pending_bank_credit; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10821,7 +10852,7 @@ COPY public.pending_bank_credit (id, init_company_id, partner_code, application_
 
 
 --
--- TOC entry 8747 (class 0 OID 84280)
+-- TOC entry 8779 (class 0 OID 84280)
 -- Dependencies: 443
 -- Data for Name: pending_bank_credit_0; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10831,7 +10862,7 @@ COPY public.pending_bank_credit_0 (id, init_company_id, partner_code, applicatio
 
 
 --
--- TOC entry 8749 (class 0 OID 84380)
+-- TOC entry 8781 (class 0 OID 84380)
 -- Dependencies: 445
 -- Data for Name: pending_bank_credit_1; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10841,7 +10872,7 @@ COPY public.pending_bank_credit_1 (id, init_company_id, partner_code, applicatio
 
 
 --
--- TOC entry 8751 (class 0 OID 84478)
+-- TOC entry 8783 (class 0 OID 84478)
 -- Dependencies: 447
 -- Data for Name: pending_bank_credit_2; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10851,7 +10882,7 @@ COPY public.pending_bank_credit_2 (id, init_company_id, partner_code, applicatio
 
 
 --
--- TOC entry 8753 (class 0 OID 84527)
+-- TOC entry 8785 (class 0 OID 84527)
 -- Dependencies: 449
 -- Data for Name: pending_bank_credit_3; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10861,7 +10892,7 @@ COPY public.pending_bank_credit_3 (id, init_company_id, partner_code, applicatio
 
 
 --
--- TOC entry 8755 (class 0 OID 84576)
+-- TOC entry 8787 (class 0 OID 84576)
 -- Dependencies: 451
 -- Data for Name: pending_bank_credit_4; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10871,7 +10902,7 @@ COPY public.pending_bank_credit_4 (id, init_company_id, partner_code, applicatio
 
 
 --
--- TOC entry 8763 (class 0 OID 85515)
+-- TOC entry 8795 (class 0 OID 85515)
 -- Dependencies: 459
 -- Data for Name: pending_node_credit; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10881,7 +10912,7 @@ COPY public.pending_node_credit (id, init_company_id, partner_code, application_
 
 
 --
--- TOC entry 8761 (class 0 OID 85466)
+-- TOC entry 8793 (class 0 OID 85466)
 -- Dependencies: 457
 -- Data for Name: pending_node_credit_0; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10891,7 +10922,7 @@ COPY public.pending_node_credit_0 (id, init_company_id, partner_code, applicatio
 
 
 --
--- TOC entry 8759 (class 0 OID 85417)
+-- TOC entry 8791 (class 0 OID 85417)
 -- Dependencies: 455
 -- Data for Name: pending_node_credit_1; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10901,7 +10932,7 @@ COPY public.pending_node_credit_1 (id, init_company_id, partner_code, applicatio
 
 
 --
--- TOC entry 8757 (class 0 OID 85368)
+-- TOC entry 8789 (class 0 OID 85368)
 -- Dependencies: 453
 -- Data for Name: pending_node_credit_2; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10911,7 +10942,7 @@ COPY public.pending_node_credit_2 (id, init_company_id, partner_code, applicatio
 
 
 --
--- TOC entry 8767 (class 0 OID 85615)
+-- TOC entry 8799 (class 0 OID 85615)
 -- Dependencies: 463
 -- Data for Name: pending_node_credit_3; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10921,7 +10952,7 @@ COPY public.pending_node_credit_3 (id, init_company_id, partner_code, applicatio
 
 
 --
--- TOC entry 8765 (class 0 OID 85566)
+-- TOC entry 8797 (class 0 OID 85566)
 -- Dependencies: 461
 -- Data for Name: pending_node_credit_4; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10931,7 +10962,7 @@ COPY public.pending_node_credit_4 (id, init_company_id, partner_code, applicatio
 
 
 --
--- TOC entry 8769 (class 0 OID 86245)
+-- TOC entry 8801 (class 0 OID 86245)
 -- Dependencies: 465
 -- Data for Name: pending_process_trxn; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10941,7 +10972,7 @@ COPY public.pending_process_trxn (id, init_company_id, partner_code, application
 
 
 --
--- TOC entry 8779 (class 0 OID 86663)
+-- TOC entry 8811 (class 0 OID 86663)
 -- Dependencies: 475
 -- Data for Name: pending_process_trxn_0; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10951,7 +10982,7 @@ COPY public.pending_process_trxn_0 (id, init_company_id, partner_code, applicati
 
 
 --
--- TOC entry 8771 (class 0 OID 86385)
+-- TOC entry 8803 (class 0 OID 86385)
 -- Dependencies: 467
 -- Data for Name: pending_process_trxn_1; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10961,7 +10992,7 @@ COPY public.pending_process_trxn_1 (id, init_company_id, partner_code, applicati
 
 
 --
--- TOC entry 8773 (class 0 OID 86454)
+-- TOC entry 8805 (class 0 OID 86454)
 -- Dependencies: 469
 -- Data for Name: pending_process_trxn_2; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10971,7 +11002,7 @@ COPY public.pending_process_trxn_2 (id, init_company_id, partner_code, applicati
 
 
 --
--- TOC entry 8775 (class 0 OID 86525)
+-- TOC entry 8807 (class 0 OID 86525)
 -- Dependencies: 471
 -- Data for Name: pending_process_trxn_3; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10981,7 +11012,7 @@ COPY public.pending_process_trxn_3 (id, init_company_id, partner_code, applicati
 
 
 --
--- TOC entry 8777 (class 0 OID 86594)
+-- TOC entry 8809 (class 0 OID 86594)
 -- Dependencies: 473
 -- Data for Name: pending_process_trxn_4; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -10991,7 +11022,7 @@ COPY public.pending_process_trxn_4 (id, init_company_id, partner_code, applicati
 
 
 --
--- TOC entry 8679 (class 0 OID 37917)
+-- TOC entry 8711 (class 0 OID 37917)
 -- Dependencies: 375
 -- Data for Name: pos_profile_details; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11001,7 +11032,7 @@ COPY public.pos_profile_details (id, user_sys_id, profile_id, first_name, middle
 
 
 --
--- TOC entry 8653 (class 0 OID 37197)
+-- TOC entry 8685 (class 0 OID 37197)
 -- Dependencies: 349
 -- Data for Name: pos_profiles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11011,7 +11042,7 @@ COPY public.pos_profiles (id, user_sys_id, profile_detail_sys_id, profile_id, pr
 
 
 --
--- TOC entry 8799 (class 0 OID 88032)
+-- TOC entry 8831 (class 0 OID 88032)
 -- Dependencies: 495
 -- Data for Name: pos_swift_wallets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11021,7 +11052,7 @@ COPY public.pos_swift_wallets (id, wallet_accnt_no, book_balance, book_balance_p
 
 
 --
--- TOC entry 8705 (class 0 OID 46736)
+-- TOC entry 8737 (class 0 OID 46736)
 -- Dependencies: 401
 -- Data for Name: pos_user_device_sessions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11031,7 +11062,7 @@ COPY public.pos_user_device_sessions (id, profile_type_code, request_partner_cod
 
 
 --
--- TOC entry 8644 (class 0 OID 36666)
+-- TOC entry 8676 (class 0 OID 36666)
 -- Dependencies: 340
 -- Data for Name: pos_users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11041,7 +11072,7 @@ COPY public.pos_users (id, profile_sys_id, profile_id, username, user_password, 
 
 
 --
--- TOC entry 8793 (class 0 OID 87786)
+-- TOC entry 8825 (class 0 OID 87786)
 -- Dependencies: 489
 -- Data for Name: pos_wallet_instance_refs; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11051,7 +11082,7 @@ COPY public.pos_wallet_instance_refs (id, wallet_accnt_no, reference_count, upda
 
 
 --
--- TOC entry 8645 (class 0 OID 36842)
+-- TOC entry 8677 (class 0 OID 36842)
 -- Dependencies: 341
 -- Data for Name: pos_wallets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11061,7 +11092,7 @@ COPY public.pos_wallets (id, wallet_accnt_no, current_balance, date_opened, cust
 
 
 --
--- TOC entry 8696 (class 0 OID 46618)
+-- TOC entry 8728 (class 0 OID 46618)
 -- Dependencies: 392
 -- Data for Name: product_scheme_promotions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11071,7 +11102,7 @@ COPY public.product_scheme_promotions (id, product_scheme_code, reward_amount, i
 
 
 --
--- TOC entry 8697 (class 0 OID 46627)
+-- TOC entry 8729 (class 0 OID 46627)
 -- Dependencies: 393
 -- Data for Name: product_scheme_promotions_recycle; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11081,7 +11112,7 @@ COPY public.product_scheme_promotions_recycle (id, product_scheme_code, reward_a
 
 
 --
--- TOC entry 8695 (class 0 OID 46591)
+-- TOC entry 8727 (class 0 OID 46591)
 -- Dependencies: 391
 -- Data for Name: product_scheme_recycle; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11091,7 +11122,7 @@ COPY public.product_scheme_recycle (id, product_name, scheme_code, era_id, use_s
 
 
 --
--- TOC entry 8693 (class 0 OID 46563)
+-- TOC entry 8725 (class 0 OID 46563)
 -- Dependencies: 389
 -- Data for Name: product_schemes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11101,7 +11132,7 @@ COPY public.product_schemes (id, product_name, scheme_code, era_id, use_scheme_k
 
 
 --
--- TOC entry 8523 (class 0 OID 19074)
+-- TOC entry 8555 (class 0 OID 19074)
 -- Dependencies: 219
 -- Data for Name: profile_biometrics; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11111,7 +11142,7 @@ COPY public.profile_biometrics (id, profile_id, email, primary_mobile, facial_pi
 
 
 --
--- TOC entry 8671 (class 0 OID 37709)
+-- TOC entry 8703 (class 0 OID 37709)
 -- Dependencies: 367
 -- Data for Name: profile_details; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11121,7 +11152,7 @@ COPY public.profile_details (id, user_sys_id, profile_id, first_name, middle_nam
 
 
 --
--- TOC entry 8540 (class 0 OID 23907)
+-- TOC entry 8572 (class 0 OID 23907)
 -- Dependencies: 236
 -- Data for Name: profile_details_model; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11131,7 +11162,7 @@ COPY public.profile_details_model (id, user_sys_id, profile_id, first_name, last
 
 
 --
--- TOC entry 8524 (class 0 OID 19084)
+-- TOC entry 8556 (class 0 OID 19084)
 -- Dependencies: 220
 -- Data for Name: profile_display_picture; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11141,7 +11172,7 @@ COPY public.profile_display_picture (id, profile_id, email, primary_mobile, disp
 
 
 --
--- TOC entry 8536 (class 0 OID 22223)
+-- TOC entry 8568 (class 0 OID 22223)
 -- Dependencies: 232
 -- Data for Name: profile_types; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11158,7 +11189,7 @@ COPY public.profile_types (id, profile_type_code, profile_type) FROM stdin;
 
 
 --
--- TOC entry 8737 (class 0 OID 72559)
+-- TOC entry 8769 (class 0 OID 72559)
 -- Dependencies: 433
 -- Data for Name: request_item_batches; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11168,7 +11199,7 @@ COPY public.request_item_batches (id, company_id, application_code, approval_wor
 
 
 --
--- TOC entry 8785 (class 0 OID 86947)
+-- TOC entry 8817 (class 0 OID 86947)
 -- Dependencies: 481
 -- Data for Name: request_log; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11178,7 +11209,7 @@ COPY public.request_log (id, request_id, request_company_id, request_partner_cod
 
 
 --
--- TOC entry 8787 (class 0 OID 87035)
+-- TOC entry 8819 (class 0 OID 87035)
 -- Dependencies: 483
 -- Data for Name: response_log; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11188,7 +11219,7 @@ COPY public.response_log (id, request_id, response_company_id, response_partner_
 
 
 --
--- TOC entry 8624 (class 0 OID 36080)
+-- TOC entry 8656 (class 0 OID 36080)
 -- Dependencies: 320
 -- Data for Name: sales_inventory; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11198,7 +11229,7 @@ COPY public.sales_inventory (id, user_sys_id, profile_sys_id, customer_no, profi
 
 
 --
--- TOC entry 8628 (class 0 OID 36110)
+-- TOC entry 8660 (class 0 OID 36110)
 -- Dependencies: 324
 -- Data for Name: sales_items; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11208,7 +11239,7 @@ COPY public.sales_items (id, user_sys_id, profile_sys_id, customer_no, profile_t
 
 
 --
--- TOC entry 8570 (class 0 OID 34225)
+-- TOC entry 8602 (class 0 OID 34225)
 -- Dependencies: 266
 -- Data for Name: scheme_promotion_recycle; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11218,7 +11249,7 @@ COPY public.scheme_promotion_recycle (id, scheme_code, reward_amount, is_active,
 
 
 --
--- TOC entry 8567 (class 0 OID 34189)
+-- TOC entry 8599 (class 0 OID 34189)
 -- Dependencies: 263
 -- Data for Name: scheme_promotions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11229,7 +11260,7 @@ COPY public.scheme_promotions (id, scheme_code, reward_amount, is_active, target
 
 
 --
--- TOC entry 8569 (class 0 OID 34200)
+-- TOC entry 8601 (class 0 OID 34200)
 -- Dependencies: 265
 -- Data for Name: scheme_recycle; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11239,7 +11270,7 @@ COPY public.scheme_recycle (id, scheme_name, scheme_code, era_id, use_scheme_key
 
 
 --
--- TOC entry 8534 (class 0 OID 20379)
+-- TOC entry 8566 (class 0 OID 20379)
 -- Dependencies: 230
 -- Data for Name: schemes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11251,7 +11282,7 @@ COPY public.schemes (id, scheme_name, scheme_code, era_id, use_scheme_key, pool_
 
 
 --
--- TOC entry 8538 (class 0 OID 22319)
+-- TOC entry 8570 (class 0 OID 22319)
 -- Dependencies: 234
 -- Data for Name: service_channels; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11268,7 +11299,7 @@ COPY public.service_channels (id, channel_id, channel_code, is_active, channel_n
 
 
 --
--- TOC entry 8520 (class 0 OID 16792)
+-- TOC entry 8552 (class 0 OID 16792)
 -- Dependencies: 216
 -- Data for Name: services; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11278,7 +11309,7 @@ COPY public.services (id, service_id, service_reference, service_name, descripti
 
 
 --
--- TOC entry 8677 (class 0 OID 37865)
+-- TOC entry 8709 (class 0 OID 37865)
 -- Dependencies: 373
 -- Data for Name: super_agent_profile_details; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11288,7 +11319,7 @@ COPY public.super_agent_profile_details (id, user_sys_id, profile_id, first_name
 
 
 --
--- TOC entry 8542 (class 0 OID 23998)
+-- TOC entry 8574 (class 0 OID 23998)
 -- Dependencies: 238
 -- Data for Name: super_agent_profile_details_model; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11298,7 +11329,7 @@ COPY public.super_agent_profile_details_model (id, user_sys_id, profile_id, firs
 
 
 --
--- TOC entry 8661 (class 0 OID 37320)
+-- TOC entry 8693 (class 0 OID 37320)
 -- Dependencies: 357
 -- Data for Name: super_agent_profiles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11308,7 +11339,7 @@ COPY public.super_agent_profiles (id, user_sys_id, profile_detail_sys_id, profil
 
 
 --
--- TOC entry 8795 (class 0 OID 87800)
+-- TOC entry 8827 (class 0 OID 87800)
 -- Dependencies: 491
 -- Data for Name: super_agent_swift_wallets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11318,7 +11349,7 @@ COPY public.super_agent_swift_wallets (id, wallet_accnt_no, book_balance, book_b
 
 
 --
--- TOC entry 8707 (class 0 OID 46769)
+-- TOC entry 8739 (class 0 OID 46769)
 -- Dependencies: 403
 -- Data for Name: super_agent_user_device_sessions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11328,7 +11359,7 @@ COPY public.super_agent_user_device_sessions (id, profile_type_code, request_par
 
 
 --
--- TOC entry 8551 (class 0 OID 24348)
+-- TOC entry 8583 (class 0 OID 24348)
 -- Dependencies: 247
 -- Data for Name: super_agent_users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11338,7 +11369,7 @@ COPY public.super_agent_users (id, profile_detail_id, username, user_password, f
 
 
 --
--- TOC entry 8548 (class 0 OID 24296)
+-- TOC entry 8580 (class 0 OID 24296)
 -- Dependencies: 244
 -- Data for Name: super_agent_users_model; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11348,7 +11379,7 @@ COPY public.super_agent_users_model (id, profile_sys_id, profile_id, username, u
 
 
 --
--- TOC entry 8790 (class 0 OID 87765)
+-- TOC entry 8822 (class 0 OID 87765)
 -- Dependencies: 486
 -- Data for Name: super_agent_wallet_instance_refs; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11358,7 +11389,7 @@ COPY public.super_agent_wallet_instance_refs (id, wallet_accnt_no, reference_cou
 
 
 --
--- TOC entry 8646 (class 0 OID 36880)
+-- TOC entry 8678 (class 0 OID 36880)
 -- Dependencies: 342
 -- Data for Name: super_agent_wallets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11368,7 +11399,7 @@ COPY public.super_agent_wallets (id, wallet_accnt_no, current_balance, date_open
 
 
 --
--- TOC entry 8797 (class 0 OID 87940)
+-- TOC entry 8829 (class 0 OID 87940)
 -- Dependencies: 493
 -- Data for Name: super_customer_swift_wallets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11378,7 +11409,7 @@ COPY public.super_customer_swift_wallets (id, wallet_accnt_no, book_balance, boo
 
 
 --
--- TOC entry 8532 (class 0 OID 20338)
+-- TOC entry 8564 (class 0 OID 20338)
 -- Dependencies: 228
 -- Data for Name: sys_app_key_era; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11390,7 +11421,7 @@ COPY public.sys_app_key_era (id, system_key, app_key, era_name) FROM stdin;
 
 
 --
--- TOC entry 8527 (class 0 OID 19376)
+-- TOC entry 8559 (class 0 OID 19376)
 -- Dependencies: 223
 -- Data for Name: sys_key_store; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11402,7 +11433,7 @@ COPY public.sys_key_store (id, key_name, key_value, description) FROM stdin;
 
 
 --
--- TOC entry 8564 (class 0 OID 24917)
+-- TOC entry 8596 (class 0 OID 24917)
 -- Dependencies: 260
 -- Data for Name: system_boundary_log; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11412,7 +11443,7 @@ COPY public.system_boundary_log (id, profile_type_code, unique_cust_id, request_
 
 
 --
--- TOC entry 8566 (class 0 OID 25686)
+-- TOC entry 8598 (class 0 OID 25686)
 -- Dependencies: 262
 -- Data for Name: system_log_summary; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11422,7 +11453,7 @@ COPY public.system_log_summary (id, profile_type_code, unique_cust_id, request_i
 
 
 --
--- TOC entry 8788 (class 0 OID 87485)
+-- TOC entry 8820 (class 0 OID 87485)
 -- Dependencies: 484
 -- Data for Name: test_wallets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11440,7 +11471,7 @@ COPY public.test_wallets (id, wallet_accnt_no, current_balance, current_balance_
 
 
 --
--- TOC entry 8743 (class 0 OID 73381)
+-- TOC entry 8775 (class 0 OID 73381)
 -- Dependencies: 439
 -- Data for Name: transaction_history; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11450,7 +11481,7 @@ COPY public.transaction_history (id, partner_code, scheme_code, processor_node_n
 
 
 --
--- TOC entry 8741 (class 0 OID 72639)
+-- TOC entry 8773 (class 0 OID 72639)
 -- Dependencies: 437
 -- Data for Name: transaction_register; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11460,7 +11491,7 @@ COPY public.transaction_register (id, wallet_id, wallet_accnt_number, customer_r
 
 
 --
--- TOC entry 8572 (class 0 OID 34372)
+-- TOC entry 8604 (class 0 OID 34372)
 -- Dependencies: 268
 -- Data for Name: trxn_bands; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11476,7 +11507,7 @@ COPY public.trxn_bands (id, default_trxn_band, is_active, scheme_code, trxn_band
 
 
 --
--- TOC entry 8556 (class 0 OID 24741)
+-- TOC entry 8588 (class 0 OID 24741)
 -- Dependencies: 252
 -- Data for Name: u_p; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11487,7 +11518,7 @@ COPY public.u_p (id, user_sys_id, login_retries, is_active) FROM stdin;
 
 
 --
--- TOC entry 8558 (class 0 OID 24751)
+-- TOC entry 8590 (class 0 OID 24751)
 -- Dependencies: 254
 -- Data for Name: u_s; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11498,7 +11529,7 @@ COPY public.u_s (id, username) FROM stdin;
 
 
 --
--- TOC entry 8560 (class 0 OID 24780)
+-- TOC entry 8592 (class 0 OID 24780)
 -- Dependencies: 256
 -- Data for Name: unique_bearer_tokens; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11508,7 +11539,7 @@ COPY public.unique_bearer_tokens (id, unique_bearer_token, currently_in_use, exp
 
 
 --
--- TOC entry 8562 (class 0 OID 24816)
+-- TOC entry 8594 (class 0 OID 24816)
 -- Dependencies: 258
 -- Data for Name: unique_customer_keys; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11518,7 +11549,7 @@ COPY public.unique_customer_keys (id, unique_cust_id, unique_customer_id, assign
 
 
 --
--- TOC entry 8526 (class 0 OID 19108)
+-- TOC entry 8558 (class 0 OID 19108)
 -- Dependencies: 222
 -- Data for Name: user_deactivation_defn; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11528,7 +11559,7 @@ COPY public.user_deactivation_defn (id, deactivate_code, deactivate_reason) FROM
 
 
 --
--- TOC entry 8669 (class 0 OID 37657)
+-- TOC entry 8701 (class 0 OID 37657)
 -- Dependencies: 365
 -- Data for Name: user_profile_details; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11538,7 +11569,7 @@ COPY public.user_profile_details (id, user_sys_id, profile_id, first_name, middl
 
 
 --
--- TOC entry 8805 (class 0 OID 96855)
+-- TOC entry 8837 (class 0 OID 96855)
 -- Dependencies: 502
 -- Data for Name: user_sessions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11548,7 +11579,7 @@ COPY public.user_sessions (ip_address, profile_type_code, customer_ref, partner_
 
 
 --
--- TOC entry 8545 (class 0 OID 24137)
+-- TOC entry 8577 (class 0 OID 24137)
 -- Dependencies: 241
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11558,7 +11589,7 @@ COPY public.users (id, profile_id, username, user_password, first_name, last_nam
 
 
 --
--- TOC entry 8525 (class 0 OID 19102)
+-- TOC entry 8557 (class 0 OID 19102)
 -- Dependencies: 221
 -- Data for Name: wallet_acct_lock_defn; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11568,7 +11599,7 @@ COPY public.wallet_acct_lock_defn (id, lock_code, lock_reason) FROM stdin;
 
 
 --
--- TOC entry 8781 (class 0 OID 86732)
+-- TOC entry 8813 (class 0 OID 86732)
 -- Dependencies: 477
 -- Data for Name: wallet_debit_history; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11578,7 +11609,7 @@ COPY public.wallet_debit_history (id, init_company_id, partner_code, application
 
 
 --
--- TOC entry 8715 (class 0 OID 55112)
+-- TOC entry 8747 (class 0 OID 55112)
 -- Dependencies: 411
 -- Data for Name: wallet_register; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11588,7 +11619,7 @@ COPY public.wallet_register (id, wallet_id, wallet_accnt_number, customer_refere
 
 
 --
--- TOC entry 8597 (class 0 OID 35231)
+-- TOC entry 8629 (class 0 OID 35231)
 -- Dependencies: 293
 -- Data for Name: wallet_to_bank_trxn_log_0; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11598,7 +11629,7 @@ COPY public.wallet_to_bank_trxn_log_0 (id, trxn_originating_cust_no, trxn_reques
 
 
 --
--- TOC entry 8599 (class 0 OID 35280)
+-- TOC entry 8631 (class 0 OID 35280)
 -- Dependencies: 295
 -- Data for Name: wallet_to_bank_trxn_log_1; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11608,7 +11639,7 @@ COPY public.wallet_to_bank_trxn_log_1 (id, trxn_originating_cust_no, trxn_reques
 
 
 --
--- TOC entry 8601 (class 0 OID 35330)
+-- TOC entry 8633 (class 0 OID 35330)
 -- Dependencies: 297
 -- Data for Name: wallet_to_bank_trxn_log_2; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11618,7 +11649,7 @@ COPY public.wallet_to_bank_trxn_log_2 (id, trxn_originating_cust_no, trxn_reques
 
 
 --
--- TOC entry 8603 (class 0 OID 35379)
+-- TOC entry 8635 (class 0 OID 35379)
 -- Dependencies: 299
 -- Data for Name: wallet_to_bank_trxn_log_3; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11628,7 +11659,7 @@ COPY public.wallet_to_bank_trxn_log_3 (id, trxn_originating_cust_no, trxn_reques
 
 
 --
--- TOC entry 8605 (class 0 OID 35428)
+-- TOC entry 8637 (class 0 OID 35428)
 -- Dependencies: 301
 -- Data for Name: wallet_to_bank_trxn_log_4; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11638,7 +11669,7 @@ COPY public.wallet_to_bank_trxn_log_4 (id, trxn_originating_cust_no, trxn_reques
 
 
 --
--- TOC entry 8607 (class 0 OID 35477)
+-- TOC entry 8639 (class 0 OID 35477)
 -- Dependencies: 303
 -- Data for Name: wallet_to_bank_trxn_log_5; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -11648,7 +11679,7 @@ COPY public.wallet_to_bank_trxn_log_5 (id, trxn_originating_cust_no, trxn_reques
 
 
 --
--- TOC entry 8918 (class 0 OID 0)
+-- TOC entry 8950 (class 0 OID 0)
 -- Dependencies: 478
 -- Name: account_credit_history_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11657,7 +11688,7 @@ SELECT pg_catalog.setval('public.account_credit_history_id_seq', 1, false);
 
 
 --
--- TOC entry 8919 (class 0 OID 0)
+-- TOC entry 8951 (class 0 OID 0)
 -- Dependencies: 404
 -- Name: admin_user_device_sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11666,7 +11697,7 @@ SELECT pg_catalog.setval('public.admin_user_device_sessions_id_seq', 1, false);
 
 
 --
--- TOC entry 8920 (class 0 OID 0)
+-- TOC entry 8952 (class 0 OID 0)
 -- Dependencies: 370
 -- Name: agent_profile_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11675,7 +11706,7 @@ SELECT pg_catalog.setval('public.agent_profile_details_id_seq', 1, false);
 
 
 --
--- TOC entry 8921 (class 0 OID 0)
+-- TOC entry 8953 (class 0 OID 0)
 -- Dependencies: 350
 -- Name: agent_profiles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11684,7 +11715,7 @@ SELECT pg_catalog.setval('public.agent_profiles_id_seq', 1, false);
 
 
 --
--- TOC entry 8922 (class 0 OID 0)
+-- TOC entry 8954 (class 0 OID 0)
 -- Dependencies: 352
 -- Name: agent_profiles_profile_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11693,7 +11724,7 @@ SELECT pg_catalog.setval('public.agent_profiles_profile_sys_id_seq', 1, false);
 
 
 --
--- TOC entry 8923 (class 0 OID 0)
+-- TOC entry 8955 (class 0 OID 0)
 -- Dependencies: 351
 -- Name: agent_profiles_user_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11702,7 +11733,7 @@ SELECT pg_catalog.setval('public.agent_profiles_user_sys_id_seq', 1, false);
 
 
 --
--- TOC entry 8924 (class 0 OID 0)
+-- TOC entry 8956 (class 0 OID 0)
 -- Dependencies: 394
 -- Name: agent_user_device_sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11711,7 +11742,7 @@ SELECT pg_catalog.setval('public.agent_user_device_sessions_id_seq', 1, false);
 
 
 --
--- TOC entry 8925 (class 0 OID 0)
+-- TOC entry 8957 (class 0 OID 0)
 -- Dependencies: 248
 -- Name: agent_users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11720,7 +11751,7 @@ SELECT pg_catalog.setval('public.agent_users_id_seq', 1, false);
 
 
 --
--- TOC entry 8926 (class 0 OID 0)
+-- TOC entry 8958 (class 0 OID 0)
 -- Dependencies: 249
 -- Name: agent_users_profile_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11729,7 +11760,7 @@ SELECT pg_catalog.setval('public.agent_users_profile_sys_id_seq', 1, false);
 
 
 --
--- TOC entry 8927 (class 0 OID 0)
+-- TOC entry 8959 (class 0 OID 0)
 -- Dependencies: 420
 -- Name: approval_item_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11738,7 +11769,7 @@ SELECT pg_catalog.setval('public.approval_item_groups_id_seq', 1, false);
 
 
 --
--- TOC entry 8928 (class 0 OID 0)
+-- TOC entry 8960 (class 0 OID 0)
 -- Dependencies: 416
 -- Name: approval_item_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11747,7 +11778,7 @@ SELECT pg_catalog.setval('public.approval_item_types_id_seq', 1, false);
 
 
 --
--- TOC entry 8929 (class 0 OID 0)
+-- TOC entry 8961 (class 0 OID 0)
 -- Dependencies: 434
 -- Name: approval_items_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11756,7 +11787,7 @@ SELECT pg_catalog.setval('public.approval_items_id_seq', 1, false);
 
 
 --
--- TOC entry 8930 (class 0 OID 0)
+-- TOC entry 8962 (class 0 OID 0)
 -- Dependencies: 418
 -- Name: approval_requests_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11765,7 +11796,7 @@ SELECT pg_catalog.setval('public.approval_requests_id_seq', 1, false);
 
 
 --
--- TOC entry 8931 (class 0 OID 0)
+-- TOC entry 8963 (class 0 OID 0)
 -- Dependencies: 426
 -- Name: approval_routes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11774,7 +11805,7 @@ SELECT pg_catalog.setval('public.approval_routes_id_seq', 1, false);
 
 
 --
--- TOC entry 8932 (class 0 OID 0)
+-- TOC entry 8964 (class 0 OID 0)
 -- Dependencies: 422
 -- Name: approval_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11783,7 +11814,7 @@ SELECT pg_catalog.setval('public.approval_user_groups_id_seq', 1, false);
 
 
 --
--- TOC entry 8933 (class 0 OID 0)
+-- TOC entry 8965 (class 0 OID 0)
 -- Dependencies: 424
 -- Name: approval_workflow_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11792,7 +11823,7 @@ SELECT pg_catalog.setval('public.approval_workflow_id_seq', 1, false);
 
 
 --
--- TOC entry 8934 (class 0 OID 0)
+-- TOC entry 8966 (class 0 OID 0)
 -- Dependencies: 213
 -- Name: billing_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11801,7 +11832,7 @@ SELECT pg_catalog.setval('public.billing_id_seq', 1, false);
 
 
 --
--- TOC entry 8935 (class 0 OID 0)
+-- TOC entry 8967 (class 0 OID 0)
 -- Dependencies: 368
 -- Name: customer_profile_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11810,7 +11841,7 @@ SELECT pg_catalog.setval('public.customer_profile_details_id_seq', 1, false);
 
 
 --
--- TOC entry 8936 (class 0 OID 0)
+-- TOC entry 8968 (class 0 OID 0)
 -- Dependencies: 497
 -- Name: customer_request_security_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11819,7 +11850,7 @@ SELECT pg_catalog.setval('public.customer_request_security_id_seq', 1, false);
 
 
 --
--- TOC entry 8937 (class 0 OID 0)
+-- TOC entry 8969 (class 0 OID 0)
 -- Dependencies: 378
 -- Name: customer_tier_1_profile_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11828,7 +11859,7 @@ SELECT pg_catalog.setval('public.customer_tier_1_profile_details_id_seq', 1, fal
 
 
 --
--- TOC entry 8938 (class 0 OID 0)
+-- TOC entry 8970 (class 0 OID 0)
 -- Dependencies: 358
 -- Name: customer_tier_1_profiles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11837,7 +11868,7 @@ SELECT pg_catalog.setval('public.customer_tier_1_profiles_id_seq', 1, false);
 
 
 --
--- TOC entry 8939 (class 0 OID 0)
+-- TOC entry 8971 (class 0 OID 0)
 -- Dependencies: 360
 -- Name: customer_tier_1_profiles_profile_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11846,7 +11877,7 @@ SELECT pg_catalog.setval('public.customer_tier_1_profiles_profile_sys_id_seq', 1
 
 
 --
--- TOC entry 8940 (class 0 OID 0)
+-- TOC entry 8972 (class 0 OID 0)
 -- Dependencies: 359
 -- Name: customer_tier_1_profiles_user_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11855,7 +11886,7 @@ SELECT pg_catalog.setval('public.customer_tier_1_profiles_user_sys_id_seq', 1, f
 
 
 --
--- TOC entry 8941 (class 0 OID 0)
+-- TOC entry 8973 (class 0 OID 0)
 -- Dependencies: 408
 -- Name: customer_tier_1_user_device_sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11864,7 +11895,7 @@ SELECT pg_catalog.setval('public.customer_tier_1_user_device_sessions_id_seq', 1
 
 
 --
--- TOC entry 8942 (class 0 OID 0)
+-- TOC entry 8974 (class 0 OID 0)
 -- Dependencies: 336
 -- Name: customer_tier_1_users_customer_no_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11873,7 +11904,7 @@ SELECT pg_catalog.setval('public.customer_tier_1_users_customer_no_seq', 1, fals
 
 
 --
--- TOC entry 8943 (class 0 OID 0)
+-- TOC entry 8975 (class 0 OID 0)
 -- Dependencies: 334
 -- Name: customer_tier_1_users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11882,7 +11913,7 @@ SELECT pg_catalog.setval('public.customer_tier_1_users_id_seq', 1, false);
 
 
 --
--- TOC entry 8944 (class 0 OID 0)
+-- TOC entry 8976 (class 0 OID 0)
 -- Dependencies: 335
 -- Name: customer_tier_1_users_profile_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11891,7 +11922,7 @@ SELECT pg_catalog.setval('public.customer_tier_1_users_profile_sys_id_seq', 1, f
 
 
 --
--- TOC entry 8945 (class 0 OID 0)
+-- TOC entry 8977 (class 0 OID 0)
 -- Dependencies: 396
 -- Name: customer_user_device_sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11900,7 +11931,7 @@ SELECT pg_catalog.setval('public.customer_user_device_sessions_id_seq', 1, false
 
 
 --
--- TOC entry 8946 (class 0 OID 0)
+-- TOC entry 8978 (class 0 OID 0)
 -- Dependencies: 386
 -- Name: customer_users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11909,7 +11940,7 @@ SELECT pg_catalog.setval('public.customer_users_id_seq', 1, false);
 
 
 --
--- TOC entry 8947 (class 0 OID 0)
+-- TOC entry 8979 (class 0 OID 0)
 -- Dependencies: 276
 -- Name: inter_node_wallet_trxn_log_0_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11918,7 +11949,7 @@ SELECT pg_catalog.setval('public.inter_node_wallet_trxn_log_0_id_seq', 1, false)
 
 
 --
--- TOC entry 8948 (class 0 OID 0)
+-- TOC entry 8980 (class 0 OID 0)
 -- Dependencies: 270
 -- Name: inter_node_wallet_trxn_log_1_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11927,7 +11958,7 @@ SELECT pg_catalog.setval('public.inter_node_wallet_trxn_log_1_id_seq', 1, false)
 
 
 --
--- TOC entry 8949 (class 0 OID 0)
+-- TOC entry 8981 (class 0 OID 0)
 -- Dependencies: 272
 -- Name: inter_node_wallet_trxn_log_2_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11936,7 +11967,7 @@ SELECT pg_catalog.setval('public.inter_node_wallet_trxn_log_2_id_seq', 1, false)
 
 
 --
--- TOC entry 8950 (class 0 OID 0)
+-- TOC entry 8982 (class 0 OID 0)
 -- Dependencies: 274
 -- Name: inter_node_wallet_trxn_log_3_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11945,7 +11976,7 @@ SELECT pg_catalog.setval('public.inter_node_wallet_trxn_log_3_id_seq', 1, false)
 
 
 --
--- TOC entry 8951 (class 0 OID 0)
+-- TOC entry 8983 (class 0 OID 0)
 -- Dependencies: 278
 -- Name: inter_node_wallet_trxn_log_4_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11954,7 +11985,7 @@ SELECT pg_catalog.setval('public.inter_node_wallet_trxn_log_4_id_seq', 1, false)
 
 
 --
--- TOC entry 8952 (class 0 OID 0)
+-- TOC entry 8984 (class 0 OID 0)
 -- Dependencies: 280
 -- Name: inter_node_wallet_trxn_log_5_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11963,7 +11994,7 @@ SELECT pg_catalog.setval('public.inter_node_wallet_trxn_log_5_id_seq', 1, false)
 
 
 --
--- TOC entry 8953 (class 0 OID 0)
+-- TOC entry 8985 (class 0 OID 0)
 -- Dependencies: 290
 -- Name: intra_node_wallet_trxn_log_0_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11972,7 +12003,7 @@ SELECT pg_catalog.setval('public.intra_node_wallet_trxn_log_0_id_seq', 1, false)
 
 
 --
--- TOC entry 8954 (class 0 OID 0)
+-- TOC entry 8986 (class 0 OID 0)
 -- Dependencies: 288
 -- Name: intra_node_wallet_trxn_log_1_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11981,7 +12012,7 @@ SELECT pg_catalog.setval('public.intra_node_wallet_trxn_log_1_id_seq', 1, false)
 
 
 --
--- TOC entry 8955 (class 0 OID 0)
+-- TOC entry 8987 (class 0 OID 0)
 -- Dependencies: 286
 -- Name: intra_node_wallet_trxn_log_2_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11990,7 +12021,7 @@ SELECT pg_catalog.setval('public.intra_node_wallet_trxn_log_2_id_seq', 1, false)
 
 
 --
--- TOC entry 8956 (class 0 OID 0)
+-- TOC entry 8988 (class 0 OID 0)
 -- Dependencies: 284
 -- Name: intra_node_wallet_trxn_log_3_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -11999,7 +12030,7 @@ SELECT pg_catalog.setval('public.intra_node_wallet_trxn_log_3_id_seq', 1, false)
 
 
 --
--- TOC entry 8957 (class 0 OID 0)
+-- TOC entry 8989 (class 0 OID 0)
 -- Dependencies: 282
 -- Name: intra_node_wallet_trxn_log_4_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12008,7 +12039,7 @@ SELECT pg_catalog.setval('public.intra_node_wallet_trxn_log_4_id_seq', 1, false)
 
 
 --
--- TOC entry 8958 (class 0 OID 0)
+-- TOC entry 8990 (class 0 OID 0)
 -- Dependencies: 304
 -- Name: intra_node_wallet_trxn_log_5_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12017,7 +12048,7 @@ SELECT pg_catalog.setval('public.intra_node_wallet_trxn_log_5_id_seq', 1, false)
 
 
 --
--- TOC entry 8959 (class 0 OID 0)
+-- TOC entry 8991 (class 0 OID 0)
 -- Dependencies: 313
 -- Name: inventory_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12026,7 +12057,7 @@ SELECT pg_catalog.setval('public.inventory_id_seq', 1, false);
 
 
 --
--- TOC entry 8960 (class 0 OID 0)
+-- TOC entry 8992 (class 0 OID 0)
 -- Dependencies: 325
 -- Name: inventory_items_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12035,7 +12066,7 @@ SELECT pg_catalog.setval('public.inventory_items_id_seq', 1, false);
 
 
 --
--- TOC entry 8961 (class 0 OID 0)
+-- TOC entry 8993 (class 0 OID 0)
 -- Dependencies: 327
 -- Name: inventory_items_profile_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12044,7 +12075,7 @@ SELECT pg_catalog.setval('public.inventory_items_profile_sys_id_seq', 1, false);
 
 
 --
--- TOC entry 8962 (class 0 OID 0)
+-- TOC entry 8994 (class 0 OID 0)
 -- Dependencies: 326
 -- Name: inventory_items_user_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12053,7 +12084,7 @@ SELECT pg_catalog.setval('public.inventory_items_user_sys_id_seq', 1, false);
 
 
 --
--- TOC entry 8963 (class 0 OID 0)
+-- TOC entry 8995 (class 0 OID 0)
 -- Dependencies: 315
 -- Name: inventory_profile_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12062,7 +12093,7 @@ SELECT pg_catalog.setval('public.inventory_profile_sys_id_seq', 1, false);
 
 
 --
--- TOC entry 8964 (class 0 OID 0)
+-- TOC entry 8996 (class 0 OID 0)
 -- Dependencies: 314
 -- Name: inventory_user_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12071,7 +12102,7 @@ SELECT pg_catalog.setval('public.inventory_user_sys_id_seq', 1, false);
 
 
 --
--- TOC entry 8965 (class 0 OID 0)
+-- TOC entry 8997 (class 0 OID 0)
 -- Dependencies: 503
 -- Name: journal_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12080,7 +12111,7 @@ SELECT pg_catalog.setval('public.journal_id_seq', 1, false);
 
 
 --
--- TOC entry 8966 (class 0 OID 0)
+-- TOC entry 8998 (class 0 OID 0)
 -- Dependencies: 507
 -- Name: journal_line_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12089,7 +12120,7 @@ SELECT pg_catalog.setval('public.journal_line_id_seq', 1, false);
 
 
 --
--- TOC entry 8967 (class 0 OID 0)
+-- TOC entry 8999 (class 0 OID 0)
 -- Dependencies: 505
 -- Name: journal_line_summary_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12098,7 +12129,7 @@ SELECT pg_catalog.setval('public.journal_line_summary_id_seq', 1, false);
 
 
 --
--- TOC entry 8968 (class 0 OID 0)
+-- TOC entry 9000 (class 0 OID 0)
 -- Dependencies: 376
 -- Name: merchant_profile_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12107,7 +12138,7 @@ SELECT pg_catalog.setval('public.merchant_profile_details_id_seq', 1, false);
 
 
 --
--- TOC entry 8969 (class 0 OID 0)
+-- TOC entry 9001 (class 0 OID 0)
 -- Dependencies: 382
 -- Name: merchant_profiles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12116,7 +12147,7 @@ SELECT pg_catalog.setval('public.merchant_profiles_id_seq', 1, false);
 
 
 --
--- TOC entry 8970 (class 0 OID 0)
+-- TOC entry 9002 (class 0 OID 0)
 -- Dependencies: 383
 -- Name: merchant_profiles_user_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12125,7 +12156,7 @@ SELECT pg_catalog.setval('public.merchant_profiles_user_sys_id_seq', 1, false);
 
 
 --
--- TOC entry 8971 (class 0 OID 0)
+-- TOC entry 9003 (class 0 OID 0)
 -- Dependencies: 398
 -- Name: merchant_user_device_sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12134,7 +12165,7 @@ SELECT pg_catalog.setval('public.merchant_user_device_sessions_id_seq', 1, false
 
 
 --
--- TOC entry 8972 (class 0 OID 0)
+-- TOC entry 9004 (class 0 OID 0)
 -- Dependencies: 380
 -- Name: merchant_users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12143,7 +12174,7 @@ SELECT pg_catalog.setval('public.merchant_users_id_seq', 1, false);
 
 
 --
--- TOC entry 8973 (class 0 OID 0)
+-- TOC entry 9005 (class 0 OID 0)
 -- Dependencies: 412
 -- Name: node_in_sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12152,7 +12183,7 @@ SELECT pg_catalog.setval('public.node_in_sessions_id_seq', 1, false);
 
 
 --
--- TOC entry 8974 (class 0 OID 0)
+-- TOC entry 9006 (class 0 OID 0)
 -- Dependencies: 414
 -- Name: node_out_sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12161,7 +12192,7 @@ SELECT pg_catalog.setval('public.node_out_sessions_id_seq', 1, false);
 
 
 --
--- TOC entry 8975 (class 0 OID 0)
+-- TOC entry 9007 (class 0 OID 0)
 -- Dependencies: 430
 -- Name: partner_loan_tenures_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12170,7 +12201,7 @@ SELECT pg_catalog.setval('public.partner_loan_tenures_id_seq', 1, false);
 
 
 --
--- TOC entry 8976 (class 0 OID 0)
+-- TOC entry 9008 (class 0 OID 0)
 -- Dependencies: 428
 -- Name: partner_loan_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12179,7 +12210,7 @@ SELECT pg_catalog.setval('public.partner_loan_types_id_seq', 1, false);
 
 
 --
--- TOC entry 8977 (class 0 OID 0)
+-- TOC entry 9009 (class 0 OID 0)
 -- Dependencies: 406
 -- Name: partner_user_device_sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12188,7 +12219,7 @@ SELECT pg_catalog.setval('public.partner_user_device_sessions_id_seq', 1, false)
 
 
 --
--- TOC entry 8978 (class 0 OID 0)
+-- TOC entry 9010 (class 0 OID 0)
 -- Dependencies: 442
 -- Name: pending_bank_credit_0_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12197,7 +12228,7 @@ SELECT pg_catalog.setval('public.pending_bank_credit_0_id_seq', 1, false);
 
 
 --
--- TOC entry 8979 (class 0 OID 0)
+-- TOC entry 9011 (class 0 OID 0)
 -- Dependencies: 444
 -- Name: pending_bank_credit_1_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12206,7 +12237,7 @@ SELECT pg_catalog.setval('public.pending_bank_credit_1_id_seq', 1, false);
 
 
 --
--- TOC entry 8980 (class 0 OID 0)
+-- TOC entry 9012 (class 0 OID 0)
 -- Dependencies: 446
 -- Name: pending_bank_credit_2_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12215,7 +12246,7 @@ SELECT pg_catalog.setval('public.pending_bank_credit_2_id_seq', 1, false);
 
 
 --
--- TOC entry 8981 (class 0 OID 0)
+-- TOC entry 9013 (class 0 OID 0)
 -- Dependencies: 448
 -- Name: pending_bank_credit_3_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12224,7 +12255,7 @@ SELECT pg_catalog.setval('public.pending_bank_credit_3_id_seq', 1, false);
 
 
 --
--- TOC entry 8982 (class 0 OID 0)
+-- TOC entry 9014 (class 0 OID 0)
 -- Dependencies: 450
 -- Name: pending_bank_credit_4_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12233,7 +12264,7 @@ SELECT pg_catalog.setval('public.pending_bank_credit_4_id_seq', 1, false);
 
 
 --
--- TOC entry 8983 (class 0 OID 0)
+-- TOC entry 9015 (class 0 OID 0)
 -- Dependencies: 440
 -- Name: pending_bank_credit_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12242,7 +12273,7 @@ SELECT pg_catalog.setval('public.pending_bank_credit_id_seq', 1, false);
 
 
 --
--- TOC entry 8984 (class 0 OID 0)
+-- TOC entry 9016 (class 0 OID 0)
 -- Dependencies: 456
 -- Name: pending_node_credit_0_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12251,7 +12282,7 @@ SELECT pg_catalog.setval('public.pending_node_credit_0_id_seq', 1, false);
 
 
 --
--- TOC entry 8985 (class 0 OID 0)
+-- TOC entry 9017 (class 0 OID 0)
 -- Dependencies: 454
 -- Name: pending_node_credit_1_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12260,7 +12291,7 @@ SELECT pg_catalog.setval('public.pending_node_credit_1_id_seq', 1, false);
 
 
 --
--- TOC entry 8986 (class 0 OID 0)
+-- TOC entry 9018 (class 0 OID 0)
 -- Dependencies: 452
 -- Name: pending_node_credit_2_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12269,7 +12300,7 @@ SELECT pg_catalog.setval('public.pending_node_credit_2_id_seq', 1, false);
 
 
 --
--- TOC entry 8987 (class 0 OID 0)
+-- TOC entry 9019 (class 0 OID 0)
 -- Dependencies: 462
 -- Name: pending_node_credit_3_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12278,7 +12309,7 @@ SELECT pg_catalog.setval('public.pending_node_credit_3_id_seq', 1, false);
 
 
 --
--- TOC entry 8988 (class 0 OID 0)
+-- TOC entry 9020 (class 0 OID 0)
 -- Dependencies: 460
 -- Name: pending_node_credit_4_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12287,7 +12318,7 @@ SELECT pg_catalog.setval('public.pending_node_credit_4_id_seq', 1, false);
 
 
 --
--- TOC entry 8989 (class 0 OID 0)
+-- TOC entry 9021 (class 0 OID 0)
 -- Dependencies: 458
 -- Name: pending_node_credit_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12296,7 +12327,7 @@ SELECT pg_catalog.setval('public.pending_node_credit_id_seq', 1, false);
 
 
 --
--- TOC entry 8990 (class 0 OID 0)
+-- TOC entry 9022 (class 0 OID 0)
 -- Dependencies: 474
 -- Name: pending_process_trxn_0_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12305,7 +12336,7 @@ SELECT pg_catalog.setval('public.pending_process_trxn_0_id_seq', 1, false);
 
 
 --
--- TOC entry 8991 (class 0 OID 0)
+-- TOC entry 9023 (class 0 OID 0)
 -- Dependencies: 466
 -- Name: pending_process_trxn_1_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12314,7 +12345,7 @@ SELECT pg_catalog.setval('public.pending_process_trxn_1_id_seq', 1, false);
 
 
 --
--- TOC entry 8992 (class 0 OID 0)
+-- TOC entry 9024 (class 0 OID 0)
 -- Dependencies: 468
 -- Name: pending_process_trxn_2_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12323,7 +12354,7 @@ SELECT pg_catalog.setval('public.pending_process_trxn_2_id_seq', 1, false);
 
 
 --
--- TOC entry 8993 (class 0 OID 0)
+-- TOC entry 9025 (class 0 OID 0)
 -- Dependencies: 470
 -- Name: pending_process_trxn_3_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12332,7 +12363,7 @@ SELECT pg_catalog.setval('public.pending_process_trxn_3_id_seq', 1, false);
 
 
 --
--- TOC entry 8994 (class 0 OID 0)
+-- TOC entry 9026 (class 0 OID 0)
 -- Dependencies: 472
 -- Name: pending_process_trxn_4_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12341,7 +12372,7 @@ SELECT pg_catalog.setval('public.pending_process_trxn_4_id_seq', 1, false);
 
 
 --
--- TOC entry 8995 (class 0 OID 0)
+-- TOC entry 9027 (class 0 OID 0)
 -- Dependencies: 464
 -- Name: pending_process_trxn_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12350,7 +12381,7 @@ SELECT pg_catalog.setval('public.pending_process_trxn_id_seq', 1, false);
 
 
 --
--- TOC entry 8996 (class 0 OID 0)
+-- TOC entry 9028 (class 0 OID 0)
 -- Dependencies: 374
 -- Name: pos_profile_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12359,7 +12390,7 @@ SELECT pg_catalog.setval('public.pos_profile_details_id_seq', 1, false);
 
 
 --
--- TOC entry 8997 (class 0 OID 0)
+-- TOC entry 9029 (class 0 OID 0)
 -- Dependencies: 346
 -- Name: pos_profiles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12368,7 +12399,7 @@ SELECT pg_catalog.setval('public.pos_profiles_id_seq', 1, false);
 
 
 --
--- TOC entry 8998 (class 0 OID 0)
+-- TOC entry 9030 (class 0 OID 0)
 -- Dependencies: 348
 -- Name: pos_profiles_profile_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12377,7 +12408,7 @@ SELECT pg_catalog.setval('public.pos_profiles_profile_sys_id_seq', 1, false);
 
 
 --
--- TOC entry 8999 (class 0 OID 0)
+-- TOC entry 9031 (class 0 OID 0)
 -- Dependencies: 347
 -- Name: pos_profiles_user_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12386,7 +12417,7 @@ SELECT pg_catalog.setval('public.pos_profiles_user_sys_id_seq', 1, false);
 
 
 --
--- TOC entry 9000 (class 0 OID 0)
+-- TOC entry 9032 (class 0 OID 0)
 -- Dependencies: 400
 -- Name: pos_user_device_sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12395,7 +12426,7 @@ SELECT pg_catalog.setval('public.pos_user_device_sessions_id_seq', 1, false);
 
 
 --
--- TOC entry 9001 (class 0 OID 0)
+-- TOC entry 9033 (class 0 OID 0)
 -- Dependencies: 338
 -- Name: pos_users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12404,7 +12435,7 @@ SELECT pg_catalog.setval('public.pos_users_id_seq', 1, false);
 
 
 --
--- TOC entry 9002 (class 0 OID 0)
+-- TOC entry 9034 (class 0 OID 0)
 -- Dependencies: 339
 -- Name: pos_users_profile_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12413,7 +12444,7 @@ SELECT pg_catalog.setval('public.pos_users_profile_sys_id_seq', 1, false);
 
 
 --
--- TOC entry 9003 (class 0 OID 0)
+-- TOC entry 9035 (class 0 OID 0)
 -- Dependencies: 390
 -- Name: product_scheme_recycle_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12422,7 +12453,7 @@ SELECT pg_catalog.setval('public.product_scheme_recycle_id_seq', 1, false);
 
 
 --
--- TOC entry 9004 (class 0 OID 0)
+-- TOC entry 9036 (class 0 OID 0)
 -- Dependencies: 388
 -- Name: product_schemes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12431,7 +12462,7 @@ SELECT pg_catalog.setval('public.product_schemes_id_seq', 1, false);
 
 
 --
--- TOC entry 9005 (class 0 OID 0)
+-- TOC entry 9037 (class 0 OID 0)
 -- Dependencies: 366
 -- Name: profile_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12440,7 +12471,7 @@ SELECT pg_catalog.setval('public.profile_details_id_seq', 1, false);
 
 
 --
--- TOC entry 9006 (class 0 OID 0)
+-- TOC entry 9038 (class 0 OID 0)
 -- Dependencies: 235
 -- Name: profile_details_model_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12449,7 +12480,7 @@ SELECT pg_catalog.setval('public.profile_details_model_id_seq', 1, false);
 
 
 --
--- TOC entry 9007 (class 0 OID 0)
+-- TOC entry 9039 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: profile_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12458,7 +12489,7 @@ SELECT pg_catalog.setval('public.profile_types_id_seq', 5, true);
 
 
 --
--- TOC entry 9008 (class 0 OID 0)
+-- TOC entry 9040 (class 0 OID 0)
 -- Dependencies: 432
 -- Name: request_item_batches_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12467,7 +12498,7 @@ SELECT pg_catalog.setval('public.request_item_batches_id_seq', 1, false);
 
 
 --
--- TOC entry 9009 (class 0 OID 0)
+-- TOC entry 9041 (class 0 OID 0)
 -- Dependencies: 480
 -- Name: request_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12476,7 +12507,7 @@ SELECT pg_catalog.setval('public.request_log_id_seq', 1, false);
 
 
 --
--- TOC entry 9010 (class 0 OID 0)
+-- TOC entry 9042 (class 0 OID 0)
 -- Dependencies: 482
 -- Name: response_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12485,7 +12516,7 @@ SELECT pg_catalog.setval('public.response_log_id_seq', 1, false);
 
 
 --
--- TOC entry 9011 (class 0 OID 0)
+-- TOC entry 9043 (class 0 OID 0)
 -- Dependencies: 317
 -- Name: sales_inventory_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12494,7 +12525,7 @@ SELECT pg_catalog.setval('public.sales_inventory_id_seq', 1, false);
 
 
 --
--- TOC entry 9012 (class 0 OID 0)
+-- TOC entry 9044 (class 0 OID 0)
 -- Dependencies: 319
 -- Name: sales_inventory_profile_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12503,7 +12534,7 @@ SELECT pg_catalog.setval('public.sales_inventory_profile_sys_id_seq', 1, false);
 
 
 --
--- TOC entry 9013 (class 0 OID 0)
+-- TOC entry 9045 (class 0 OID 0)
 -- Dependencies: 318
 -- Name: sales_inventory_user_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12512,7 +12543,7 @@ SELECT pg_catalog.setval('public.sales_inventory_user_sys_id_seq', 1, false);
 
 
 --
--- TOC entry 9014 (class 0 OID 0)
+-- TOC entry 9046 (class 0 OID 0)
 -- Dependencies: 321
 -- Name: sales_items_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12521,7 +12552,7 @@ SELECT pg_catalog.setval('public.sales_items_id_seq', 1, false);
 
 
 --
--- TOC entry 9015 (class 0 OID 0)
+-- TOC entry 9047 (class 0 OID 0)
 -- Dependencies: 323
 -- Name: sales_items_profile_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12530,7 +12561,7 @@ SELECT pg_catalog.setval('public.sales_items_profile_sys_id_seq', 1, false);
 
 
 --
--- TOC entry 9016 (class 0 OID 0)
+-- TOC entry 9048 (class 0 OID 0)
 -- Dependencies: 322
 -- Name: sales_items_user_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12539,7 +12570,7 @@ SELECT pg_catalog.setval('public.sales_items_user_sys_id_seq', 1, false);
 
 
 --
--- TOC entry 9017 (class 0 OID 0)
+-- TOC entry 9049 (class 0 OID 0)
 -- Dependencies: 264
 -- Name: scheme_recycle_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12548,7 +12579,7 @@ SELECT pg_catalog.setval('public.scheme_recycle_id_seq', 1, false);
 
 
 --
--- TOC entry 9018 (class 0 OID 0)
+-- TOC entry 9050 (class 0 OID 0)
 -- Dependencies: 229
 -- Name: schemes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12557,7 +12588,7 @@ SELECT pg_catalog.setval('public.schemes_id_seq', 1, false);
 
 
 --
--- TOC entry 9019 (class 0 OID 0)
+-- TOC entry 9051 (class 0 OID 0)
 -- Dependencies: 233
 -- Name: service_channels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12566,7 +12597,7 @@ SELECT pg_catalog.setval('public.service_channels_id_seq', 7, true);
 
 
 --
--- TOC entry 9020 (class 0 OID 0)
+-- TOC entry 9052 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: services_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12575,7 +12606,7 @@ SELECT pg_catalog.setval('public.services_id_seq', 1, false);
 
 
 --
--- TOC entry 9021 (class 0 OID 0)
+-- TOC entry 9053 (class 0 OID 0)
 -- Dependencies: 372
 -- Name: super_agent_profile_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12584,7 +12615,7 @@ SELECT pg_catalog.setval('public.super_agent_profile_details_id_seq', 1, false);
 
 
 --
--- TOC entry 9022 (class 0 OID 0)
+-- TOC entry 9054 (class 0 OID 0)
 -- Dependencies: 237
 -- Name: super_agent_profile_details_model_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12593,7 +12624,7 @@ SELECT pg_catalog.setval('public.super_agent_profile_details_model_id_seq', 1, f
 
 
 --
--- TOC entry 9023 (class 0 OID 0)
+-- TOC entry 9055 (class 0 OID 0)
 -- Dependencies: 354
 -- Name: super_agent_profiles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12602,7 +12633,7 @@ SELECT pg_catalog.setval('public.super_agent_profiles_id_seq', 1, false);
 
 
 --
--- TOC entry 9024 (class 0 OID 0)
+-- TOC entry 9056 (class 0 OID 0)
 -- Dependencies: 356
 -- Name: super_agent_profiles_profile_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12611,7 +12642,7 @@ SELECT pg_catalog.setval('public.super_agent_profiles_profile_sys_id_seq', 1, fa
 
 
 --
--- TOC entry 9025 (class 0 OID 0)
+-- TOC entry 9057 (class 0 OID 0)
 -- Dependencies: 355
 -- Name: super_agent_profiles_user_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12620,7 +12651,7 @@ SELECT pg_catalog.setval('public.super_agent_profiles_user_sys_id_seq', 1, false
 
 
 --
--- TOC entry 9026 (class 0 OID 0)
+-- TOC entry 9058 (class 0 OID 0)
 -- Dependencies: 402
 -- Name: super_agent_user_device_sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12629,7 +12660,7 @@ SELECT pg_catalog.setval('public.super_agent_user_device_sessions_id_seq', 1, fa
 
 
 --
--- TOC entry 9027 (class 0 OID 0)
+-- TOC entry 9059 (class 0 OID 0)
 -- Dependencies: 245
 -- Name: super_agent_users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12638,7 +12669,7 @@ SELECT pg_catalog.setval('public.super_agent_users_id_seq', 1, false);
 
 
 --
--- TOC entry 9028 (class 0 OID 0)
+-- TOC entry 9060 (class 0 OID 0)
 -- Dependencies: 242
 -- Name: super_agent_users_model_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12647,7 +12678,7 @@ SELECT pg_catalog.setval('public.super_agent_users_model_id_seq', 1, false);
 
 
 --
--- TOC entry 9029 (class 0 OID 0)
+-- TOC entry 9061 (class 0 OID 0)
 -- Dependencies: 243
 -- Name: super_agent_users_model_profile_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12656,7 +12687,7 @@ SELECT pg_catalog.setval('public.super_agent_users_model_profile_sys_id_seq', 1,
 
 
 --
--- TOC entry 9030 (class 0 OID 0)
+-- TOC entry 9062 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: super_agent_users_profile_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12665,7 +12696,7 @@ SELECT pg_catalog.setval('public.super_agent_users_profile_sys_id_seq', 1, false
 
 
 --
--- TOC entry 9031 (class 0 OID 0)
+-- TOC entry 9063 (class 0 OID 0)
 -- Dependencies: 227
 -- Name: sys_app_key_era_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12674,7 +12705,7 @@ SELECT pg_catalog.setval('public.sys_app_key_era_id_seq', 2, true);
 
 
 --
--- TOC entry 9032 (class 0 OID 0)
+-- TOC entry 9064 (class 0 OID 0)
 -- Dependencies: 259
 -- Name: system_boundary_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12683,7 +12714,7 @@ SELECT pg_catalog.setval('public.system_boundary_log_id_seq', 1, false);
 
 
 --
--- TOC entry 9033 (class 0 OID 0)
+-- TOC entry 9065 (class 0 OID 0)
 -- Dependencies: 261
 -- Name: system_log_summary_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12692,7 +12723,7 @@ SELECT pg_catalog.setval('public.system_log_summary_id_seq', 1, false);
 
 
 --
--- TOC entry 9034 (class 0 OID 0)
+-- TOC entry 9066 (class 0 OID 0)
 -- Dependencies: 438
 -- Name: transaction_history_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12701,7 +12732,7 @@ SELECT pg_catalog.setval('public.transaction_history_id_seq', 1, false);
 
 
 --
--- TOC entry 9035 (class 0 OID 0)
+-- TOC entry 9067 (class 0 OID 0)
 -- Dependencies: 436
 -- Name: transaction_register_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12710,7 +12741,7 @@ SELECT pg_catalog.setval('public.transaction_register_id_seq', 1, false);
 
 
 --
--- TOC entry 9036 (class 0 OID 0)
+-- TOC entry 9068 (class 0 OID 0)
 -- Dependencies: 251
 -- Name: u_p_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12719,7 +12750,7 @@ SELECT pg_catalog.setval('public.u_p_id_seq', 1, true);
 
 
 --
--- TOC entry 9037 (class 0 OID 0)
+-- TOC entry 9069 (class 0 OID 0)
 -- Dependencies: 253
 -- Name: u_s_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12728,7 +12759,7 @@ SELECT pg_catalog.setval('public.u_s_id_seq', 1, true);
 
 
 --
--- TOC entry 9038 (class 0 OID 0)
+-- TOC entry 9070 (class 0 OID 0)
 -- Dependencies: 255
 -- Name: unique_bearer_tokens_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12737,7 +12768,7 @@ SELECT pg_catalog.setval('public.unique_bearer_tokens_id_seq', 1, false);
 
 
 --
--- TOC entry 9039 (class 0 OID 0)
+-- TOC entry 9071 (class 0 OID 0)
 -- Dependencies: 257
 -- Name: unique_customer_keys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12746,7 +12777,7 @@ SELECT pg_catalog.setval('public.unique_customer_keys_id_seq', 1, false);
 
 
 --
--- TOC entry 9040 (class 0 OID 0)
+-- TOC entry 9072 (class 0 OID 0)
 -- Dependencies: 364
 -- Name: user_profile_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12755,7 +12786,7 @@ SELECT pg_catalog.setval('public.user_profile_details_id_seq', 1, false);
 
 
 --
--- TOC entry 9041 (class 0 OID 0)
+-- TOC entry 9073 (class 0 OID 0)
 -- Dependencies: 239
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12764,7 +12795,7 @@ SELECT pg_catalog.setval('public.users_id_seq', 1, false);
 
 
 --
--- TOC entry 9042 (class 0 OID 0)
+-- TOC entry 9074 (class 0 OID 0)
 -- Dependencies: 240
 -- Name: users_profile_sys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12773,7 +12804,7 @@ SELECT pg_catalog.setval('public.users_profile_sys_id_seq', 1, false);
 
 
 --
--- TOC entry 9043 (class 0 OID 0)
+-- TOC entry 9075 (class 0 OID 0)
 -- Dependencies: 476
 -- Name: wallet_debit_history_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12782,7 +12813,7 @@ SELECT pg_catalog.setval('public.wallet_debit_history_id_seq', 1, false);
 
 
 --
--- TOC entry 9044 (class 0 OID 0)
+-- TOC entry 9076 (class 0 OID 0)
 -- Dependencies: 410
 -- Name: wallet_register_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12791,7 +12822,7 @@ SELECT pg_catalog.setval('public.wallet_register_id_seq', 1, false);
 
 
 --
--- TOC entry 9045 (class 0 OID 0)
+-- TOC entry 9077 (class 0 OID 0)
 -- Dependencies: 292
 -- Name: wallet_to_bank_trxn_log_0_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12800,7 +12831,7 @@ SELECT pg_catalog.setval('public.wallet_to_bank_trxn_log_0_id_seq', 1, false);
 
 
 --
--- TOC entry 9046 (class 0 OID 0)
+-- TOC entry 9078 (class 0 OID 0)
 -- Dependencies: 294
 -- Name: wallet_to_bank_trxn_log_1_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12809,7 +12840,7 @@ SELECT pg_catalog.setval('public.wallet_to_bank_trxn_log_1_id_seq', 1, false);
 
 
 --
--- TOC entry 9047 (class 0 OID 0)
+-- TOC entry 9079 (class 0 OID 0)
 -- Dependencies: 296
 -- Name: wallet_to_bank_trxn_log_2_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12818,7 +12849,7 @@ SELECT pg_catalog.setval('public.wallet_to_bank_trxn_log_2_id_seq', 1, false);
 
 
 --
--- TOC entry 9048 (class 0 OID 0)
+-- TOC entry 9080 (class 0 OID 0)
 -- Dependencies: 298
 -- Name: wallet_to_bank_trxn_log_3_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12827,7 +12858,7 @@ SELECT pg_catalog.setval('public.wallet_to_bank_trxn_log_3_id_seq', 1, false);
 
 
 --
--- TOC entry 9049 (class 0 OID 0)
+-- TOC entry 9081 (class 0 OID 0)
 -- Dependencies: 300
 -- Name: wallet_to_bank_trxn_log_4_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12836,7 +12867,7 @@ SELECT pg_catalog.setval('public.wallet_to_bank_trxn_log_4_id_seq', 1, false);
 
 
 --
--- TOC entry 9050 (class 0 OID 0)
+-- TOC entry 9082 (class 0 OID 0)
 -- Dependencies: 302
 -- Name: wallet_to_bank_trxn_log_5_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -12845,7 +12876,7 @@ SELECT pg_catalog.setval('public.wallet_to_bank_trxn_log_5_id_seq', 1, false);
 
 
 --
--- TOC entry 8202 (class 2606 OID 46829)
+-- TOC entry 8234 (class 2606 OID 46829)
 -- Name: admin_user_device_sessions admin_user_device_sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -12854,7 +12885,7 @@ ALTER TABLE ONLY public.admin_user_device_sessions
 
 
 --
--- TOC entry 8114 (class 2606 OID 37858)
+-- TOC entry 8146 (class 2606 OID 37858)
 -- Name: agent_profile_details agent_profile_details_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -12863,7 +12894,7 @@ ALTER TABLE ONLY public.agent_profile_details
 
 
 --
--- TOC entry 8080 (class 2606 OID 37299)
+-- TOC entry 8112 (class 2606 OID 37299)
 -- Name: agent_profiles agent_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -12872,7 +12903,7 @@ ALTER TABLE ONLY public.agent_profiles
 
 
 --
--- TOC entry 8172 (class 2606 OID 46664)
+-- TOC entry 8204 (class 2606 OID 46664)
 -- Name: agent_user_device_sessions agent_user_device_sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -12881,7 +12912,7 @@ ALTER TABLE ONLY public.agent_user_device_sessions
 
 
 --
--- TOC entry 7956 (class 2606 OID 24440)
+-- TOC entry 7988 (class 2606 OID 24440)
 -- Name: agent_users agent_users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -12890,7 +12921,7 @@ ALTER TABLE ONLY public.agent_users
 
 
 --
--- TOC entry 8094 (class 2606 OID 37543)
+-- TOC entry 8126 (class 2606 OID 37543)
 -- Name: beneficiary_accounts beneficiary_accounts_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -12899,7 +12930,7 @@ ALTER TABLE ONLY public.beneficiary_accounts
 
 
 --
--- TOC entry 8092 (class 2606 OID 37508)
+-- TOC entry 8124 (class 2606 OID 37508)
 -- Name: beneficiary_service_accounts beneficiary_service_accounts_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -12908,7 +12939,7 @@ ALTER TABLE ONLY public.beneficiary_service_accounts
 
 
 --
--- TOC entry 7906 (class 2606 OID 34300)
+-- TOC entry 7938 (class 2606 OID 34300)
 -- Name: biller_operational_wallets biller_operational_charges_wallet_accnt_num; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -12917,7 +12948,7 @@ ALTER TABLE ONLY public.biller_operational_wallets
 
 
 --
--- TOC entry 7902 (class 2606 OID 19604)
+-- TOC entry 7934 (class 2606 OID 19604)
 -- Name: biller_settlement_accounts biller_settlement_accounts_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -12926,7 +12957,7 @@ ALTER TABLE ONLY public.biller_settlement_accounts
 
 
 --
--- TOC entry 8238 (class 2606 OID 98073)
+-- TOC entry 8270 (class 2606 OID 98263)
 -- Name: billing_charges_config billing_charges_config_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -12935,7 +12966,7 @@ ALTER TABLE ONLY public.billing_charges_config
 
 
 --
--- TOC entry 7998 (class 2606 OID 34408)
+-- TOC entry 8030 (class 2606 OID 34408)
 -- Name: billing_config_summary billing_config_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -12944,7 +12975,7 @@ ALTER TABLE ONLY public.billing_config_summary
 
 
 --
--- TOC entry 8108 (class 2606 OID 37805)
+-- TOC entry 8140 (class 2606 OID 37805)
 -- Name: customer_profile_details customer_profile_details_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -12953,7 +12984,7 @@ ALTER TABLE ONLY public.customer_profile_details
 
 
 --
--- TOC entry 8220 (class 2606 OID 96368)
+-- TOC entry 8252 (class 2606 OID 96368)
 -- Name: customer_request_security customer_reference_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -12962,7 +12993,7 @@ ALTER TABLE ONLY public.customer_request_security
 
 
 --
--- TOC entry 8222 (class 2606 OID 96366)
+-- TOC entry 8254 (class 2606 OID 96366)
 -- Name: customer_request_security customer_request_security_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -12971,7 +13002,7 @@ ALTER TABLE ONLY public.customer_request_security
 
 
 --
--- TOC entry 8138 (class 2606 OID 38064)
+-- TOC entry 8170 (class 2606 OID 38064)
 -- Name: customer_tier_1_profile_details customer_tier_1_profile_details_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -12980,7 +13011,7 @@ ALTER TABLE ONLY public.customer_tier_1_profile_details
 
 
 --
--- TOC entry 8088 (class 2606 OID 37389)
+-- TOC entry 8120 (class 2606 OID 37389)
 -- Name: customer_tier_1_profiles customer_tier_1_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -12989,7 +13020,7 @@ ALTER TABLE ONLY public.customer_tier_1_profiles
 
 
 --
--- TOC entry 8214 (class 2606 OID 46897)
+-- TOC entry 8246 (class 2606 OID 46897)
 -- Name: customer_tier_1_user_device_sessions customer_tier_1_user_device_sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -12998,7 +13029,7 @@ ALTER TABLE ONLY public.customer_tier_1_user_device_sessions
 
 
 --
--- TOC entry 8068 (class 2606 OID 36422)
+-- TOC entry 8100 (class 2606 OID 36422)
 -- Name: customer_tier_1_users customer_tier_1_users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13007,7 +13038,7 @@ ALTER TABLE ONLY public.customer_tier_1_users
 
 
 --
--- TOC entry 8178 (class 2606 OID 46697)
+-- TOC entry 8210 (class 2606 OID 46697)
 -- Name: customer_user_device_sessions customer_user_device_sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13016,7 +13047,7 @@ ALTER TABLE ONLY public.customer_user_device_sessions
 
 
 --
--- TOC entry 8150 (class 2606 OID 38266)
+-- TOC entry 8182 (class 2606 OID 38266)
 -- Name: customer_users customer_users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13025,7 +13056,7 @@ ALTER TABLE ONLY public.customer_users
 
 
 --
--- TOC entry 8036 (class 2606 OID 35811)
+-- TOC entry 8068 (class 2606 OID 35811)
 -- Name: ext_credit_wallet_rqst_trxn_log_0 ext_credit_wallet_rqst_trxn_log_0_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13034,7 +13065,7 @@ ALTER TABLE ONLY public.ext_credit_wallet_rqst_trxn_log_0
 
 
 --
--- TOC entry 8038 (class 2606 OID 35837)
+-- TOC entry 8070 (class 2606 OID 35837)
 -- Name: ext_credit_wallet_rqst_trxn_log_1 ext_credit_wallet_rqst_trxn_log_1_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13043,7 +13074,7 @@ ALTER TABLE ONLY public.ext_credit_wallet_rqst_trxn_log_1
 
 
 --
--- TOC entry 8040 (class 2606 OID 35863)
+-- TOC entry 8072 (class 2606 OID 35863)
 -- Name: ext_credit_wallet_rqst_trxn_log_2 ext_credit_wallet_rqst_trxn_log_2_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13052,7 +13083,7 @@ ALTER TABLE ONLY public.ext_credit_wallet_rqst_trxn_log_2
 
 
 --
--- TOC entry 8042 (class 2606 OID 35889)
+-- TOC entry 8074 (class 2606 OID 35889)
 -- Name: ext_credit_wallet_rqst_trxn_log_3 ext_credit_wallet_rqst_trxn_log_3_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13061,7 +13092,7 @@ ALTER TABLE ONLY public.ext_credit_wallet_rqst_trxn_log_3
 
 
 --
--- TOC entry 8044 (class 2606 OID 35915)
+-- TOC entry 8076 (class 2606 OID 35915)
 -- Name: ext_credit_wallet_rqst_trxn_log_4 ext_credit_wallet_rqst_trxn_log_4_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13070,7 +13101,7 @@ ALTER TABLE ONLY public.ext_credit_wallet_rqst_trxn_log_4
 
 
 --
--- TOC entry 8046 (class 2606 OID 35941)
+-- TOC entry 8078 (class 2606 OID 35941)
 -- Name: ext_credit_wallet_rqst_trxn_log_5 ext_credit_wallet_rqst_trxn_log_5_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13079,7 +13110,7 @@ ALTER TABLE ONLY public.ext_credit_wallet_rqst_trxn_log_5
 
 
 --
--- TOC entry 8066 (class 2606 OID 36282)
+-- TOC entry 8098 (class 2606 OID 36282)
 -- Name: ext_debit_wallet_rqst_trxn_log_0 ext_debit_wallet_rqst_trxn_log_0_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13088,7 +13119,7 @@ ALTER TABLE ONLY public.ext_debit_wallet_rqst_trxn_log_0
 
 
 --
--- TOC entry 8064 (class 2606 OID 36256)
+-- TOC entry 8096 (class 2606 OID 36256)
 -- Name: ext_debit_wallet_rqst_trxn_log_1 ext_debit_wallet_rqst_trxn_log_1_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13097,7 +13128,7 @@ ALTER TABLE ONLY public.ext_debit_wallet_rqst_trxn_log_1
 
 
 --
--- TOC entry 8062 (class 2606 OID 36229)
+-- TOC entry 8094 (class 2606 OID 36229)
 -- Name: ext_debit_wallet_rqst_trxn_log_2 ext_debit_wallet_rqst_trxn_log_2_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13106,7 +13137,7 @@ ALTER TABLE ONLY public.ext_debit_wallet_rqst_trxn_log_2
 
 
 --
--- TOC entry 8060 (class 2606 OID 36203)
+-- TOC entry 8092 (class 2606 OID 36203)
 -- Name: ext_debit_wallet_rqst_trxn_log_3 ext_debit_wallet_rqst_trxn_log_3_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13115,7 +13146,7 @@ ALTER TABLE ONLY public.ext_debit_wallet_rqst_trxn_log_3
 
 
 --
--- TOC entry 8058 (class 2606 OID 36177)
+-- TOC entry 8090 (class 2606 OID 36177)
 -- Name: ext_debit_wallet_rqst_trxn_log_4 ext_debit_wallet_rqst_trxn_log_4_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13124,7 +13155,7 @@ ALTER TABLE ONLY public.ext_debit_wallet_rqst_trxn_log_4
 
 
 --
--- TOC entry 8048 (class 2606 OID 35968)
+-- TOC entry 8080 (class 2606 OID 35968)
 -- Name: ext_debit_wallet_rqst_trxn_log_5 ext_debit_wallet_rqst_trxn_log_5_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13133,7 +13164,7 @@ ALTER TABLE ONLY public.ext_debit_wallet_rqst_trxn_log_5
 
 
 --
--- TOC entry 8006 (class 2606 OID 34864)
+-- TOC entry 8038 (class 2606 OID 34864)
 -- Name: inter_node_wallet_trxn_log_0 inter_node_wallet_trxn_log_0_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13142,7 +13173,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_0
 
 
 --
--- TOC entry 8000 (class 2606 OID 34689)
+-- TOC entry 8032 (class 2606 OID 34689)
 -- Name: inter_node_wallet_trxn_log_1 inter_node_wallet_trxn_log_1_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13151,7 +13182,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_1
 
 
 --
--- TOC entry 8002 (class 2606 OID 34739)
+-- TOC entry 8034 (class 2606 OID 34739)
 -- Name: inter_node_wallet_trxn_log_2 inter_node_wallet_trxn_log_2_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13160,7 +13191,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_2
 
 
 --
--- TOC entry 8004 (class 2606 OID 34788)
+-- TOC entry 8036 (class 2606 OID 34788)
 -- Name: inter_node_wallet_trxn_log_3 inter_node_wallet_trxn_log_3_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13169,7 +13200,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_3
 
 
 --
--- TOC entry 8008 (class 2606 OID 34914)
+-- TOC entry 8040 (class 2606 OID 34914)
 -- Name: inter_node_wallet_trxn_log_4 inter_node_wallet_trxn_log_4_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13178,7 +13209,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_4
 
 
 --
--- TOC entry 8010 (class 2606 OID 34963)
+-- TOC entry 8042 (class 2606 OID 34963)
 -- Name: inter_node_wallet_trxn_log_5 inter_node_wallet_trxn_log_5_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13187,7 +13218,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_5
 
 
 --
--- TOC entry 8020 (class 2606 OID 35209)
+-- TOC entry 8052 (class 2606 OID 35209)
 -- Name: intra_node_wallet_trxn_log_0 intra_node_wallet_trxn_log_0_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13196,7 +13227,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_0
 
 
 --
--- TOC entry 8018 (class 2606 OID 35159)
+-- TOC entry 8050 (class 2606 OID 35159)
 -- Name: intra_node_wallet_trxn_log_1 intra_node_wallet_trxn_log_1_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13205,7 +13236,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_1
 
 
 --
--- TOC entry 8016 (class 2606 OID 35110)
+-- TOC entry 8048 (class 2606 OID 35110)
 -- Name: intra_node_wallet_trxn_log_2 intra_node_wallet_trxn_log_2_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13214,7 +13245,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_2
 
 
 --
--- TOC entry 8014 (class 2606 OID 35061)
+-- TOC entry 8046 (class 2606 OID 35061)
 -- Name: intra_node_wallet_trxn_log_3 intra_node_wallet_trxn_log_3_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13223,7 +13254,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_3
 
 
 --
--- TOC entry 8012 (class 2606 OID 35012)
+-- TOC entry 8044 (class 2606 OID 35012)
 -- Name: intra_node_wallet_trxn_log_4 intra_node_wallet_trxn_log_4_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13232,7 +13263,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_4
 
 
 --
--- TOC entry 8034 (class 2606 OID 35553)
+-- TOC entry 8066 (class 2606 OID 35553)
 -- Name: intra_node_wallet_trxn_log_5 intra_node_wallet_trxn_log_5_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13241,7 +13272,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_5
 
 
 --
--- TOC entry 8056 (class 2606 OID 36156)
+-- TOC entry 8088 (class 2606 OID 36156)
 -- Name: inventory_items inventory_items_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13250,7 +13281,7 @@ ALTER TABLE ONLY public.inventory_items
 
 
 --
--- TOC entry 8050 (class 2606 OID 36076)
+-- TOC entry 8082 (class 2606 OID 36076)
 -- Name: inventory inventory_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13259,7 +13290,7 @@ ALTER TABLE ONLY public.inventory
 
 
 --
--- TOC entry 8230 (class 2606 OID 97249)
+-- TOC entry 8262 (class 2606 OID 97249)
 -- Name: journal_line journal_line_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13268,7 +13299,7 @@ ALTER TABLE ONLY public.journal_line
 
 
 --
--- TOC entry 8228 (class 2606 OID 97058)
+-- TOC entry 8260 (class 2606 OID 97058)
 -- Name: journal_line_summary journal_line_summary_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13277,7 +13308,7 @@ ALTER TABLE ONLY public.journal_line_summary
 
 
 --
--- TOC entry 8226 (class 2606 OID 97012)
+-- TOC entry 8258 (class 2606 OID 97012)
 -- Name: journal journal_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13286,7 +13317,7 @@ ALTER TABLE ONLY public.journal
 
 
 --
--- TOC entry 8232 (class 2606 OID 97487)
+-- TOC entry 8264 (class 2606 OID 97487)
 -- Name: merchant_access_whitelist merchant_access_whitelist_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13295,7 +13326,7 @@ ALTER TABLE ONLY public.merchant_access_whitelist
 
 
 --
--- TOC entry 8132 (class 2606 OID 38013)
+-- TOC entry 8164 (class 2606 OID 38013)
 -- Name: merchant_profile_details merchant_profile_details_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13304,7 +13335,7 @@ ALTER TABLE ONLY public.merchant_profile_details
 
 
 --
--- TOC entry 8146 (class 2606 OID 38133)
+-- TOC entry 8178 (class 2606 OID 38133)
 -- Name: merchant_profiles merchant_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13313,7 +13344,7 @@ ALTER TABLE ONLY public.merchant_profiles
 
 
 --
--- TOC entry 8184 (class 2606 OID 46730)
+-- TOC entry 8216 (class 2606 OID 46730)
 -- Name: merchant_user_device_sessions merchant_user_device_sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13322,7 +13353,7 @@ ALTER TABLE ONLY public.merchant_user_device_sessions
 
 
 --
--- TOC entry 8144 (class 2606 OID 38107)
+-- TOC entry 8176 (class 2606 OID 38107)
 -- Name: merchant_users merchant_users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13331,7 +13362,7 @@ ALTER TABLE ONLY public.merchant_users
 
 
 --
--- TOC entry 7992 (class 2606 OID 34343)
+-- TOC entry 8024 (class 2606 OID 34343)
 -- Name: operational_charges operational_charges_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13340,7 +13371,7 @@ ALTER TABLE ONLY public.operational_charges
 
 
 --
--- TOC entry 7904 (class 2606 OID 19877)
+-- TOC entry 7936 (class 2606 OID 19877)
 -- Name: operational_wallets operational_wallets_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13349,7 +13380,7 @@ ALTER TABLE ONLY public.operational_wallets
 
 
 --
--- TOC entry 8234 (class 2606 OID 97496)
+-- TOC entry 8266 (class 2606 OID 97496)
 -- Name: partner_access_whitelist partner_access_whitelist_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13358,7 +13389,7 @@ ALTER TABLE ONLY public.partner_access_whitelist
 
 
 --
--- TOC entry 8208 (class 2606 OID 46864)
+-- TOC entry 8240 (class 2606 OID 46864)
 -- Name: partner_user_device_sessions partner_user_device_sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13367,7 +13398,7 @@ ALTER TABLE ONLY public.partner_user_device_sessions
 
 
 --
--- TOC entry 8126 (class 2606 OID 37962)
+-- TOC entry 8158 (class 2606 OID 37962)
 -- Name: pos_profile_details pos_profile_details_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13376,7 +13407,7 @@ ALTER TABLE ONLY public.pos_profile_details
 
 
 --
--- TOC entry 8076 (class 2606 OID 37221)
+-- TOC entry 8108 (class 2606 OID 37221)
 -- Name: pos_profiles pos_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13385,7 +13416,7 @@ ALTER TABLE ONLY public.pos_profiles
 
 
 --
--- TOC entry 8190 (class 2606 OID 46763)
+-- TOC entry 8222 (class 2606 OID 46763)
 -- Name: pos_user_device_sessions pos_user_device_sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13394,7 +13425,7 @@ ALTER TABLE ONLY public.pos_user_device_sessions
 
 
 --
--- TOC entry 8072 (class 2606 OID 36706)
+-- TOC entry 8104 (class 2606 OID 36706)
 -- Name: pos_users pos_users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13403,7 +13434,7 @@ ALTER TABLE ONLY public.pos_users
 
 
 --
--- TOC entry 8168 (class 2606 OID 46626)
+-- TOC entry 8200 (class 2606 OID 46626)
 -- Name: product_scheme_promotions product_scheme_promotions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13412,7 +13443,7 @@ ALTER TABLE ONLY public.product_scheme_promotions
 
 
 --
--- TOC entry 8170 (class 2606 OID 46635)
+-- TOC entry 8202 (class 2606 OID 46635)
 -- Name: product_scheme_promotions_recycle product_scheme_promotions_recycle_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13421,7 +13452,7 @@ ALTER TABLE ONLY public.product_scheme_promotions_recycle
 
 
 --
--- TOC entry 8152 (class 2606 OID 46583)
+-- TOC entry 8184 (class 2606 OID 46583)
 -- Name: product_schemes product_schemes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13430,7 +13461,7 @@ ALTER TABLE ONLY public.product_schemes
 
 
 --
--- TOC entry 8160 (class 2606 OID 46611)
+-- TOC entry 8192 (class 2606 OID 46611)
 -- Name: product_scheme_recycle product_schemes_recycle_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13439,7 +13470,7 @@ ALTER TABLE ONLY public.product_scheme_recycle
 
 
 --
--- TOC entry 7936 (class 2606 OID 23946)
+-- TOC entry 7968 (class 2606 OID 23946)
 -- Name: profile_details_model profile_details_model_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13448,7 +13479,7 @@ ALTER TABLE ONLY public.profile_details_model
 
 
 --
--- TOC entry 8102 (class 2606 OID 37754)
+-- TOC entry 8134 (class 2606 OID 37754)
 -- Name: profile_details profile_details_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13457,7 +13488,7 @@ ALTER TABLE ONLY public.profile_details
 
 
 --
--- TOC entry 7922 (class 2606 OID 22230)
+-- TOC entry 7954 (class 2606 OID 22230)
 -- Name: profile_types profile_types_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13466,7 +13497,7 @@ ALTER TABLE ONLY public.profile_types
 
 
 --
--- TOC entry 8052 (class 2606 OID 36106)
+-- TOC entry 8084 (class 2606 OID 36106)
 -- Name: sales_inventory sales_inventory_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13475,7 +13506,7 @@ ALTER TABLE ONLY public.sales_inventory
 
 
 --
--- TOC entry 8054 (class 2606 OID 36131)
+-- TOC entry 8086 (class 2606 OID 36131)
 -- Name: sales_items sales_items_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13484,7 +13515,7 @@ ALTER TABLE ONLY public.sales_items
 
 
 --
--- TOC entry 7980 (class 2606 OID 34196)
+-- TOC entry 8012 (class 2606 OID 34196)
 -- Name: scheme_promotions scheme_promotions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13493,7 +13524,7 @@ ALTER TABLE ONLY public.scheme_promotions
 
 
 --
--- TOC entry 7990 (class 2606 OID 34233)
+-- TOC entry 8022 (class 2606 OID 34233)
 -- Name: scheme_promotion_recycle scheme_promotions_recycle_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13502,7 +13533,7 @@ ALTER TABLE ONLY public.scheme_promotion_recycle
 
 
 --
--- TOC entry 7982 (class 2606 OID 34218)
+-- TOC entry 8014 (class 2606 OID 34218)
 -- Name: scheme_recycle scheme_recycle_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13511,7 +13542,7 @@ ALTER TABLE ONLY public.scheme_recycle
 
 
 --
--- TOC entry 7914 (class 2606 OID 20396)
+-- TOC entry 7946 (class 2606 OID 20396)
 -- Name: schemes schemes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13520,7 +13551,7 @@ ALTER TABLE ONLY public.schemes
 
 
 --
--- TOC entry 7928 (class 2606 OID 22328)
+-- TOC entry 7960 (class 2606 OID 22328)
 -- Name: service_channels service_channels_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13529,7 +13560,7 @@ ALTER TABLE ONLY public.service_channels
 
 
 --
--- TOC entry 7942 (class 2606 OID 24037)
+-- TOC entry 7974 (class 2606 OID 24037)
 -- Name: super_agent_profile_details_model super_agent_profile_details_model_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13538,7 +13569,7 @@ ALTER TABLE ONLY public.super_agent_profile_details_model
 
 
 --
--- TOC entry 8120 (class 2606 OID 37910)
+-- TOC entry 8152 (class 2606 OID 37910)
 -- Name: super_agent_profile_details super_agent_profile_details_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13547,7 +13578,7 @@ ALTER TABLE ONLY public.super_agent_profile_details
 
 
 --
--- TOC entry 8084 (class 2606 OID 37344)
+-- TOC entry 8116 (class 2606 OID 37344)
 -- Name: super_agent_profiles super_agent_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13556,7 +13587,7 @@ ALTER TABLE ONLY public.super_agent_profiles
 
 
 --
--- TOC entry 8196 (class 2606 OID 46796)
+-- TOC entry 8228 (class 2606 OID 46796)
 -- Name: super_agent_user_device_sessions super_agent_user_device_sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13565,7 +13596,7 @@ ALTER TABLE ONLY public.super_agent_user_device_sessions
 
 
 --
--- TOC entry 7950 (class 2606 OID 24337)
+-- TOC entry 7982 (class 2606 OID 24337)
 -- Name: super_agent_users_model super_agent_users_model_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13574,7 +13605,7 @@ ALTER TABLE ONLY public.super_agent_users_model
 
 
 --
--- TOC entry 7954 (class 2606 OID 24389)
+-- TOC entry 7986 (class 2606 OID 24389)
 -- Name: super_agent_users super_agent_users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13583,7 +13614,7 @@ ALTER TABLE ONLY public.super_agent_users
 
 
 --
--- TOC entry 7908 (class 2606 OID 20348)
+-- TOC entry 7940 (class 2606 OID 20348)
 -- Name: sys_app_key_era sys_app_key_era_app_key_col; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13592,7 +13623,7 @@ ALTER TABLE ONLY public.sys_app_key_era
 
 
 --
--- TOC entry 7910 (class 2606 OID 20346)
+-- TOC entry 7942 (class 2606 OID 20346)
 -- Name: sys_app_key_era sys_app_key_era_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13601,7 +13632,7 @@ ALTER TABLE ONLY public.sys_app_key_era
 
 
 --
--- TOC entry 7912 (class 2606 OID 20350)
+-- TOC entry 7944 (class 2606 OID 20350)
 -- Name: sys_app_key_era sys_app_key_era_system_key_col; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13610,7 +13641,7 @@ ALTER TABLE ONLY public.sys_app_key_era
 
 
 --
--- TOC entry 7972 (class 2606 OID 24937)
+-- TOC entry 8004 (class 2606 OID 24937)
 -- Name: system_boundary_log system_boundary_log_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13619,7 +13650,7 @@ ALTER TABLE ONLY public.system_boundary_log
 
 
 --
--- TOC entry 7976 (class 2606 OID 25708)
+-- TOC entry 8008 (class 2606 OID 25708)
 -- Name: system_log_summary system_log_summary_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13628,7 +13659,7 @@ ALTER TABLE ONLY public.system_log_summary
 
 
 --
--- TOC entry 7994 (class 2606 OID 34382)
+-- TOC entry 8026 (class 2606 OID 34382)
 -- Name: trxn_bands trxn_bands_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13637,7 +13668,7 @@ ALTER TABLE ONLY public.trxn_bands
 
 
 --
--- TOC entry 7996 (class 2606 OID 34386)
+-- TOC entry 8028 (class 2606 OID 34386)
 -- Name: trxn_bands trxn_bands_unique_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13646,7 +13677,7 @@ ALTER TABLE ONLY public.trxn_bands
 
 
 --
--- TOC entry 7960 (class 2606 OID 24749)
+-- TOC entry 7992 (class 2606 OID 24749)
 -- Name: u_p u_p_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13655,7 +13686,7 @@ ALTER TABLE ONLY public.u_p
 
 
 --
--- TOC entry 7962 (class 2606 OID 24757)
+-- TOC entry 7994 (class 2606 OID 24757)
 -- Name: u_s u_s_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13664,7 +13695,7 @@ ALTER TABLE ONLY public.u_s
 
 
 --
--- TOC entry 8204 (class 2606 OID 46831)
+-- TOC entry 8236 (class 2606 OID 46831)
 -- Name: admin_user_device_sessions uk_admin_user_device_sessions_bearer_token; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13673,7 +13704,7 @@ ALTER TABLE ONLY public.admin_user_device_sessions
 
 
 --
--- TOC entry 8206 (class 2606 OID 46833)
+-- TOC entry 8238 (class 2606 OID 46833)
 -- Name: admin_user_device_sessions uk_admin_user_device_sessions_cols; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13682,7 +13713,7 @@ ALTER TABLE ONLY public.admin_user_device_sessions
 
 
 --
--- TOC entry 8116 (class 2606 OID 37860)
+-- TOC entry 8148 (class 2606 OID 37860)
 -- Name: agent_profile_details uk_agent_profile_details_cols; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13691,7 +13722,7 @@ ALTER TABLE ONLY public.agent_profile_details
 
 
 --
--- TOC entry 8118 (class 2606 OID 37862)
+-- TOC entry 8150 (class 2606 OID 37862)
 -- Name: agent_profile_details uk_agent_profile_details_profile_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13700,7 +13731,7 @@ ALTER TABLE ONLY public.agent_profile_details
 
 
 --
--- TOC entry 8082 (class 2606 OID 37301)
+-- TOC entry 8114 (class 2606 OID 37301)
 -- Name: agent_profiles uk_agent_profiles_profile_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13709,7 +13740,7 @@ ALTER TABLE ONLY public.agent_profiles
 
 
 --
--- TOC entry 8174 (class 2606 OID 46666)
+-- TOC entry 8206 (class 2606 OID 46666)
 -- Name: agent_user_device_sessions uk_agent_user_device_sessions_bearer_token; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13718,7 +13749,7 @@ ALTER TABLE ONLY public.agent_user_device_sessions
 
 
 --
--- TOC entry 8176 (class 2606 OID 46668)
+-- TOC entry 8208 (class 2606 OID 46668)
 -- Name: agent_user_device_sessions uk_agent_user_device_sessions_cols; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13727,7 +13758,7 @@ ALTER TABLE ONLY public.agent_user_device_sessions
 
 
 --
--- TOC entry 7958 (class 2606 OID 24442)
+-- TOC entry 7990 (class 2606 OID 24442)
 -- Name: agent_users uk_agent_users_profile_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13736,7 +13767,7 @@ ALTER TABLE ONLY public.agent_users
 
 
 --
--- TOC entry 8110 (class 2606 OID 37807)
+-- TOC entry 8142 (class 2606 OID 37807)
 -- Name: customer_profile_details uk_customer_profile_details_cols; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13745,7 +13776,7 @@ ALTER TABLE ONLY public.customer_profile_details
 
 
 --
--- TOC entry 8112 (class 2606 OID 37809)
+-- TOC entry 8144 (class 2606 OID 37809)
 -- Name: customer_profile_details uk_customer_profile_details_profile_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13754,7 +13785,7 @@ ALTER TABLE ONLY public.customer_profile_details
 
 
 --
--- TOC entry 8140 (class 2606 OID 38066)
+-- TOC entry 8172 (class 2606 OID 38066)
 -- Name: customer_tier_1_profile_details uk_customer_tier_1_profile_details_cols; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13763,7 +13794,7 @@ ALTER TABLE ONLY public.customer_tier_1_profile_details
 
 
 --
--- TOC entry 8142 (class 2606 OID 38068)
+-- TOC entry 8174 (class 2606 OID 38068)
 -- Name: customer_tier_1_profile_details uk_customer_tier_1_profile_details_profile_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13772,7 +13803,7 @@ ALTER TABLE ONLY public.customer_tier_1_profile_details
 
 
 --
--- TOC entry 8090 (class 2606 OID 37391)
+-- TOC entry 8122 (class 2606 OID 37391)
 -- Name: customer_tier_1_profiles uk_customer_tier_1_profiles_profile_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13781,7 +13812,7 @@ ALTER TABLE ONLY public.customer_tier_1_profiles
 
 
 --
--- TOC entry 8216 (class 2606 OID 46899)
+-- TOC entry 8248 (class 2606 OID 46899)
 -- Name: customer_tier_1_user_device_sessions uk_customer_tier_1_user_device_sessions_bearer_token; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13790,7 +13821,7 @@ ALTER TABLE ONLY public.customer_tier_1_user_device_sessions
 
 
 --
--- TOC entry 8218 (class 2606 OID 46901)
+-- TOC entry 8250 (class 2606 OID 46901)
 -- Name: customer_tier_1_user_device_sessions uk_customer_tier_1_user_device_sessions_cols; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13799,7 +13830,7 @@ ALTER TABLE ONLY public.customer_tier_1_user_device_sessions
 
 
 --
--- TOC entry 8070 (class 2606 OID 36424)
+-- TOC entry 8102 (class 2606 OID 36424)
 -- Name: customer_tier_1_users uk_customer_tier_1_users_profile_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13808,7 +13839,7 @@ ALTER TABLE ONLY public.customer_tier_1_users
 
 
 --
--- TOC entry 8180 (class 2606 OID 46699)
+-- TOC entry 8212 (class 2606 OID 46699)
 -- Name: customer_user_device_sessions uk_customer_user_device_sessions_bearer_token; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13817,7 +13848,7 @@ ALTER TABLE ONLY public.customer_user_device_sessions
 
 
 --
--- TOC entry 8182 (class 2606 OID 46701)
+-- TOC entry 8214 (class 2606 OID 46701)
 -- Name: customer_user_device_sessions uk_customer_user_device_sessions_cols; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13826,7 +13857,7 @@ ALTER TABLE ONLY public.customer_user_device_sessions
 
 
 --
--- TOC entry 8134 (class 2606 OID 38015)
+-- TOC entry 8166 (class 2606 OID 38015)
 -- Name: merchant_profile_details uk_merchant_profile_details_cols; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13835,7 +13866,7 @@ ALTER TABLE ONLY public.merchant_profile_details
 
 
 --
--- TOC entry 8136 (class 2606 OID 38017)
+-- TOC entry 8168 (class 2606 OID 38017)
 -- Name: merchant_profile_details uk_merchant_profile_details_profile_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13844,7 +13875,7 @@ ALTER TABLE ONLY public.merchant_profile_details
 
 
 --
--- TOC entry 8148 (class 2606 OID 38135)
+-- TOC entry 8180 (class 2606 OID 38135)
 -- Name: merchant_profiles uk_merchant_profiles_profile_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13853,7 +13884,7 @@ ALTER TABLE ONLY public.merchant_profiles
 
 
 --
--- TOC entry 8186 (class 2606 OID 46732)
+-- TOC entry 8218 (class 2606 OID 46732)
 -- Name: merchant_user_device_sessions uk_merchant_user_device_sessions_bearer_token; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13862,7 +13893,7 @@ ALTER TABLE ONLY public.merchant_user_device_sessions
 
 
 --
--- TOC entry 8188 (class 2606 OID 46734)
+-- TOC entry 8220 (class 2606 OID 46734)
 -- Name: merchant_user_device_sessions uk_merchant_user_device_sessions_cols; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13871,7 +13902,7 @@ ALTER TABLE ONLY public.merchant_user_device_sessions
 
 
 --
--- TOC entry 8210 (class 2606 OID 46866)
+-- TOC entry 8242 (class 2606 OID 46866)
 -- Name: partner_user_device_sessions uk_partner_user_device_sessions_bearer_token; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13880,7 +13911,7 @@ ALTER TABLE ONLY public.partner_user_device_sessions
 
 
 --
--- TOC entry 8212 (class 2606 OID 46868)
+-- TOC entry 8244 (class 2606 OID 46868)
 -- Name: partner_user_device_sessions uk_partner_user_device_sessions_cols; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13889,7 +13920,7 @@ ALTER TABLE ONLY public.partner_user_device_sessions
 
 
 --
--- TOC entry 8128 (class 2606 OID 37964)
+-- TOC entry 8160 (class 2606 OID 37964)
 -- Name: pos_profile_details uk_pos_profile_details_cols; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13898,7 +13929,7 @@ ALTER TABLE ONLY public.pos_profile_details
 
 
 --
--- TOC entry 8130 (class 2606 OID 37966)
+-- TOC entry 8162 (class 2606 OID 37966)
 -- Name: pos_profile_details uk_pos_profile_details_profile_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13907,7 +13938,7 @@ ALTER TABLE ONLY public.pos_profile_details
 
 
 --
--- TOC entry 8078 (class 2606 OID 37223)
+-- TOC entry 8110 (class 2606 OID 37223)
 -- Name: pos_profiles uk_pos_profiles_profile_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13916,7 +13947,7 @@ ALTER TABLE ONLY public.pos_profiles
 
 
 --
--- TOC entry 8192 (class 2606 OID 46765)
+-- TOC entry 8224 (class 2606 OID 46765)
 -- Name: pos_user_device_sessions uk_pos_user_device_sessions_bearer_token; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13925,7 +13956,7 @@ ALTER TABLE ONLY public.pos_user_device_sessions
 
 
 --
--- TOC entry 8194 (class 2606 OID 46767)
+-- TOC entry 8226 (class 2606 OID 46767)
 -- Name: pos_user_device_sessions uk_pos_user_device_sessions_cols; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13934,7 +13965,7 @@ ALTER TABLE ONLY public.pos_user_device_sessions
 
 
 --
--- TOC entry 8074 (class 2606 OID 36708)
+-- TOC entry 8106 (class 2606 OID 36708)
 -- Name: pos_users uk_pos_users_profile_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13943,7 +13974,7 @@ ALTER TABLE ONLY public.pos_users
 
 
 --
--- TOC entry 8154 (class 2606 OID 46585)
+-- TOC entry 8186 (class 2606 OID 46585)
 -- Name: product_schemes uk_product_schemes_col_callback_url; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13952,7 +13983,7 @@ ALTER TABLE ONLY public.product_schemes
 
 
 --
--- TOC entry 8156 (class 2606 OID 46587)
+-- TOC entry 8188 (class 2606 OID 46587)
 -- Name: product_schemes uk_product_schemes_col_scheme_code; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13961,7 +13992,7 @@ ALTER TABLE ONLY public.product_schemes
 
 
 --
--- TOC entry 8158 (class 2606 OID 46589)
+-- TOC entry 8190 (class 2606 OID 46589)
 -- Name: product_schemes uk_product_schemes_col_secret_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13970,7 +14001,7 @@ ALTER TABLE ONLY public.product_schemes
 
 
 --
--- TOC entry 8162 (class 2606 OID 46613)
+-- TOC entry 8194 (class 2606 OID 46613)
 -- Name: product_scheme_recycle uk_product_schemes_recycle_col_callback_url; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13979,7 +14010,7 @@ ALTER TABLE ONLY public.product_scheme_recycle
 
 
 --
--- TOC entry 8164 (class 2606 OID 46615)
+-- TOC entry 8196 (class 2606 OID 46615)
 -- Name: product_scheme_recycle uk_product_schemes_recycle_col_scheme_code; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13988,7 +14019,7 @@ ALTER TABLE ONLY public.product_scheme_recycle
 
 
 --
--- TOC entry 8166 (class 2606 OID 46617)
+-- TOC entry 8198 (class 2606 OID 46617)
 -- Name: product_scheme_recycle uk_product_schemes_recycle_col_secret_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -13997,7 +14028,7 @@ ALTER TABLE ONLY public.product_scheme_recycle
 
 
 --
--- TOC entry 8104 (class 2606 OID 37756)
+-- TOC entry 8136 (class 2606 OID 37756)
 -- Name: profile_details uk_profile_details_cols; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14006,7 +14037,7 @@ ALTER TABLE ONLY public.profile_details
 
 
 --
--- TOC entry 7938 (class 2606 OID 23948)
+-- TOC entry 7970 (class 2606 OID 23948)
 -- Name: profile_details_model uk_profile_details_model_cols; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14015,7 +14046,7 @@ ALTER TABLE ONLY public.profile_details_model
 
 
 --
--- TOC entry 7940 (class 2606 OID 23950)
+-- TOC entry 7972 (class 2606 OID 23950)
 -- Name: profile_details_model uk_profile_details_model_profile_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14024,7 +14055,7 @@ ALTER TABLE ONLY public.profile_details_model
 
 
 --
--- TOC entry 8106 (class 2606 OID 37758)
+-- TOC entry 8138 (class 2606 OID 37758)
 -- Name: profile_details uk_profile_details_profile_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14033,7 +14064,7 @@ ALTER TABLE ONLY public.profile_details
 
 
 --
--- TOC entry 7924 (class 2606 OID 22234)
+-- TOC entry 7956 (class 2606 OID 22234)
 -- Name: profile_types uk_profile_types_profile_type; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14042,7 +14073,7 @@ ALTER TABLE ONLY public.profile_types
 
 
 --
--- TOC entry 7926 (class 2606 OID 22232)
+-- TOC entry 7958 (class 2606 OID 22232)
 -- Name: profile_types uk_profile_types_profile_type_code; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14051,7 +14082,7 @@ ALTER TABLE ONLY public.profile_types
 
 
 --
--- TOC entry 7984 (class 2606 OID 34220)
+-- TOC entry 8016 (class 2606 OID 34220)
 -- Name: scheme_recycle uk_scheme_recycle_col_callback_url; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14060,7 +14091,7 @@ ALTER TABLE ONLY public.scheme_recycle
 
 
 --
--- TOC entry 7986 (class 2606 OID 34222)
+-- TOC entry 8018 (class 2606 OID 34222)
 -- Name: scheme_recycle uk_scheme_recycle_col_scheme_code; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14069,7 +14100,7 @@ ALTER TABLE ONLY public.scheme_recycle
 
 
 --
--- TOC entry 7988 (class 2606 OID 34224)
+-- TOC entry 8020 (class 2606 OID 34224)
 -- Name: scheme_recycle uk_scheme_recycle_col_secret_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14078,7 +14109,7 @@ ALTER TABLE ONLY public.scheme_recycle
 
 
 --
--- TOC entry 7916 (class 2606 OID 20398)
+-- TOC entry 7948 (class 2606 OID 20398)
 -- Name: schemes uk_schemes_col_callback_url; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14087,7 +14118,7 @@ ALTER TABLE ONLY public.schemes
 
 
 --
--- TOC entry 7918 (class 2606 OID 20400)
+-- TOC entry 7950 (class 2606 OID 20400)
 -- Name: schemes uk_schemes_col_scheme_code; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14096,7 +14127,7 @@ ALTER TABLE ONLY public.schemes
 
 
 --
--- TOC entry 7920 (class 2606 OID 20402)
+-- TOC entry 7952 (class 2606 OID 20402)
 -- Name: schemes uk_schemes_col_secret_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14105,7 +14136,7 @@ ALTER TABLE ONLY public.schemes
 
 
 --
--- TOC entry 7930 (class 2606 OID 22330)
+-- TOC entry 7962 (class 2606 OID 22330)
 -- Name: service_channels uk_service_channels_channel_code; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14114,7 +14145,7 @@ ALTER TABLE ONLY public.service_channels
 
 
 --
--- TOC entry 7932 (class 2606 OID 22332)
+-- TOC entry 7964 (class 2606 OID 22332)
 -- Name: service_channels uk_service_channels_channel_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14123,7 +14154,7 @@ ALTER TABLE ONLY public.service_channels
 
 
 --
--- TOC entry 7934 (class 2606 OID 22334)
+-- TOC entry 7966 (class 2606 OID 22334)
 -- Name: service_channels uk_service_channels_channel_name; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14132,7 +14163,7 @@ ALTER TABLE ONLY public.service_channels
 
 
 --
--- TOC entry 8122 (class 2606 OID 37912)
+-- TOC entry 8154 (class 2606 OID 37912)
 -- Name: super_agent_profile_details uk_super_agent_profile_details_cols; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14141,7 +14172,7 @@ ALTER TABLE ONLY public.super_agent_profile_details
 
 
 --
--- TOC entry 7944 (class 2606 OID 24039)
+-- TOC entry 7976 (class 2606 OID 24039)
 -- Name: super_agent_profile_details_model uk_super_agent_profile_details_model_cols; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14150,7 +14181,7 @@ ALTER TABLE ONLY public.super_agent_profile_details_model
 
 
 --
--- TOC entry 7946 (class 2606 OID 24041)
+-- TOC entry 7978 (class 2606 OID 24041)
 -- Name: super_agent_profile_details_model uk_super_agent_profile_details_model_profile_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14159,7 +14190,7 @@ ALTER TABLE ONLY public.super_agent_profile_details_model
 
 
 --
--- TOC entry 8124 (class 2606 OID 37914)
+-- TOC entry 8156 (class 2606 OID 37914)
 -- Name: super_agent_profile_details uk_super_agent_profile_details_profile_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14168,7 +14199,7 @@ ALTER TABLE ONLY public.super_agent_profile_details
 
 
 --
--- TOC entry 8086 (class 2606 OID 37346)
+-- TOC entry 8118 (class 2606 OID 37346)
 -- Name: super_agent_profiles uk_super_agent_profiles_profile_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14177,7 +14208,7 @@ ALTER TABLE ONLY public.super_agent_profiles
 
 
 --
--- TOC entry 8198 (class 2606 OID 46798)
+-- TOC entry 8230 (class 2606 OID 46798)
 -- Name: super_agent_user_device_sessions uk_super_agent_user_device_sessions_bearer_token; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14186,7 +14217,7 @@ ALTER TABLE ONLY public.super_agent_user_device_sessions
 
 
 --
--- TOC entry 8200 (class 2606 OID 46800)
+-- TOC entry 8232 (class 2606 OID 46800)
 -- Name: super_agent_user_device_sessions uk_super_agent_user_device_sessions_cols; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14195,7 +14226,7 @@ ALTER TABLE ONLY public.super_agent_user_device_sessions
 
 
 --
--- TOC entry 7952 (class 2606 OID 24339)
+-- TOC entry 7984 (class 2606 OID 24339)
 -- Name: super_agent_users_model uk_super_agent_users_model_profile_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14204,7 +14235,7 @@ ALTER TABLE ONLY public.super_agent_users_model
 
 
 --
--- TOC entry 7974 (class 2606 OID 24939)
+-- TOC entry 8006 (class 2606 OID 24939)
 -- Name: system_boundary_log uk_system_boundary_log_cols; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14213,7 +14244,7 @@ ALTER TABLE ONLY public.system_boundary_log
 
 
 --
--- TOC entry 7978 (class 2606 OID 25710)
+-- TOC entry 8010 (class 2606 OID 25710)
 -- Name: system_log_summary uk_system_log_summary_cols; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14222,7 +14253,7 @@ ALTER TABLE ONLY public.system_log_summary
 
 
 --
--- TOC entry 7964 (class 2606 OID 24790)
+-- TOC entry 7996 (class 2606 OID 24790)
 -- Name: unique_bearer_tokens uk_unique_bearer_tokens_unique_bearer_token; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14231,7 +14262,7 @@ ALTER TABLE ONLY public.unique_bearer_tokens
 
 
 --
--- TOC entry 7968 (class 2606 OID 24826)
+-- TOC entry 8000 (class 2606 OID 24826)
 -- Name: unique_customer_keys uk_unique_customer_keys_unique_customer_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14240,7 +14271,7 @@ ALTER TABLE ONLY public.unique_customer_keys
 
 
 --
--- TOC entry 8096 (class 2606 OID 37704)
+-- TOC entry 8128 (class 2606 OID 37704)
 -- Name: user_profile_details uk_user_profile_details_cols; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14249,7 +14280,7 @@ ALTER TABLE ONLY public.user_profile_details
 
 
 --
--- TOC entry 8098 (class 2606 OID 37706)
+-- TOC entry 8130 (class 2606 OID 37706)
 -- Name: user_profile_details uk_user_profile_details_profile_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14258,7 +14289,7 @@ ALTER TABLE ONLY public.user_profile_details
 
 
 --
--- TOC entry 7966 (class 2606 OID 24788)
+-- TOC entry 7998 (class 2606 OID 24788)
 -- Name: unique_bearer_tokens unique_bearer_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14267,7 +14298,7 @@ ALTER TABLE ONLY public.unique_bearer_tokens
 
 
 --
--- TOC entry 7970 (class 2606 OID 24824)
+-- TOC entry 8002 (class 2606 OID 24824)
 -- Name: unique_customer_keys unique_customer_keys_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14276,7 +14307,7 @@ ALTER TABLE ONLY public.unique_customer_keys
 
 
 --
--- TOC entry 8236 (class 2606 OID 97505)
+-- TOC entry 8268 (class 2606 OID 97505)
 -- Name: partner_access_blacklist user_access_blacklist_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14285,7 +14316,7 @@ ALTER TABLE ONLY public.partner_access_blacklist
 
 
 --
--- TOC entry 8100 (class 2606 OID 37702)
+-- TOC entry 8132 (class 2606 OID 37702)
 -- Name: user_profile_details user_profile_details_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14294,7 +14325,7 @@ ALTER TABLE ONLY public.user_profile_details
 
 
 --
--- TOC entry 8224 (class 2606 OID 96874)
+-- TOC entry 8256 (class 2606 OID 96874)
 -- Name: user_sessions user_session_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14303,7 +14334,7 @@ ALTER TABLE ONLY public.user_sessions
 
 
 --
--- TOC entry 7948 (class 2606 OID 24178)
+-- TOC entry 7980 (class 2606 OID 24178)
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14312,7 +14343,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 8022 (class 2606 OID 35258)
+-- TOC entry 8054 (class 2606 OID 35258)
 -- Name: wallet_to_bank_trxn_log_0 wallet_to_bank_trxn_log_0_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14321,7 +14352,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_0
 
 
 --
--- TOC entry 8024 (class 2606 OID 35307)
+-- TOC entry 8056 (class 2606 OID 35307)
 -- Name: wallet_to_bank_trxn_log_1 wallet_to_bank_trxn_log_1_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14330,7 +14361,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_1
 
 
 --
--- TOC entry 8026 (class 2606 OID 35357)
+-- TOC entry 8058 (class 2606 OID 35357)
 -- Name: wallet_to_bank_trxn_log_2 wallet_to_bank_trxn_log_2_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14339,7 +14370,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_2
 
 
 --
--- TOC entry 8028 (class 2606 OID 35406)
+-- TOC entry 8060 (class 2606 OID 35406)
 -- Name: wallet_to_bank_trxn_log_3 wallet_to_bank_trxn_log_3_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14348,7 +14379,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_3
 
 
 --
--- TOC entry 8030 (class 2606 OID 35455)
+-- TOC entry 8062 (class 2606 OID 35455)
 -- Name: wallet_to_bank_trxn_log_4 wallet_to_bank_trxn_log_4_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14357,7 +14388,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_4
 
 
 --
--- TOC entry 8032 (class 2606 OID 35504)
+-- TOC entry 8064 (class 2606 OID 35504)
 -- Name: wallet_to_bank_trxn_log_5 wallet_to_bank_trxn_log_5_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14366,7 +14397,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_5
 
 
 --
--- TOC entry 8375 (class 2606 OID 97250)
+-- TOC entry 8407 (class 2606 OID 97250)
 -- Name: journal_line FKq1qkwi3bp726yehudbih8xe5b; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14375,7 +14406,7 @@ ALTER TABLE ONLY public.journal_line
 
 
 --
--- TOC entry 8242 (class 2606 OID 34409)
+-- TOC entry 8274 (class 2606 OID 34409)
 -- Name: billing_config_summary billing_config_wallet_accnt_num; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14384,7 +14415,7 @@ ALTER TABLE ONLY public.billing_config_summary
 
 
 --
--- TOC entry 8366 (class 2606 OID 37307)
+-- TOC entry 8398 (class 2606 OID 37307)
 -- Name: agent_profiles fk_agent_profiles_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14393,7 +14424,7 @@ ALTER TABLE ONLY public.agent_profiles
 
 
 --
--- TOC entry 8367 (class 2606 OID 37312)
+-- TOC entry 8399 (class 2606 OID 37312)
 -- Name: agent_profiles fk_agent_profiles_user_sys_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14402,7 +14433,7 @@ ALTER TABLE ONLY public.agent_profiles
 
 
 --
--- TOC entry 8370 (class 2606 OID 37397)
+-- TOC entry 8402 (class 2606 OID 37397)
 -- Name: customer_tier_1_profiles fk_customer_tier_1_profiles_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14411,7 +14442,7 @@ ALTER TABLE ONLY public.customer_tier_1_profiles
 
 
 --
--- TOC entry 8371 (class 2606 OID 37402)
+-- TOC entry 8403 (class 2606 OID 37402)
 -- Name: customer_tier_1_profiles fk_customer_tier_1_profiles_user_sys_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14420,7 +14451,7 @@ ALTER TABLE ONLY public.customer_tier_1_profiles
 
 
 --
--- TOC entry 8351 (class 2606 OID 35812)
+-- TOC entry 8383 (class 2606 OID 35812)
 -- Name: ext_credit_wallet_rqst_trxn_log_0 fk_ext_credit_wallet_rqst_trxn_log_0_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14429,7 +14460,7 @@ ALTER TABLE ONLY public.ext_credit_wallet_rqst_trxn_log_0
 
 
 --
--- TOC entry 8352 (class 2606 OID 35838)
+-- TOC entry 8384 (class 2606 OID 35838)
 -- Name: ext_credit_wallet_rqst_trxn_log_1 fk_ext_credit_wallet_rqst_trxn_log_1_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14438,7 +14469,7 @@ ALTER TABLE ONLY public.ext_credit_wallet_rqst_trxn_log_1
 
 
 --
--- TOC entry 8353 (class 2606 OID 35864)
+-- TOC entry 8385 (class 2606 OID 35864)
 -- Name: ext_credit_wallet_rqst_trxn_log_2 fk_ext_credit_wallet_rqst_trxn_log_2_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14447,7 +14478,7 @@ ALTER TABLE ONLY public.ext_credit_wallet_rqst_trxn_log_2
 
 
 --
--- TOC entry 8354 (class 2606 OID 35890)
+-- TOC entry 8386 (class 2606 OID 35890)
 -- Name: ext_credit_wallet_rqst_trxn_log_3 fk_ext_credit_wallet_rqst_trxn_log_3_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14456,7 +14487,7 @@ ALTER TABLE ONLY public.ext_credit_wallet_rqst_trxn_log_3
 
 
 --
--- TOC entry 8355 (class 2606 OID 35916)
+-- TOC entry 8387 (class 2606 OID 35916)
 -- Name: ext_credit_wallet_rqst_trxn_log_4 fk_ext_credit_wallet_rqst_trxn_log_4_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14465,7 +14496,7 @@ ALTER TABLE ONLY public.ext_credit_wallet_rqst_trxn_log_4
 
 
 --
--- TOC entry 8356 (class 2606 OID 35942)
+-- TOC entry 8388 (class 2606 OID 35942)
 -- Name: ext_credit_wallet_rqst_trxn_log_5 fk_ext_credit_wallet_rqst_trxn_log_5_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14474,7 +14505,7 @@ ALTER TABLE ONLY public.ext_credit_wallet_rqst_trxn_log_5
 
 
 --
--- TOC entry 8362 (class 2606 OID 36283)
+-- TOC entry 8394 (class 2606 OID 36283)
 -- Name: ext_debit_wallet_rqst_trxn_log_0 fk_ext_debit_wallet_rqst_trxn_log_0_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14483,7 +14514,7 @@ ALTER TABLE ONLY public.ext_debit_wallet_rqst_trxn_log_0
 
 
 --
--- TOC entry 8361 (class 2606 OID 36257)
+-- TOC entry 8393 (class 2606 OID 36257)
 -- Name: ext_debit_wallet_rqst_trxn_log_1 fk_ext_debit_wallet_rqst_trxn_log_1_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14492,7 +14523,7 @@ ALTER TABLE ONLY public.ext_debit_wallet_rqst_trxn_log_1
 
 
 --
--- TOC entry 8360 (class 2606 OID 36230)
+-- TOC entry 8392 (class 2606 OID 36230)
 -- Name: ext_debit_wallet_rqst_trxn_log_2 fk_ext_debit_wallet_rqst_trxn_log_2_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14501,7 +14532,7 @@ ALTER TABLE ONLY public.ext_debit_wallet_rqst_trxn_log_2
 
 
 --
--- TOC entry 8359 (class 2606 OID 36204)
+-- TOC entry 8391 (class 2606 OID 36204)
 -- Name: ext_debit_wallet_rqst_trxn_log_3 fk_ext_debit_wallet_rqst_trxn_log_3_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14510,7 +14541,7 @@ ALTER TABLE ONLY public.ext_debit_wallet_rqst_trxn_log_3
 
 
 --
--- TOC entry 8358 (class 2606 OID 36178)
+-- TOC entry 8390 (class 2606 OID 36178)
 -- Name: ext_debit_wallet_rqst_trxn_log_4 fk_ext_debit_wallet_rqst_trxn_log_4_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14519,7 +14550,7 @@ ALTER TABLE ONLY public.ext_debit_wallet_rqst_trxn_log_4
 
 
 --
--- TOC entry 8357 (class 2606 OID 35969)
+-- TOC entry 8389 (class 2606 OID 35969)
 -- Name: ext_debit_wallet_rqst_trxn_log_5 fk_ext_debit_wallet_rqst_trxn_log_5_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14528,7 +14559,7 @@ ALTER TABLE ONLY public.ext_debit_wallet_rqst_trxn_log_5
 
 
 --
--- TOC entry 8261 (class 2606 OID 34865)
+-- TOC entry 8293 (class 2606 OID 34865)
 -- Name: inter_node_wallet_trxn_log_0 fk_inter_node_wallet_trxn_log_0_channel_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14537,7 +14568,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_0
 
 
 --
--- TOC entry 8265 (class 2606 OID 35649)
+-- TOC entry 8297 (class 2606 OID 35649)
 -- Name: inter_node_wallet_trxn_log_0 fk_inter_node_wallet_trxn_log_0_cr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14546,7 +14577,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_0
 
 
 --
--- TOC entry 8262 (class 2606 OID 34870)
+-- TOC entry 8294 (class 2606 OID 34870)
 -- Name: inter_node_wallet_trxn_log_0 fk_inter_node_wallet_trxn_log_0_credit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14555,7 +14586,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_0
 
 
 --
--- TOC entry 8263 (class 2606 OID 34875)
+-- TOC entry 8295 (class 2606 OID 34875)
 -- Name: inter_node_wallet_trxn_log_0 fk_inter_node_wallet_trxn_log_0_debit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14564,7 +14595,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_0
 
 
 --
--- TOC entry 8266 (class 2606 OID 35654)
+-- TOC entry 8298 (class 2606 OID 35654)
 -- Name: inter_node_wallet_trxn_log_0 fk_inter_node_wallet_trxn_log_0_dr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14573,7 +14604,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_0
 
 
 --
--- TOC entry 8264 (class 2606 OID 34880)
+-- TOC entry 8296 (class 2606 OID 34880)
 -- Name: inter_node_wallet_trxn_log_0 fk_inter_node_wallet_trxn_log_0_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14582,7 +14613,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_0
 
 
 --
--- TOC entry 8243 (class 2606 OID 34690)
+-- TOC entry 8275 (class 2606 OID 34690)
 -- Name: inter_node_wallet_trxn_log_1 fk_inter_node_wallet_trxn_log_1_channel_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14591,7 +14622,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_1
 
 
 --
--- TOC entry 8247 (class 2606 OID 35661)
+-- TOC entry 8279 (class 2606 OID 35661)
 -- Name: inter_node_wallet_trxn_log_1 fk_inter_node_wallet_trxn_log_1_cr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14600,7 +14631,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_1
 
 
 --
--- TOC entry 8244 (class 2606 OID 34695)
+-- TOC entry 8276 (class 2606 OID 34695)
 -- Name: inter_node_wallet_trxn_log_1 fk_inter_node_wallet_trxn_log_1_credit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14609,7 +14640,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_1
 
 
 --
--- TOC entry 8245 (class 2606 OID 34700)
+-- TOC entry 8277 (class 2606 OID 34700)
 -- Name: inter_node_wallet_trxn_log_1 fk_inter_node_wallet_trxn_log_1_debit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14618,7 +14649,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_1
 
 
 --
--- TOC entry 8248 (class 2606 OID 35666)
+-- TOC entry 8280 (class 2606 OID 35666)
 -- Name: inter_node_wallet_trxn_log_1 fk_inter_node_wallet_trxn_log_1_dr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14627,7 +14658,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_1
 
 
 --
--- TOC entry 8246 (class 2606 OID 34705)
+-- TOC entry 8278 (class 2606 OID 34705)
 -- Name: inter_node_wallet_trxn_log_1 fk_inter_node_wallet_trxn_log_1_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14636,7 +14667,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_1
 
 
 --
--- TOC entry 8249 (class 2606 OID 34740)
+-- TOC entry 8281 (class 2606 OID 34740)
 -- Name: inter_node_wallet_trxn_log_2 fk_inter_node_wallet_trxn_log_2_channel_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14645,7 +14676,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_2
 
 
 --
--- TOC entry 8253 (class 2606 OID 35673)
+-- TOC entry 8285 (class 2606 OID 35673)
 -- Name: inter_node_wallet_trxn_log_2 fk_inter_node_wallet_trxn_log_2_cr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14654,7 +14685,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_2
 
 
 --
--- TOC entry 8250 (class 2606 OID 34745)
+-- TOC entry 8282 (class 2606 OID 34745)
 -- Name: inter_node_wallet_trxn_log_2 fk_inter_node_wallet_trxn_log_2_credit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14663,7 +14694,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_2
 
 
 --
--- TOC entry 8251 (class 2606 OID 34750)
+-- TOC entry 8283 (class 2606 OID 34750)
 -- Name: inter_node_wallet_trxn_log_2 fk_inter_node_wallet_trxn_log_2_debit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14672,7 +14703,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_2
 
 
 --
--- TOC entry 8254 (class 2606 OID 35678)
+-- TOC entry 8286 (class 2606 OID 35678)
 -- Name: inter_node_wallet_trxn_log_2 fk_inter_node_wallet_trxn_log_2_dr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14681,7 +14712,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_2
 
 
 --
--- TOC entry 8252 (class 2606 OID 34755)
+-- TOC entry 8284 (class 2606 OID 34755)
 -- Name: inter_node_wallet_trxn_log_2 fk_inter_node_wallet_trxn_log_2_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14690,7 +14721,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_2
 
 
 --
--- TOC entry 8255 (class 2606 OID 34789)
+-- TOC entry 8287 (class 2606 OID 34789)
 -- Name: inter_node_wallet_trxn_log_3 fk_inter_node_wallet_trxn_log_3_channel_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14699,7 +14730,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_3
 
 
 --
--- TOC entry 8259 (class 2606 OID 35685)
+-- TOC entry 8291 (class 2606 OID 35685)
 -- Name: inter_node_wallet_trxn_log_3 fk_inter_node_wallet_trxn_log_3_cr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14708,7 +14739,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_3
 
 
 --
--- TOC entry 8256 (class 2606 OID 34794)
+-- TOC entry 8288 (class 2606 OID 34794)
 -- Name: inter_node_wallet_trxn_log_3 fk_inter_node_wallet_trxn_log_3_credit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14717,7 +14748,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_3
 
 
 --
--- TOC entry 8257 (class 2606 OID 34799)
+-- TOC entry 8289 (class 2606 OID 34799)
 -- Name: inter_node_wallet_trxn_log_3 fk_inter_node_wallet_trxn_log_3_debit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14726,7 +14757,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_3
 
 
 --
--- TOC entry 8260 (class 2606 OID 35690)
+-- TOC entry 8292 (class 2606 OID 35690)
 -- Name: inter_node_wallet_trxn_log_3 fk_inter_node_wallet_trxn_log_3_dr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14735,7 +14766,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_3
 
 
 --
--- TOC entry 8258 (class 2606 OID 34804)
+-- TOC entry 8290 (class 2606 OID 34804)
 -- Name: inter_node_wallet_trxn_log_3 fk_inter_node_wallet_trxn_log_3_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14744,7 +14775,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_3
 
 
 --
--- TOC entry 8267 (class 2606 OID 34915)
+-- TOC entry 8299 (class 2606 OID 34915)
 -- Name: inter_node_wallet_trxn_log_4 fk_inter_node_wallet_trxn_log_4_channel_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14753,7 +14784,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_4
 
 
 --
--- TOC entry 8271 (class 2606 OID 35697)
+-- TOC entry 8303 (class 2606 OID 35697)
 -- Name: inter_node_wallet_trxn_log_4 fk_inter_node_wallet_trxn_log_4_cr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14762,7 +14793,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_4
 
 
 --
--- TOC entry 8268 (class 2606 OID 34920)
+-- TOC entry 8300 (class 2606 OID 34920)
 -- Name: inter_node_wallet_trxn_log_4 fk_inter_node_wallet_trxn_log_4_credit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14771,7 +14802,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_4
 
 
 --
--- TOC entry 8269 (class 2606 OID 34925)
+-- TOC entry 8301 (class 2606 OID 34925)
 -- Name: inter_node_wallet_trxn_log_4 fk_inter_node_wallet_trxn_log_4_debit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14780,7 +14811,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_4
 
 
 --
--- TOC entry 8272 (class 2606 OID 35702)
+-- TOC entry 8304 (class 2606 OID 35702)
 -- Name: inter_node_wallet_trxn_log_4 fk_inter_node_wallet_trxn_log_4_dr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14789,7 +14820,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_4
 
 
 --
--- TOC entry 8270 (class 2606 OID 34930)
+-- TOC entry 8302 (class 2606 OID 34930)
 -- Name: inter_node_wallet_trxn_log_4 fk_inter_node_wallet_trxn_log_4_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14798,7 +14829,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_4
 
 
 --
--- TOC entry 8273 (class 2606 OID 34964)
+-- TOC entry 8305 (class 2606 OID 34964)
 -- Name: inter_node_wallet_trxn_log_5 fk_inter_node_wallet_trxn_log_5_channel_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14807,7 +14838,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_5
 
 
 --
--- TOC entry 8277 (class 2606 OID 35709)
+-- TOC entry 8309 (class 2606 OID 35709)
 -- Name: inter_node_wallet_trxn_log_5 fk_inter_node_wallet_trxn_log_5_cr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14816,7 +14847,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_5
 
 
 --
--- TOC entry 8274 (class 2606 OID 34969)
+-- TOC entry 8306 (class 2606 OID 34969)
 -- Name: inter_node_wallet_trxn_log_5 fk_inter_node_wallet_trxn_log_5_credit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14825,7 +14856,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_5
 
 
 --
--- TOC entry 8275 (class 2606 OID 34974)
+-- TOC entry 8307 (class 2606 OID 34974)
 -- Name: inter_node_wallet_trxn_log_5 fk_inter_node_wallet_trxn_log_5_debit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14834,7 +14865,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_5
 
 
 --
--- TOC entry 8278 (class 2606 OID 35714)
+-- TOC entry 8310 (class 2606 OID 35714)
 -- Name: inter_node_wallet_trxn_log_5 fk_inter_node_wallet_trxn_log_5_dr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14843,7 +14874,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_5
 
 
 --
--- TOC entry 8276 (class 2606 OID 34979)
+-- TOC entry 8308 (class 2606 OID 34979)
 -- Name: inter_node_wallet_trxn_log_5 fk_inter_node_wallet_trxn_log_5_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14852,7 +14883,7 @@ ALTER TABLE ONLY public.inter_node_wallet_trxn_log_5
 
 
 --
--- TOC entry 8303 (class 2606 OID 35210)
+-- TOC entry 8335 (class 2606 OID 35210)
 -- Name: intra_node_wallet_trxn_log_0 fk_intra_node_wallet_trxn_log_0_channel_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14861,7 +14892,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_0
 
 
 --
--- TOC entry 8307 (class 2606 OID 35637)
+-- TOC entry 8339 (class 2606 OID 35637)
 -- Name: intra_node_wallet_trxn_log_0 fk_intra_node_wallet_trxn_log_0_cr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14870,7 +14901,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_0
 
 
 --
--- TOC entry 8304 (class 2606 OID 35215)
+-- TOC entry 8336 (class 2606 OID 35215)
 -- Name: intra_node_wallet_trxn_log_0 fk_intra_node_wallet_trxn_log_0_credit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14879,7 +14910,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_0
 
 
 --
--- TOC entry 8305 (class 2606 OID 35220)
+-- TOC entry 8337 (class 2606 OID 35220)
 -- Name: intra_node_wallet_trxn_log_0 fk_intra_node_wallet_trxn_log_0_debit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14888,7 +14919,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_0
 
 
 --
--- TOC entry 8308 (class 2606 OID 35642)
+-- TOC entry 8340 (class 2606 OID 35642)
 -- Name: intra_node_wallet_trxn_log_0 fk_intra_node_wallet_trxn_log_0_dr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14897,7 +14928,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_0
 
 
 --
--- TOC entry 8306 (class 2606 OID 35225)
+-- TOC entry 8338 (class 2606 OID 35225)
 -- Name: intra_node_wallet_trxn_log_0 fk_intra_node_wallet_trxn_log_0_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14906,7 +14937,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_0
 
 
 --
--- TOC entry 8297 (class 2606 OID 35160)
+-- TOC entry 8329 (class 2606 OID 35160)
 -- Name: intra_node_wallet_trxn_log_1 fk_intra_node_wallet_trxn_log_1_channel_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14915,7 +14946,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_1
 
 
 --
--- TOC entry 8301 (class 2606 OID 35625)
+-- TOC entry 8333 (class 2606 OID 35625)
 -- Name: intra_node_wallet_trxn_log_1 fk_intra_node_wallet_trxn_log_1_cr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14924,7 +14955,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_1
 
 
 --
--- TOC entry 8298 (class 2606 OID 35165)
+-- TOC entry 8330 (class 2606 OID 35165)
 -- Name: intra_node_wallet_trxn_log_1 fk_intra_node_wallet_trxn_log_1_credit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14933,7 +14964,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_1
 
 
 --
--- TOC entry 8299 (class 2606 OID 35170)
+-- TOC entry 8331 (class 2606 OID 35170)
 -- Name: intra_node_wallet_trxn_log_1 fk_intra_node_wallet_trxn_log_1_debit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14942,7 +14973,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_1
 
 
 --
--- TOC entry 8302 (class 2606 OID 35630)
+-- TOC entry 8334 (class 2606 OID 35630)
 -- Name: intra_node_wallet_trxn_log_1 fk_intra_node_wallet_trxn_log_1_dr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14951,7 +14982,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_1
 
 
 --
--- TOC entry 8300 (class 2606 OID 35175)
+-- TOC entry 8332 (class 2606 OID 35175)
 -- Name: intra_node_wallet_trxn_log_1 fk_intra_node_wallet_trxn_log_1_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14960,7 +14991,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_1
 
 
 --
--- TOC entry 8291 (class 2606 OID 35111)
+-- TOC entry 8323 (class 2606 OID 35111)
 -- Name: intra_node_wallet_trxn_log_2 fk_intra_node_wallet_trxn_log_2_channel_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14969,7 +15000,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_2
 
 
 --
--- TOC entry 8295 (class 2606 OID 35613)
+-- TOC entry 8327 (class 2606 OID 35613)
 -- Name: intra_node_wallet_trxn_log_2 fk_intra_node_wallet_trxn_log_2_cr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14978,7 +15009,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_2
 
 
 --
--- TOC entry 8292 (class 2606 OID 35116)
+-- TOC entry 8324 (class 2606 OID 35116)
 -- Name: intra_node_wallet_trxn_log_2 fk_intra_node_wallet_trxn_log_2_credit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14987,7 +15018,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_2
 
 
 --
--- TOC entry 8293 (class 2606 OID 35121)
+-- TOC entry 8325 (class 2606 OID 35121)
 -- Name: intra_node_wallet_trxn_log_2 fk_intra_node_wallet_trxn_log_2_debit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -14996,7 +15027,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_2
 
 
 --
--- TOC entry 8296 (class 2606 OID 35618)
+-- TOC entry 8328 (class 2606 OID 35618)
 -- Name: intra_node_wallet_trxn_log_2 fk_intra_node_wallet_trxn_log_2_dr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15005,7 +15036,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_2
 
 
 --
--- TOC entry 8294 (class 2606 OID 35126)
+-- TOC entry 8326 (class 2606 OID 35126)
 -- Name: intra_node_wallet_trxn_log_2 fk_intra_node_wallet_trxn_log_2_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15014,7 +15045,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_2
 
 
 --
--- TOC entry 8285 (class 2606 OID 35062)
+-- TOC entry 8317 (class 2606 OID 35062)
 -- Name: intra_node_wallet_trxn_log_3 fk_intra_node_wallet_trxn_log_3_channel_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15023,7 +15054,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_3
 
 
 --
--- TOC entry 8289 (class 2606 OID 35601)
+-- TOC entry 8321 (class 2606 OID 35601)
 -- Name: intra_node_wallet_trxn_log_3 fk_intra_node_wallet_trxn_log_3_cr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15032,7 +15063,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_3
 
 
 --
--- TOC entry 8286 (class 2606 OID 35067)
+-- TOC entry 8318 (class 2606 OID 35067)
 -- Name: intra_node_wallet_trxn_log_3 fk_intra_node_wallet_trxn_log_3_credit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15041,7 +15072,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_3
 
 
 --
--- TOC entry 8287 (class 2606 OID 35072)
+-- TOC entry 8319 (class 2606 OID 35072)
 -- Name: intra_node_wallet_trxn_log_3 fk_intra_node_wallet_trxn_log_3_debit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15050,7 +15081,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_3
 
 
 --
--- TOC entry 8290 (class 2606 OID 35606)
+-- TOC entry 8322 (class 2606 OID 35606)
 -- Name: intra_node_wallet_trxn_log_3 fk_intra_node_wallet_trxn_log_3_dr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15059,7 +15090,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_3
 
 
 --
--- TOC entry 8288 (class 2606 OID 35077)
+-- TOC entry 8320 (class 2606 OID 35077)
 -- Name: intra_node_wallet_trxn_log_3 fk_intra_node_wallet_trxn_log_3_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15068,7 +15099,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_3
 
 
 --
--- TOC entry 8279 (class 2606 OID 35013)
+-- TOC entry 8311 (class 2606 OID 35013)
 -- Name: intra_node_wallet_trxn_log_4 fk_intra_node_wallet_trxn_log_4_channel_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15077,7 +15108,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_4
 
 
 --
--- TOC entry 8283 (class 2606 OID 35589)
+-- TOC entry 8315 (class 2606 OID 35589)
 -- Name: intra_node_wallet_trxn_log_4 fk_intra_node_wallet_trxn_log_4_cr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15086,7 +15117,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_4
 
 
 --
--- TOC entry 8280 (class 2606 OID 35018)
+-- TOC entry 8312 (class 2606 OID 35018)
 -- Name: intra_node_wallet_trxn_log_4 fk_intra_node_wallet_trxn_log_4_credit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15095,7 +15126,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_4
 
 
 --
--- TOC entry 8281 (class 2606 OID 35023)
+-- TOC entry 8313 (class 2606 OID 35023)
 -- Name: intra_node_wallet_trxn_log_4 fk_intra_node_wallet_trxn_log_4_debit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15104,7 +15135,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_4
 
 
 --
--- TOC entry 8284 (class 2606 OID 35594)
+-- TOC entry 8316 (class 2606 OID 35594)
 -- Name: intra_node_wallet_trxn_log_4 fk_intra_node_wallet_trxn_log_4_dr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15113,7 +15144,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_4
 
 
 --
--- TOC entry 8282 (class 2606 OID 35028)
+-- TOC entry 8314 (class 2606 OID 35028)
 -- Name: intra_node_wallet_trxn_log_4 fk_intra_node_wallet_trxn_log_4_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15122,7 +15153,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_4
 
 
 --
--- TOC entry 8345 (class 2606 OID 35554)
+-- TOC entry 8377 (class 2606 OID 35554)
 -- Name: intra_node_wallet_trxn_log_5 fk_intra_node_wallet_trxn_log_5_channel_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15131,7 +15162,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_5
 
 
 --
--- TOC entry 8349 (class 2606 OID 35577)
+-- TOC entry 8381 (class 2606 OID 35577)
 -- Name: intra_node_wallet_trxn_log_5 fk_intra_node_wallet_trxn_log_5_cr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15140,7 +15171,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_5
 
 
 --
--- TOC entry 8346 (class 2606 OID 35559)
+-- TOC entry 8378 (class 2606 OID 35559)
 -- Name: intra_node_wallet_trxn_log_5 fk_intra_node_wallet_trxn_log_5_credit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15149,7 +15180,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_5
 
 
 --
--- TOC entry 8347 (class 2606 OID 35564)
+-- TOC entry 8379 (class 2606 OID 35564)
 -- Name: intra_node_wallet_trxn_log_5 fk_intra_node_wallet_trxn_log_5_debit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15158,7 +15189,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_5
 
 
 --
--- TOC entry 8350 (class 2606 OID 35582)
+-- TOC entry 8382 (class 2606 OID 35582)
 -- Name: intra_node_wallet_trxn_log_5 fk_intra_node_wallet_trxn_log_5_dr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15167,7 +15198,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_5
 
 
 --
--- TOC entry 8348 (class 2606 OID 35569)
+-- TOC entry 8380 (class 2606 OID 35569)
 -- Name: intra_node_wallet_trxn_log_5 fk_intra_node_wallet_trxn_log_5_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15176,7 +15207,7 @@ ALTER TABLE ONLY public.intra_node_wallet_trxn_log_5
 
 
 --
--- TOC entry 8374 (class 2606 OID 97059)
+-- TOC entry 8406 (class 2606 OID 97059)
 -- Name: journal_line_summary fk_journal_line_summary_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15185,7 +15216,7 @@ ALTER TABLE ONLY public.journal_line_summary
 
 
 --
--- TOC entry 8372 (class 2606 OID 38136)
+-- TOC entry 8404 (class 2606 OID 38136)
 -- Name: merchant_profiles fk_merchant_profiles_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15194,7 +15225,7 @@ ALTER TABLE ONLY public.merchant_profiles
 
 
 --
--- TOC entry 8373 (class 2606 OID 38141)
+-- TOC entry 8405 (class 2606 OID 38141)
 -- Name: merchant_profiles fk_merchant_profiles_user_sys_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15203,7 +15234,7 @@ ALTER TABLE ONLY public.merchant_profiles
 
 
 --
--- TOC entry 8365 (class 2606 OID 37239)
+-- TOC entry 8397 (class 2606 OID 37239)
 -- Name: pos_profiles fk_pos_profiles_user_sys_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15212,7 +15243,7 @@ ALTER TABLE ONLY public.pos_profiles
 
 
 --
--- TOC entry 8363 (class 2606 OID 37229)
+-- TOC entry 8395 (class 2606 OID 37229)
 -- Name: pos_profiles fk_pos_users_profiles_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15221,7 +15252,7 @@ ALTER TABLE ONLY public.pos_profiles
 
 
 --
--- TOC entry 8364 (class 2606 OID 37234)
+-- TOC entry 8396 (class 2606 OID 37234)
 -- Name: pos_profiles fk_pos_users_profiles_user_sys_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15230,7 +15261,7 @@ ALTER TABLE ONLY public.pos_profiles
 
 
 --
--- TOC entry 8368 (class 2606 OID 37352)
+-- TOC entry 8400 (class 2606 OID 37352)
 -- Name: super_agent_profiles fk_super_agent_profiles_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15239,7 +15270,7 @@ ALTER TABLE ONLY public.super_agent_profiles
 
 
 --
--- TOC entry 8369 (class 2606 OID 37357)
+-- TOC entry 8401 (class 2606 OID 37357)
 -- Name: super_agent_profiles fk_super_agent_profiles_user_sys_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15248,7 +15279,7 @@ ALTER TABLE ONLY public.super_agent_profiles
 
 
 --
--- TOC entry 8239 (class 2606 OID 24340)
+-- TOC entry 8271 (class 2606 OID 24340)
 -- Name: super_agent_users_model fk_super_agent_users_model_profile_sys_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15257,7 +15288,7 @@ ALTER TABLE ONLY public.super_agent_users_model
 
 
 --
--- TOC entry 8309 (class 2606 OID 35259)
+-- TOC entry 8341 (class 2606 OID 35259)
 -- Name: wallet_to_bank_trxn_log_0 fk_wallet_to_bank_trxn_log_0_channel_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15266,7 +15297,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_0
 
 
 --
--- TOC entry 8313 (class 2606 OID 35781)
+-- TOC entry 8345 (class 2606 OID 35781)
 -- Name: wallet_to_bank_trxn_log_0 fk_wallet_to_bank_trxn_log_0_cr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15275,7 +15306,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_0
 
 
 --
--- TOC entry 8310 (class 2606 OID 35264)
+-- TOC entry 8342 (class 2606 OID 35264)
 -- Name: wallet_to_bank_trxn_log_0 fk_wallet_to_bank_trxn_log_0_credit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15284,7 +15315,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_0
 
 
 --
--- TOC entry 8311 (class 2606 OID 35269)
+-- TOC entry 8343 (class 2606 OID 35269)
 -- Name: wallet_to_bank_trxn_log_0 fk_wallet_to_bank_trxn_log_0_debit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15293,7 +15324,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_0
 
 
 --
--- TOC entry 8314 (class 2606 OID 35786)
+-- TOC entry 8346 (class 2606 OID 35786)
 -- Name: wallet_to_bank_trxn_log_0 fk_wallet_to_bank_trxn_log_0_dr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15302,7 +15333,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_0
 
 
 --
--- TOC entry 8312 (class 2606 OID 35274)
+-- TOC entry 8344 (class 2606 OID 35274)
 -- Name: wallet_to_bank_trxn_log_0 fk_wallet_to_bank_trxn_log_0_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15311,7 +15342,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_0
 
 
 --
--- TOC entry 8315 (class 2606 OID 35308)
+-- TOC entry 8347 (class 2606 OID 35308)
 -- Name: wallet_to_bank_trxn_log_1 fk_wallet_to_bank_trxn_log_1_channel_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15320,7 +15351,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_1
 
 
 --
--- TOC entry 8319 (class 2606 OID 35769)
+-- TOC entry 8351 (class 2606 OID 35769)
 -- Name: wallet_to_bank_trxn_log_1 fk_wallet_to_bank_trxn_log_1_cr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15329,7 +15360,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_1
 
 
 --
--- TOC entry 8316 (class 2606 OID 35313)
+-- TOC entry 8348 (class 2606 OID 35313)
 -- Name: wallet_to_bank_trxn_log_1 fk_wallet_to_bank_trxn_log_1_credit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15338,7 +15369,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_1
 
 
 --
--- TOC entry 8317 (class 2606 OID 35318)
+-- TOC entry 8349 (class 2606 OID 35318)
 -- Name: wallet_to_bank_trxn_log_1 fk_wallet_to_bank_trxn_log_1_debit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15347,7 +15378,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_1
 
 
 --
--- TOC entry 8320 (class 2606 OID 35774)
+-- TOC entry 8352 (class 2606 OID 35774)
 -- Name: wallet_to_bank_trxn_log_1 fk_wallet_to_bank_trxn_log_1_dr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15356,7 +15387,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_1
 
 
 --
--- TOC entry 8318 (class 2606 OID 35323)
+-- TOC entry 8350 (class 2606 OID 35323)
 -- Name: wallet_to_bank_trxn_log_1 fk_wallet_to_bank_trxn_log_1_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15365,7 +15396,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_1
 
 
 --
--- TOC entry 8321 (class 2606 OID 35358)
+-- TOC entry 8353 (class 2606 OID 35358)
 -- Name: wallet_to_bank_trxn_log_2 fk_wallet_to_bank_trxn_log_2_channel_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15374,7 +15405,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_2
 
 
 --
--- TOC entry 8325 (class 2606 OID 35757)
+-- TOC entry 8357 (class 2606 OID 35757)
 -- Name: wallet_to_bank_trxn_log_2 fk_wallet_to_bank_trxn_log_2_cr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15383,7 +15414,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_2
 
 
 --
--- TOC entry 8322 (class 2606 OID 35363)
+-- TOC entry 8354 (class 2606 OID 35363)
 -- Name: wallet_to_bank_trxn_log_2 fk_wallet_to_bank_trxn_log_2_credit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15392,7 +15423,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_2
 
 
 --
--- TOC entry 8323 (class 2606 OID 35368)
+-- TOC entry 8355 (class 2606 OID 35368)
 -- Name: wallet_to_bank_trxn_log_2 fk_wallet_to_bank_trxn_log_2_debit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15401,7 +15432,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_2
 
 
 --
--- TOC entry 8326 (class 2606 OID 35762)
+-- TOC entry 8358 (class 2606 OID 35762)
 -- Name: wallet_to_bank_trxn_log_2 fk_wallet_to_bank_trxn_log_2_dr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15410,7 +15441,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_2
 
 
 --
--- TOC entry 8324 (class 2606 OID 35373)
+-- TOC entry 8356 (class 2606 OID 35373)
 -- Name: wallet_to_bank_trxn_log_2 fk_wallet_to_bank_trxn_log_2_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15419,7 +15450,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_2
 
 
 --
--- TOC entry 8327 (class 2606 OID 35407)
+-- TOC entry 8359 (class 2606 OID 35407)
 -- Name: wallet_to_bank_trxn_log_3 fk_wallet_to_bank_trxn_log_3_channel_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15428,7 +15459,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_3
 
 
 --
--- TOC entry 8331 (class 2606 OID 35745)
+-- TOC entry 8363 (class 2606 OID 35745)
 -- Name: wallet_to_bank_trxn_log_3 fk_wallet_to_bank_trxn_log_3_cr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15437,7 +15468,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_3
 
 
 --
--- TOC entry 8328 (class 2606 OID 35412)
+-- TOC entry 8360 (class 2606 OID 35412)
 -- Name: wallet_to_bank_trxn_log_3 fk_wallet_to_bank_trxn_log_3_credit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15446,7 +15477,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_3
 
 
 --
--- TOC entry 8329 (class 2606 OID 35417)
+-- TOC entry 8361 (class 2606 OID 35417)
 -- Name: wallet_to_bank_trxn_log_3 fk_wallet_to_bank_trxn_log_3_debit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15455,7 +15486,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_3
 
 
 --
--- TOC entry 8332 (class 2606 OID 35750)
+-- TOC entry 8364 (class 2606 OID 35750)
 -- Name: wallet_to_bank_trxn_log_3 fk_wallet_to_bank_trxn_log_3_dr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15464,7 +15495,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_3
 
 
 --
--- TOC entry 8330 (class 2606 OID 35422)
+-- TOC entry 8362 (class 2606 OID 35422)
 -- Name: wallet_to_bank_trxn_log_3 fk_wallet_to_bank_trxn_log_3_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15473,7 +15504,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_3
 
 
 --
--- TOC entry 8333 (class 2606 OID 35456)
+-- TOC entry 8365 (class 2606 OID 35456)
 -- Name: wallet_to_bank_trxn_log_4 fk_wallet_to_bank_trxn_log_4_channel_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15482,7 +15513,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_4
 
 
 --
--- TOC entry 8337 (class 2606 OID 35733)
+-- TOC entry 8369 (class 2606 OID 35733)
 -- Name: wallet_to_bank_trxn_log_4 fk_wallet_to_bank_trxn_log_4_cr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15491,7 +15522,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_4
 
 
 --
--- TOC entry 8334 (class 2606 OID 35461)
+-- TOC entry 8366 (class 2606 OID 35461)
 -- Name: wallet_to_bank_trxn_log_4 fk_wallet_to_bank_trxn_log_4_credit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15500,7 +15531,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_4
 
 
 --
--- TOC entry 8335 (class 2606 OID 35466)
+-- TOC entry 8367 (class 2606 OID 35466)
 -- Name: wallet_to_bank_trxn_log_4 fk_wallet_to_bank_trxn_log_4_debit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15509,7 +15540,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_4
 
 
 --
--- TOC entry 8338 (class 2606 OID 35738)
+-- TOC entry 8370 (class 2606 OID 35738)
 -- Name: wallet_to_bank_trxn_log_4 fk_wallet_to_bank_trxn_log_4_dr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15518,7 +15549,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_4
 
 
 --
--- TOC entry 8336 (class 2606 OID 35471)
+-- TOC entry 8368 (class 2606 OID 35471)
 -- Name: wallet_to_bank_trxn_log_4 fk_wallet_to_bank_trxn_log_4_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15527,7 +15558,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_4
 
 
 --
--- TOC entry 8339 (class 2606 OID 35505)
+-- TOC entry 8371 (class 2606 OID 35505)
 -- Name: wallet_to_bank_trxn_log_5 fk_wallet_to_bank_trxn_log_5_channel_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15536,7 +15567,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_5
 
 
 --
--- TOC entry 8343 (class 2606 OID 35721)
+-- TOC entry 8375 (class 2606 OID 35721)
 -- Name: wallet_to_bank_trxn_log_5 fk_wallet_to_bank_trxn_log_5_cr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15545,7 +15576,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_5
 
 
 --
--- TOC entry 8340 (class 2606 OID 35510)
+-- TOC entry 8372 (class 2606 OID 35510)
 -- Name: wallet_to_bank_trxn_log_5 fk_wallet_to_bank_trxn_log_5_credit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15554,7 +15585,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_5
 
 
 --
--- TOC entry 8341 (class 2606 OID 35515)
+-- TOC entry 8373 (class 2606 OID 35515)
 -- Name: wallet_to_bank_trxn_log_5 fk_wallet_to_bank_trxn_log_5_debit_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15563,7 +15594,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_5
 
 
 --
--- TOC entry 8344 (class 2606 OID 35726)
+-- TOC entry 8376 (class 2606 OID 35726)
 -- Name: wallet_to_bank_trxn_log_5 fk_wallet_to_bank_trxn_log_5_dr_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15572,7 +15603,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_5
 
 
 --
--- TOC entry 8342 (class 2606 OID 35520)
+-- TOC entry 8374 (class 2606 OID 35520)
 -- Name: wallet_to_bank_trxn_log_5 fk_wallet_to_bank_trxn_log_5_profile_type_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15581,7 +15612,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_5
 
 
 --
--- TOC entry 8240 (class 2606 OID 34344)
+-- TOC entry 8272 (class 2606 OID 34344)
 -- Name: operational_charges operational_charges_scheme_code; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15590,7 +15621,7 @@ ALTER TABLE ONLY public.operational_charges
 
 
 --
--- TOC entry 8241 (class 2606 OID 34349)
+-- TOC entry 8273 (class 2606 OID 34349)
 -- Name: operational_charges operational_charges_wallet_accnt_num; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -15598,7 +15629,7 @@ ALTER TABLE ONLY public.operational_charges
     ADD CONSTRAINT operational_charges_wallet_accnt_num FOREIGN KEY (wallet_accnt_num) REFERENCES public.biller_operational_wallets(wallet_accnt_num);
 
 
--- Completed on 2024-09-12 12:28:35
+-- Completed on 2024-10-01 01:12:41
 
 --
 -- PostgreSQL database dump complete

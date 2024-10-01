@@ -5,7 +5,7 @@
 -- Dumped from database version 14.5
 -- Dumped by pg_dump version 14.5
 
--- Started on 2024-09-12 12:28:07
+-- Started on 2024-10-01 01:13:27
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -29,7 +29,7 @@ CREATE SCHEMA public;
 ALTER SCHEMA public OWNER TO postgres;
 
 --
--- TOC entry 5215 (class 0 OID 0)
+-- TOC entry 5247 (class 0 OID 0)
 -- Dependencies: 4
 -- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
 --
@@ -363,7 +363,7 @@ ALTER TABLE public.approval_user_groups ALTER COLUMN id ADD GENERATED ALWAYS AS 
 
 
 --
--- TOC entry 308 (class 1259 OID 97984)
+-- TOC entry 308 (class 1259 OID 98076)
 -- Name: billing_charges_config; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -397,7 +397,39 @@ CREATE TABLE public.billing_charges_config (
     minimum_save_invest numeric(15,2) DEFAULT 0.00,
     save_invest_cap numeric(15,2) DEFAULT 0.00,
     bonus_share numeric(15,2) DEFAULT 0.00,
-    bonus_accelerate boolean DEFAULT true NOT NULL
+    bonus_accelerate boolean DEFAULT true NOT NULL,
+    use_donation_percentage boolean DEFAULT true NOT NULL,
+    donation_percentage_or_fixedvalue numeric(15,2) DEFAULT 0.00,
+    minimum_donation numeric(15,2) DEFAULT 0.00,
+    donation_cap numeric(15,2) DEFAULT 0.00,
+    use_communication_percentage boolean DEFAULT true NOT NULL,
+    communication_percentage_or_fixedvalue numeric(15,2) DEFAULT 0.00,
+    minimum_communication_saving numeric(15,2) DEFAULT 0.00,
+    communication_save_cap numeric(15,2) DEFAULT 0.00,
+    use_utility_percentage boolean DEFAULT true NOT NULL,
+    utility_percentage_or_fixedvalue numeric(15,2) DEFAULT 0.00,
+    minimum_utility_saving numeric(15,2) DEFAULT 0.00,
+    utility_save_cap numeric(15,2) DEFAULT 0.00,
+    use_healthcare_percentage boolean DEFAULT true NOT NULL,
+    healthcare_percentage_or_fixedvalue numeric(15,2) DEFAULT 0.00,
+    minimum_healthcare_saving numeric(15,2) DEFAULT 0.00,
+    healthcare_save_cap numeric(15,2) DEFAULT 0.00,
+    use_legal_percentage boolean DEFAULT true NOT NULL,
+    legal_percentage_or_fixedvalue numeric(15,2) DEFAULT 0.00,
+    minimum_legal_saving numeric(15,2) DEFAULT 0.00,
+    legal_save_cap numeric(15,2) DEFAULT 0.00,
+    use_housing_percentage boolean DEFAULT true NOT NULL,
+    housing_percentage_or_fixedvalue numeric(15,2) DEFAULT 0.00,
+    minimum_housing_saving numeric(15,2) DEFAULT 0.00,
+    housing_save_cap numeric(15,2) DEFAULT 0.00,
+    use_housing_asset_percentage boolean DEFAULT true NOT NULL,
+    housing_asset_percentage_or_fixedvalue numeric(15,2) DEFAULT 0.00,
+    minimum_housing_asset_saving numeric(15,2) DEFAULT 0.00,
+    housing_asset_save_cap numeric(15,2) DEFAULT 0.00,
+    use_education_training_percentage boolean DEFAULT true NOT NULL,
+    education_training_percentage_or_fixedvalue numeric(15,2) DEFAULT 0.00,
+    minimum_education_training_saving numeric(15,2) DEFAULT 0.00,
+    education_training_save_cap numeric(15,2) DEFAULT 0.00
 );
 
 
@@ -498,7 +530,7 @@ CREATE SEQUENCE public.journal_id_seq
 ALTER TABLE public.journal_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5216 (class 0 OID 0)
+-- TOC entry 5248 (class 0 OID 0)
 -- Dependencies: 299
 -- Name: journal_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -552,7 +584,7 @@ CREATE SEQUENCE public.journal_line_id_seq
 ALTER TABLE public.journal_line_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5217 (class 0 OID 0)
+-- TOC entry 5249 (class 0 OID 0)
 -- Dependencies: 303
 -- Name: journal_line_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -635,7 +667,7 @@ CREATE SEQUENCE public.journal_line_summary_id_seq
 ALTER TABLE public.journal_line_summary_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5218 (class 0 OID 0)
+-- TOC entry 5250 (class 0 OID 0)
 -- Dependencies: 301
 -- Name: journal_line_summary_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3104,7 +3136,7 @@ CREATE SEQUENCE public.wallet_to_bank_trxn_log_4_id_seq
 ALTER TABLE public.wallet_to_bank_trxn_log_4_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5219 (class 0 OID 0)
+-- TOC entry 5251 (class 0 OID 0)
 -- Dependencies: 252
 -- Name: wallet_to_bank_trxn_log_4_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -3145,7 +3177,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_4 ALTER COLUMN id SET DEFAULT ne
 
 
 --
--- TOC entry 5194 (class 0 OID 86828)
+-- TOC entry 5226 (class 0 OID 86828)
 -- Dependencies: 293
 -- Data for Name: account_credit_history; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3155,7 +3187,7 @@ COPY public.account_credit_history (id, init_company_id, partner_code, applicati
 
 
 --
--- TOC entry 5136 (class 0 OID 64424)
+-- TOC entry 5168 (class 0 OID 64424)
 -- Dependencies: 235
 -- Data for Name: approval_item_groups; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3165,7 +3197,7 @@ COPY public.approval_item_groups (id, company_id, application_code, item_group_n
 
 
 --
--- TOC entry 5132 (class 0 OID 56197)
+-- TOC entry 5164 (class 0 OID 56197)
 -- Dependencies: 231
 -- Data for Name: approval_item_types; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3175,7 +3207,7 @@ COPY public.approval_item_types (id, company_id, application_code, approval_item
 
 
 --
--- TOC entry 5148 (class 0 OID 72617)
+-- TOC entry 5180 (class 0 OID 72617)
 -- Dependencies: 247
 -- Data for Name: approval_items; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3185,7 +3217,7 @@ COPY public.approval_items (id, company_id, application_code, approval_workflow_
 
 
 --
--- TOC entry 5134 (class 0 OID 64354)
+-- TOC entry 5166 (class 0 OID 64354)
 -- Dependencies: 233
 -- Data for Name: approval_requests; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3195,7 +3227,7 @@ COPY public.approval_requests (id, company_id, application_code, approval_workfl
 
 
 --
--- TOC entry 5140 (class 0 OID 64530)
+-- TOC entry 5172 (class 0 OID 64530)
 -- Dependencies: 239
 -- Data for Name: approval_routes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3205,7 +3237,7 @@ COPY public.approval_routes (id, company_id, application_code, item_group_id, it
 
 
 --
--- TOC entry 5138 (class 0 OID 64466)
+-- TOC entry 5170 (class 0 OID 64466)
 -- Dependencies: 237
 -- Data for Name: approval_user_groups; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3215,18 +3247,17 @@ COPY public.approval_user_groups (id, company_id, application_code, user_group_n
 
 
 --
--- TOC entry 5209 (class 0 OID 97984)
+-- TOC entry 5241 (class 0 OID 98076)
 -- Dependencies: 308
 -- Data for Name: billing_charges_config; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.billing_charges_config (id, billing_code, partner_code, is_active, service_id, service_name, scheme_code, applicable_trxn_type, trxn_band, lower_limit_value, upper_limit_value, use_percentage, percentage_or_fixedvalue, trxn_charge_cap, date_configured, use_percentage_for_tax, tax_percentage_or_fixedvalue, tax_charge_cap, use_percentage_for_bank_commission, bank_commission_percentage_or_fixedvalue, bank_commission_share_cap, use_percentage_for_partner_commission, partner_commission_percentage_or_fixedvalue, partner_commission_share_cap, use_save_invest_percentage, save_invest_percentage_or_fixedvalue, minimum_save_invest, save_invest_cap, bonus_share, bonus_accelerate) FROM stdin;
-1	HJSW                	jahddd              	t	1	test-billing        	ndoadndadd  	WalletToBank        	LOW       	1.00	5000.00	t	20.00	100.00	2024-09-11	f	1.00	10.00	f	0.00	0.00	f	0.00	0.00	f	50.00	500.00	500.00	0.00	f
+COPY public.billing_charges_config (id, billing_code, partner_code, is_active, service_id, service_name, scheme_code, applicable_trxn_type, trxn_band, lower_limit_value, upper_limit_value, use_percentage, percentage_or_fixedvalue, trxn_charge_cap, date_configured, use_percentage_for_tax, tax_percentage_or_fixedvalue, tax_charge_cap, use_percentage_for_bank_commission, bank_commission_percentage_or_fixedvalue, bank_commission_share_cap, use_percentage_for_partner_commission, partner_commission_percentage_or_fixedvalue, partner_commission_share_cap, use_save_invest_percentage, save_invest_percentage_or_fixedvalue, minimum_save_invest, save_invest_cap, bonus_share, bonus_accelerate, use_donation_percentage, donation_percentage_or_fixedvalue, minimum_donation, donation_cap, use_communication_percentage, communication_percentage_or_fixedvalue, minimum_communication_saving, communication_save_cap, use_utility_percentage, utility_percentage_or_fixedvalue, minimum_utility_saving, utility_save_cap, use_healthcare_percentage, healthcare_percentage_or_fixedvalue, minimum_healthcare_saving, healthcare_save_cap, use_legal_percentage, legal_percentage_or_fixedvalue, minimum_legal_saving, legal_save_cap, use_housing_percentage, housing_percentage_or_fixedvalue, minimum_housing_saving, housing_save_cap, use_housing_asset_percentage, housing_asset_percentage_or_fixedvalue, minimum_housing_asset_saving, housing_asset_save_cap, use_education_training_percentage, education_training_percentage_or_fixedvalue, minimum_education_training_saving, education_training_save_cap) FROM stdin;
 \.
 
 
 --
--- TOC entry 5118 (class 0 OID 55216)
+-- TOC entry 5150 (class 0 OID 55216)
 -- Dependencies: 217
 -- Data for Name: de_dynamic_class_4_students; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3237,7 +3268,7 @@ COPY public.de_dynamic_class_4_students (id, first_name, last_name, date_of_birt
 
 
 --
--- TOC entry 5201 (class 0 OID 97094)
+-- TOC entry 5233 (class 0 OID 97094)
 -- Dependencies: 300
 -- Data for Name: journal; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3247,7 +3278,7 @@ COPY public.journal (id, trxn_request_id, trxn_reference, external_trxn_referenc
 
 
 --
--- TOC entry 5205 (class 0 OID 97200)
+-- TOC entry 5237 (class 0 OID 97200)
 -- Dependencies: 304
 -- Data for Name: journal_line; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3257,7 +3288,7 @@ COPY public.journal_line (id, profile_id, profile_type_code, journal_action, cre
 
 
 --
--- TOC entry 5203 (class 0 OID 97121)
+-- TOC entry 5235 (class 0 OID 97121)
 -- Dependencies: 302
 -- Data for Name: journal_line_summary; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3267,7 +3298,7 @@ COPY public.journal_line_summary (id, journal_id, journal_action, debit_profile_
 
 
 --
--- TOC entry 5206 (class 0 OID 97452)
+-- TOC entry 5238 (class 0 OID 97452)
 -- Dependencies: 305
 -- Data for Name: merchant_access_whitelist; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3277,7 +3308,7 @@ COPY public.merchant_access_whitelist (ip_address, merchant_full_name, merchant_
 
 
 --
--- TOC entry 5112 (class 0 OID 54938)
+-- TOC entry 5144 (class 0 OID 54938)
 -- Dependencies: 211
 -- Data for Name: mini_wallet; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3288,7 +3319,7 @@ COPY public.mini_wallet (id, customer_reference, previous_balance, balance) FROM
 
 
 --
--- TOC entry 5128 (class 0 OID 55653)
+-- TOC entry 5160 (class 0 OID 55653)
 -- Dependencies: 227
 -- Data for Name: node_in_sessions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3298,7 +3329,7 @@ COPY public.node_in_sessions (id, node_index, node_name, start_in_session_id, en
 
 
 --
--- TOC entry 5130 (class 0 OID 55661)
+-- TOC entry 5162 (class 0 OID 55661)
 -- Dependencies: 229
 -- Data for Name: node_out_sessions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3308,7 +3339,7 @@ COPY public.node_out_sessions (id, node_index, node_name, start_out_session_id, 
 
 
 --
--- TOC entry 5208 (class 0 OID 97470)
+-- TOC entry 5240 (class 0 OID 97470)
 -- Dependencies: 307
 -- Data for Name: partner_access_blacklist; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3318,7 +3349,7 @@ COPY public.partner_access_blacklist (ip_address, user_full_name, user_mobile_nu
 
 
 --
--- TOC entry 5207 (class 0 OID 97461)
+-- TOC entry 5239 (class 0 OID 97461)
 -- Dependencies: 306
 -- Data for Name: partner_access_whitelist; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3328,7 +3359,7 @@ COPY public.partner_access_whitelist (ip_address, partner_full_name, partner_mob
 
 
 --
--- TOC entry 5144 (class 0 OID 72524)
+-- TOC entry 5176 (class 0 OID 72524)
 -- Dependencies: 243
 -- Data for Name: partner_loan_tenures; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3338,7 +3369,7 @@ COPY public.partner_loan_tenures (id, company_id, partner_code, application_code
 
 
 --
--- TOC entry 5142 (class 0 OID 72481)
+-- TOC entry 5174 (class 0 OID 72481)
 -- Dependencies: 241
 -- Data for Name: partner_loan_types; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3348,7 +3379,7 @@ COPY public.partner_loan_types (id, company_id, partner_code, application_code, 
 
 
 --
--- TOC entry 5156 (class 0 OID 84676)
+-- TOC entry 5188 (class 0 OID 84676)
 -- Dependencies: 255
 -- Data for Name: pending_bank_credit; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3358,7 +3389,7 @@ COPY public.pending_bank_credit (id, init_company_id, partner_code, application_
 
 
 --
--- TOC entry 5158 (class 0 OID 84725)
+-- TOC entry 5190 (class 0 OID 84725)
 -- Dependencies: 257
 -- Data for Name: pending_bank_credit_0; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3368,7 +3399,7 @@ COPY public.pending_bank_credit_0 (id, init_company_id, partner_code, applicatio
 
 
 --
--- TOC entry 5160 (class 0 OID 84774)
+-- TOC entry 5192 (class 0 OID 84774)
 -- Dependencies: 259
 -- Data for Name: pending_bank_credit_1; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3378,7 +3409,7 @@ COPY public.pending_bank_credit_1 (id, init_company_id, partner_code, applicatio
 
 
 --
--- TOC entry 5162 (class 0 OID 84825)
+-- TOC entry 5194 (class 0 OID 84825)
 -- Dependencies: 261
 -- Data for Name: pending_bank_credit_2; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3388,7 +3419,7 @@ COPY public.pending_bank_credit_2 (id, init_company_id, partner_code, applicatio
 
 
 --
--- TOC entry 5164 (class 0 OID 84874)
+-- TOC entry 5196 (class 0 OID 84874)
 -- Dependencies: 263
 -- Data for Name: pending_bank_credit_3; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3398,7 +3429,7 @@ COPY public.pending_bank_credit_3 (id, init_company_id, partner_code, applicatio
 
 
 --
--- TOC entry 5166 (class 0 OID 84923)
+-- TOC entry 5198 (class 0 OID 84923)
 -- Dependencies: 265
 -- Data for Name: pending_bank_credit_4; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3408,7 +3439,7 @@ COPY public.pending_bank_credit_4 (id, init_company_id, partner_code, applicatio
 
 
 --
--- TOC entry 5168 (class 0 OID 84974)
+-- TOC entry 5200 (class 0 OID 84974)
 -- Dependencies: 267
 -- Data for Name: pending_node_credit; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3418,7 +3449,7 @@ COPY public.pending_node_credit (id, init_company_id, partner_code, application_
 
 
 --
--- TOC entry 5170 (class 0 OID 85023)
+-- TOC entry 5202 (class 0 OID 85023)
 -- Dependencies: 269
 -- Data for Name: pending_node_credit_0; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3428,7 +3459,7 @@ COPY public.pending_node_credit_0 (id, init_company_id, partner_code, applicatio
 
 
 --
--- TOC entry 5172 (class 0 OID 85072)
+-- TOC entry 5204 (class 0 OID 85072)
 -- Dependencies: 271
 -- Data for Name: pending_node_credit_1; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3438,7 +3469,7 @@ COPY public.pending_node_credit_1 (id, init_company_id, partner_code, applicatio
 
 
 --
--- TOC entry 5174 (class 0 OID 85121)
+-- TOC entry 5206 (class 0 OID 85121)
 -- Dependencies: 273
 -- Data for Name: pending_node_credit_2; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3448,7 +3479,7 @@ COPY public.pending_node_credit_2 (id, init_company_id, partner_code, applicatio
 
 
 --
--- TOC entry 5176 (class 0 OID 85170)
+-- TOC entry 5208 (class 0 OID 85170)
 -- Dependencies: 275
 -- Data for Name: pending_node_credit_3; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3458,7 +3489,7 @@ COPY public.pending_node_credit_3 (id, init_company_id, partner_code, applicatio
 
 
 --
--- TOC entry 5178 (class 0 OID 85219)
+-- TOC entry 5210 (class 0 OID 85219)
 -- Dependencies: 277
 -- Data for Name: pending_node_credit_4; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3468,7 +3499,7 @@ COPY public.pending_node_credit_4 (id, init_company_id, partner_code, applicatio
 
 
 --
--- TOC entry 5192 (class 0 OID 86107)
+-- TOC entry 5224 (class 0 OID 86107)
 -- Dependencies: 291
 -- Data for Name: pending_process_trxn; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3478,7 +3509,7 @@ COPY public.pending_process_trxn (id, init_company_id, partner_code, application
 
 
 --
--- TOC entry 5182 (class 0 OID 85760)
+-- TOC entry 5214 (class 0 OID 85760)
 -- Dependencies: 281
 -- Data for Name: pending_process_trxn_0; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3488,7 +3519,7 @@ COPY public.pending_process_trxn_0 (id, init_company_id, partner_code, applicati
 
 
 --
--- TOC entry 5184 (class 0 OID 85829)
+-- TOC entry 5216 (class 0 OID 85829)
 -- Dependencies: 283
 -- Data for Name: pending_process_trxn_1; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3498,7 +3529,7 @@ COPY public.pending_process_trxn_1 (id, init_company_id, partner_code, applicati
 
 
 --
--- TOC entry 5186 (class 0 OID 85900)
+-- TOC entry 5218 (class 0 OID 85900)
 -- Dependencies: 285
 -- Data for Name: pending_process_trxn_2; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3508,7 +3539,7 @@ COPY public.pending_process_trxn_2 (id, init_company_id, partner_code, applicati
 
 
 --
--- TOC entry 5188 (class 0 OID 85969)
+-- TOC entry 5220 (class 0 OID 85969)
 -- Dependencies: 287
 -- Data for Name: pending_process_trxn_3; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3518,7 +3549,7 @@ COPY public.pending_process_trxn_3 (id, init_company_id, partner_code, applicati
 
 
 --
--- TOC entry 5190 (class 0 OID 86038)
+-- TOC entry 5222 (class 0 OID 86038)
 -- Dependencies: 289
 -- Data for Name: pending_process_trxn_4; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3528,7 +3559,7 @@ COPY public.pending_process_trxn_4 (id, init_company_id, partner_code, applicati
 
 
 --
--- TOC entry 5146 (class 0 OID 72543)
+-- TOC entry 5178 (class 0 OID 72543)
 -- Dependencies: 245
 -- Data for Name: request_item_batches; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3538,7 +3569,7 @@ COPY public.request_item_batches (id, company_id, application_code, approval_wor
 
 
 --
--- TOC entry 5196 (class 0 OID 87005)
+-- TOC entry 5228 (class 0 OID 87005)
 -- Dependencies: 295
 -- Data for Name: request_log; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3548,7 +3579,7 @@ COPY public.request_log (id, request_id, request_company_id, request_partner_cod
 
 
 --
--- TOC entry 5198 (class 0 OID 87022)
+-- TOC entry 5230 (class 0 OID 87022)
 -- Dependencies: 297
 -- Data for Name: response_log; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3558,7 +3589,7 @@ COPY public.response_log (id, request_id, response_company_id, response_partner_
 
 
 --
--- TOC entry 5152 (class 0 OID 73431)
+-- TOC entry 5184 (class 0 OID 73431)
 -- Dependencies: 251
 -- Data for Name: transaction_history; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3568,7 +3599,7 @@ COPY public.transaction_history (id, init_company_id, partner_code, application_
 
 
 --
--- TOC entry 5116 (class 0 OID 55131)
+-- TOC entry 5148 (class 0 OID 55131)
 -- Dependencies: 215
 -- Data for Name: transaction_log; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3587,7 +3618,7 @@ COPY public.transaction_log (id, trans_id, trans_ref, processor_resp_code, proce
 
 
 --
--- TOC entry 5150 (class 0 OID 72748)
+-- TOC entry 5182 (class 0 OID 72748)
 -- Dependencies: 249
 -- Data for Name: transaction_register; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3597,7 +3628,7 @@ COPY public.transaction_register (id, wallet_id, wallet_accnt_number, customer_r
 
 
 --
--- TOC entry 5199 (class 0 OID 96878)
+-- TOC entry 5231 (class 0 OID 96878)
 -- Dependencies: 298
 -- Data for Name: user_sessions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3607,7 +3638,7 @@ COPY public.user_sessions (ip_address, profile_type_code, customer_ref, partner_
 
 
 --
--- TOC entry 5126 (class 0 OID 55605)
+-- TOC entry 5158 (class 0 OID 55605)
 -- Dependencies: 225
 -- Data for Name: user_ussd_menus; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3617,7 +3648,7 @@ COPY public.user_ussd_menus (id, ussd_service_code, menu_title, menu_directory, 
 
 
 --
--- TOC entry 5122 (class 0 OID 55524)
+-- TOC entry 5154 (class 0 OID 55524)
 -- Dependencies: 221
 -- Data for Name: user_ussd_sessions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3627,7 +3658,7 @@ COPY public.user_ussd_sessions (id, ussd_service_code, mobile_number, previous_d
 
 
 --
--- TOC entry 5120 (class 0 OID 55503)
+-- TOC entry 5152 (class 0 OID 55503)
 -- Dependencies: 219
 -- Data for Name: user_ussd_state; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3637,7 +3668,7 @@ COPY public.user_ussd_state (id, ussd_service_code, mobile_number, previous_dire
 
 
 --
--- TOC entry 5124 (class 0 OID 55589)
+-- TOC entry 5156 (class 0 OID 55589)
 -- Dependencies: 223
 -- Data for Name: ussd_services; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3647,7 +3678,7 @@ COPY public.ussd_services (id, ussd_service_code, current_user_count, service_de
 
 
 --
--- TOC entry 5114 (class 0 OID 55020)
+-- TOC entry 5146 (class 0 OID 55020)
 -- Dependencies: 213
 -- Data for Name: wallet_balance_compact_history; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3686,7 +3717,7 @@ COPY public.wallet_balance_compact_history (id, wallet_id, wallet_accnt_number, 
 
 
 --
--- TOC entry 5180 (class 0 OID 85664)
+-- TOC entry 5212 (class 0 OID 85664)
 -- Dependencies: 279
 -- Data for Name: wallet_debit_history; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3696,7 +3727,7 @@ COPY public.wallet_debit_history (id, init_company_id, partner_code, application
 
 
 --
--- TOC entry 5154 (class 0 OID 81437)
+-- TOC entry 5186 (class 0 OID 81437)
 -- Dependencies: 253
 -- Data for Name: wallet_to_bank_trxn_log_4; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3706,7 +3737,7 @@ COPY public.wallet_to_bank_trxn_log_4 (id, trxn_originating_cust_no, trxn_reques
 
 
 --
--- TOC entry 5220 (class 0 OID 0)
+-- TOC entry 5252 (class 0 OID 0)
 -- Dependencies: 292
 -- Name: account_credit_history_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3715,7 +3746,7 @@ SELECT pg_catalog.setval('public.account_credit_history_id_seq', 1, false);
 
 
 --
--- TOC entry 5221 (class 0 OID 0)
+-- TOC entry 5253 (class 0 OID 0)
 -- Dependencies: 234
 -- Name: approval_item_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3724,7 +3755,7 @@ SELECT pg_catalog.setval('public.approval_item_groups_id_seq', 1, false);
 
 
 --
--- TOC entry 5222 (class 0 OID 0)
+-- TOC entry 5254 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: approval_item_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3733,7 +3764,7 @@ SELECT pg_catalog.setval('public.approval_item_types_id_seq', 1, false);
 
 
 --
--- TOC entry 5223 (class 0 OID 0)
+-- TOC entry 5255 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: approval_items_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3742,7 +3773,7 @@ SELECT pg_catalog.setval('public.approval_items_id_seq', 1, false);
 
 
 --
--- TOC entry 5224 (class 0 OID 0)
+-- TOC entry 5256 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: approval_requests_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3751,7 +3782,7 @@ SELECT pg_catalog.setval('public.approval_requests_id_seq', 1, false);
 
 
 --
--- TOC entry 5225 (class 0 OID 0)
+-- TOC entry 5257 (class 0 OID 0)
 -- Dependencies: 238
 -- Name: approval_routes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3760,7 +3791,7 @@ SELECT pg_catalog.setval('public.approval_routes_id_seq', 1, false);
 
 
 --
--- TOC entry 5226 (class 0 OID 0)
+-- TOC entry 5258 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: approval_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3769,7 +3800,7 @@ SELECT pg_catalog.setval('public.approval_user_groups_id_seq', 1, false);
 
 
 --
--- TOC entry 5227 (class 0 OID 0)
+-- TOC entry 5259 (class 0 OID 0)
 -- Dependencies: 216
 -- Name: de_dynamic_class_4_students_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3778,7 +3809,7 @@ SELECT pg_catalog.setval('public.de_dynamic_class_4_students_id_seq', 1, true);
 
 
 --
--- TOC entry 5228 (class 0 OID 0)
+-- TOC entry 5260 (class 0 OID 0)
 -- Dependencies: 299
 -- Name: journal_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3787,7 +3818,7 @@ SELECT pg_catalog.setval('public.journal_id_seq', 1, false);
 
 
 --
--- TOC entry 5229 (class 0 OID 0)
+-- TOC entry 5261 (class 0 OID 0)
 -- Dependencies: 303
 -- Name: journal_line_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3796,7 +3827,7 @@ SELECT pg_catalog.setval('public.journal_line_id_seq', 1, false);
 
 
 --
--- TOC entry 5230 (class 0 OID 0)
+-- TOC entry 5262 (class 0 OID 0)
 -- Dependencies: 301
 -- Name: journal_line_summary_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3805,7 +3836,7 @@ SELECT pg_catalog.setval('public.journal_line_summary_id_seq', 1, false);
 
 
 --
--- TOC entry 5231 (class 0 OID 0)
+-- TOC entry 5263 (class 0 OID 0)
 -- Dependencies: 210
 -- Name: mini_wallet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3814,7 +3845,7 @@ SELECT pg_catalog.setval('public.mini_wallet_id_seq', 1, true);
 
 
 --
--- TOC entry 5232 (class 0 OID 0)
+-- TOC entry 5264 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: node_in_sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3823,7 +3854,7 @@ SELECT pg_catalog.setval('public.node_in_sessions_id_seq', 1, false);
 
 
 --
--- TOC entry 5233 (class 0 OID 0)
+-- TOC entry 5265 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: node_out_sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3832,7 +3863,7 @@ SELECT pg_catalog.setval('public.node_out_sessions_id_seq', 1, false);
 
 
 --
--- TOC entry 5234 (class 0 OID 0)
+-- TOC entry 5266 (class 0 OID 0)
 -- Dependencies: 242
 -- Name: partner_loan_tenures_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3841,7 +3872,7 @@ SELECT pg_catalog.setval('public.partner_loan_tenures_id_seq', 1, false);
 
 
 --
--- TOC entry 5235 (class 0 OID 0)
+-- TOC entry 5267 (class 0 OID 0)
 -- Dependencies: 240
 -- Name: partner_loan_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3850,7 +3881,7 @@ SELECT pg_catalog.setval('public.partner_loan_types_id_seq', 1, false);
 
 
 --
--- TOC entry 5236 (class 0 OID 0)
+-- TOC entry 5268 (class 0 OID 0)
 -- Dependencies: 256
 -- Name: pending_bank_credit_0_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3859,7 +3890,7 @@ SELECT pg_catalog.setval('public.pending_bank_credit_0_id_seq', 1, false);
 
 
 --
--- TOC entry 5237 (class 0 OID 0)
+-- TOC entry 5269 (class 0 OID 0)
 -- Dependencies: 258
 -- Name: pending_bank_credit_1_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3868,7 +3899,7 @@ SELECT pg_catalog.setval('public.pending_bank_credit_1_id_seq', 1, false);
 
 
 --
--- TOC entry 5238 (class 0 OID 0)
+-- TOC entry 5270 (class 0 OID 0)
 -- Dependencies: 260
 -- Name: pending_bank_credit_2_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3877,7 +3908,7 @@ SELECT pg_catalog.setval('public.pending_bank_credit_2_id_seq', 1, false);
 
 
 --
--- TOC entry 5239 (class 0 OID 0)
+-- TOC entry 5271 (class 0 OID 0)
 -- Dependencies: 262
 -- Name: pending_bank_credit_3_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3886,7 +3917,7 @@ SELECT pg_catalog.setval('public.pending_bank_credit_3_id_seq', 1, false);
 
 
 --
--- TOC entry 5240 (class 0 OID 0)
+-- TOC entry 5272 (class 0 OID 0)
 -- Dependencies: 264
 -- Name: pending_bank_credit_4_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3895,7 +3926,7 @@ SELECT pg_catalog.setval('public.pending_bank_credit_4_id_seq', 1, false);
 
 
 --
--- TOC entry 5241 (class 0 OID 0)
+-- TOC entry 5273 (class 0 OID 0)
 -- Dependencies: 254
 -- Name: pending_bank_credit_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3904,7 +3935,7 @@ SELECT pg_catalog.setval('public.pending_bank_credit_id_seq', 1, false);
 
 
 --
--- TOC entry 5242 (class 0 OID 0)
+-- TOC entry 5274 (class 0 OID 0)
 -- Dependencies: 268
 -- Name: pending_node_credit_0_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3913,7 +3944,7 @@ SELECT pg_catalog.setval('public.pending_node_credit_0_id_seq', 1, false);
 
 
 --
--- TOC entry 5243 (class 0 OID 0)
+-- TOC entry 5275 (class 0 OID 0)
 -- Dependencies: 270
 -- Name: pending_node_credit_1_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3922,7 +3953,7 @@ SELECT pg_catalog.setval('public.pending_node_credit_1_id_seq', 1, false);
 
 
 --
--- TOC entry 5244 (class 0 OID 0)
+-- TOC entry 5276 (class 0 OID 0)
 -- Dependencies: 272
 -- Name: pending_node_credit_2_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3931,7 +3962,7 @@ SELECT pg_catalog.setval('public.pending_node_credit_2_id_seq', 1, false);
 
 
 --
--- TOC entry 5245 (class 0 OID 0)
+-- TOC entry 5277 (class 0 OID 0)
 -- Dependencies: 274
 -- Name: pending_node_credit_3_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3940,7 +3971,7 @@ SELECT pg_catalog.setval('public.pending_node_credit_3_id_seq', 1, false);
 
 
 --
--- TOC entry 5246 (class 0 OID 0)
+-- TOC entry 5278 (class 0 OID 0)
 -- Dependencies: 276
 -- Name: pending_node_credit_4_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3949,7 +3980,7 @@ SELECT pg_catalog.setval('public.pending_node_credit_4_id_seq', 1, false);
 
 
 --
--- TOC entry 5247 (class 0 OID 0)
+-- TOC entry 5279 (class 0 OID 0)
 -- Dependencies: 266
 -- Name: pending_node_credit_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3958,7 +3989,7 @@ SELECT pg_catalog.setval('public.pending_node_credit_id_seq', 1, false);
 
 
 --
--- TOC entry 5248 (class 0 OID 0)
+-- TOC entry 5280 (class 0 OID 0)
 -- Dependencies: 280
 -- Name: pending_process_trxn_0_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3967,7 +3998,7 @@ SELECT pg_catalog.setval('public.pending_process_trxn_0_id_seq', 1, false);
 
 
 --
--- TOC entry 5249 (class 0 OID 0)
+-- TOC entry 5281 (class 0 OID 0)
 -- Dependencies: 282
 -- Name: pending_process_trxn_1_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3976,7 +4007,7 @@ SELECT pg_catalog.setval('public.pending_process_trxn_1_id_seq', 1, false);
 
 
 --
--- TOC entry 5250 (class 0 OID 0)
+-- TOC entry 5282 (class 0 OID 0)
 -- Dependencies: 284
 -- Name: pending_process_trxn_2_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3985,7 +4016,7 @@ SELECT pg_catalog.setval('public.pending_process_trxn_2_id_seq', 1, false);
 
 
 --
--- TOC entry 5251 (class 0 OID 0)
+-- TOC entry 5283 (class 0 OID 0)
 -- Dependencies: 286
 -- Name: pending_process_trxn_3_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -3994,7 +4025,7 @@ SELECT pg_catalog.setval('public.pending_process_trxn_3_id_seq', 1, false);
 
 
 --
--- TOC entry 5252 (class 0 OID 0)
+-- TOC entry 5284 (class 0 OID 0)
 -- Dependencies: 288
 -- Name: pending_process_trxn_4_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -4003,7 +4034,7 @@ SELECT pg_catalog.setval('public.pending_process_trxn_4_id_seq', 1, false);
 
 
 --
--- TOC entry 5253 (class 0 OID 0)
+-- TOC entry 5285 (class 0 OID 0)
 -- Dependencies: 290
 -- Name: pending_process_trxn_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -4012,7 +4043,7 @@ SELECT pg_catalog.setval('public.pending_process_trxn_id_seq', 1, false);
 
 
 --
--- TOC entry 5254 (class 0 OID 0)
+-- TOC entry 5286 (class 0 OID 0)
 -- Dependencies: 244
 -- Name: request_item_batches_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -4021,7 +4052,7 @@ SELECT pg_catalog.setval('public.request_item_batches_id_seq', 1, false);
 
 
 --
--- TOC entry 5255 (class 0 OID 0)
+-- TOC entry 5287 (class 0 OID 0)
 -- Dependencies: 294
 -- Name: request_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -4030,7 +4061,7 @@ SELECT pg_catalog.setval('public.request_log_id_seq', 1, false);
 
 
 --
--- TOC entry 5256 (class 0 OID 0)
+-- TOC entry 5288 (class 0 OID 0)
 -- Dependencies: 296
 -- Name: response_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -4039,7 +4070,7 @@ SELECT pg_catalog.setval('public.response_log_id_seq', 1, false);
 
 
 --
--- TOC entry 5257 (class 0 OID 0)
+-- TOC entry 5289 (class 0 OID 0)
 -- Dependencies: 250
 -- Name: transaction_history_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -4048,7 +4079,7 @@ SELECT pg_catalog.setval('public.transaction_history_id_seq', 1, false);
 
 
 --
--- TOC entry 5258 (class 0 OID 0)
+-- TOC entry 5290 (class 0 OID 0)
 -- Dependencies: 214
 -- Name: transaction_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -4057,7 +4088,7 @@ SELECT pg_catalog.setval('public.transaction_log_id_seq', 157, true);
 
 
 --
--- TOC entry 5259 (class 0 OID 0)
+-- TOC entry 5291 (class 0 OID 0)
 -- Dependencies: 248
 -- Name: transaction_register_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -4066,7 +4097,7 @@ SELECT pg_catalog.setval('public.transaction_register_id_seq', 1, false);
 
 
 --
--- TOC entry 5260 (class 0 OID 0)
+-- TOC entry 5292 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: user_ussd_menus_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -4075,7 +4106,7 @@ SELECT pg_catalog.setval('public.user_ussd_menus_id_seq', 1, false);
 
 
 --
--- TOC entry 5261 (class 0 OID 0)
+-- TOC entry 5293 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: user_ussd_sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -4084,7 +4115,7 @@ SELECT pg_catalog.setval('public.user_ussd_sessions_id_seq', 1, false);
 
 
 --
--- TOC entry 5262 (class 0 OID 0)
+-- TOC entry 5294 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: user_ussd_state_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -4093,7 +4124,7 @@ SELECT pg_catalog.setval('public.user_ussd_state_id_seq', 1, false);
 
 
 --
--- TOC entry 5263 (class 0 OID 0)
+-- TOC entry 5295 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: ussd_services_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -4102,7 +4133,7 @@ SELECT pg_catalog.setval('public.ussd_services_id_seq', 1, false);
 
 
 --
--- TOC entry 5264 (class 0 OID 0)
+-- TOC entry 5296 (class 0 OID 0)
 -- Dependencies: 212
 -- Name: wallet_balance_compact_history_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -4111,7 +4142,7 @@ SELECT pg_catalog.setval('public.wallet_balance_compact_history_id_seq', 36, tru
 
 
 --
--- TOC entry 5265 (class 0 OID 0)
+-- TOC entry 5297 (class 0 OID 0)
 -- Dependencies: 278
 -- Name: wallet_debit_history_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -4120,7 +4151,7 @@ SELECT pg_catalog.setval('public.wallet_debit_history_id_seq', 1, false);
 
 
 --
--- TOC entry 5266 (class 0 OID 0)
+-- TOC entry 5298 (class 0 OID 0)
 -- Dependencies: 252
 -- Name: wallet_to_bank_trxn_log_4_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -4129,7 +4160,7 @@ SELECT pg_catalog.setval('public.wallet_to_bank_trxn_log_4_id_seq', 1, false);
 
 
 --
--- TOC entry 4969 (class 2606 OID 98013)
+-- TOC entry 5001 (class 2606 OID 98137)
 -- Name: billing_charges_config billing_charges_config_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -4138,7 +4169,7 @@ ALTER TABLE ONLY public.billing_charges_config
 
 
 --
--- TOC entry 4961 (class 2606 OID 97221)
+-- TOC entry 4993 (class 2606 OID 97221)
 -- Name: journal_line journal_line_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -4147,7 +4178,7 @@ ALTER TABLE ONLY public.journal_line
 
 
 --
--- TOC entry 4959 (class 2606 OID 97165)
+-- TOC entry 4991 (class 2606 OID 97165)
 -- Name: journal_line_summary journal_line_summary_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -4156,7 +4187,7 @@ ALTER TABLE ONLY public.journal_line_summary
 
 
 --
--- TOC entry 4957 (class 2606 OID 97119)
+-- TOC entry 4989 (class 2606 OID 97119)
 -- Name: journal journal_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -4165,7 +4196,7 @@ ALTER TABLE ONLY public.journal
 
 
 --
--- TOC entry 4963 (class 2606 OID 97460)
+-- TOC entry 4995 (class 2606 OID 97460)
 -- Name: merchant_access_whitelist merchant_access_whitelist_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -4174,7 +4205,7 @@ ALTER TABLE ONLY public.merchant_access_whitelist
 
 
 --
--- TOC entry 4965 (class 2606 OID 97469)
+-- TOC entry 4997 (class 2606 OID 97469)
 -- Name: partner_access_whitelist partner_access_whitelist_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -4183,7 +4214,7 @@ ALTER TABLE ONLY public.partner_access_whitelist
 
 
 --
--- TOC entry 4967 (class 2606 OID 97478)
+-- TOC entry 4999 (class 2606 OID 97478)
 -- Name: partner_access_blacklist user_access_blacklist_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -4192,7 +4223,7 @@ ALTER TABLE ONLY public.partner_access_blacklist
 
 
 --
--- TOC entry 4955 (class 2606 OID 96897)
+-- TOC entry 4987 (class 2606 OID 96897)
 -- Name: user_sessions user_session_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -4201,7 +4232,7 @@ ALTER TABLE ONLY public.user_sessions
 
 
 --
--- TOC entry 4953 (class 2606 OID 81466)
+-- TOC entry 4985 (class 2606 OID 81466)
 -- Name: wallet_to_bank_trxn_log_4 wallet_to_bank_trxn_log_4_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -4210,7 +4241,7 @@ ALTER TABLE ONLY public.wallet_to_bank_trxn_log_4
 
 
 --
--- TOC entry 4971 (class 2606 OID 97222)
+-- TOC entry 5003 (class 2606 OID 97222)
 -- Name: journal_line FKq1qkwi3bp726yehudbih8xe5b; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -4219,7 +4250,7 @@ ALTER TABLE ONLY public.journal_line
 
 
 --
--- TOC entry 4970 (class 2606 OID 97166)
+-- TOC entry 5002 (class 2606 OID 97166)
 -- Name: journal_line_summary fk_journal_line_summary_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -4227,7 +4258,7 @@ ALTER TABLE ONLY public.journal_line_summary
     ADD CONSTRAINT fk_journal_line_summary_id FOREIGN KEY (journal_id) REFERENCES public.journal(id);
 
 
--- Completed on 2024-09-12 12:28:08
+-- Completed on 2024-10-01 01:13:28
 
 --
 -- PostgreSQL database dump complete
