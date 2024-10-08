@@ -4,8 +4,11 @@
  */
 package i.ogeyingbo.online.bookstore.dao;
 
+import i.ogeyingbo.input.Account;
 import i.ogeyingbo.online.bookstore.model.InventoryBook;
+import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -44,31 +47,107 @@ public class AccountDBInterface {
     
      
         
-  
-  
-     
+    private  String  getAccountTableName(String  inAction){
+        
+        String   accountTable = "";
+        switch(inAction){
+            case "purchases":   accountTable = "purchases_acc" ;  break; 
+            case "sales":   accountTable = "sales_acc" ;  break;  
+            case "return":   accountTable = "return_inwards_acc" ;  break;  
+            case "purchases":   accountTable = "return_outwards_acc" ;  break;  
+            case "capital":   accountTable = "capital_acc" ;  break;  
+            case "bank":   accountTable = "bank_acc" ;  break; 
+            case "cash":   accountTable = "cash_acc" ;  break;
+            case "furniture":   accountTable = "furniture_acc" ;  break; 
+            case "vehicle":   accountTable = "vehicle_acc" ;  break;
+            
+            default:   accountTable = ""; break;
+        }
+       return  accountTable;
+    }
     
-  public     ArrayList<InventoryBook>    getBookInventory(){
-          
-           Statement     stmnt =    null; 
-           ResultSet row = null;
-           ArrayList<InventoryBook>  inventoryBookList =  new   ArrayList<>(); 
+    
+    
+    public    int     doAccountEntry(String  inAccountTable, String  inTrxnDate,  String inDescription,  BigDecimal  inAccountEntryValue){
+         
+           StringBuilder   updateQuery1 = new StringBuilder(200);
+           StringBuilder   updateQuery = new StringBuilder(200);
+           PreparedStatement    prepStmnt1 =    null;
+           PreparedStatement    prepStmnt =    null; 
+           int   resultCount  =  0;
            Connection  cron   = null;
            
             
            try { 
-               
-                
+                 
+                    updateQuery.append(" INSERT INTO   ").append(inAccountTable);
+                    updateQuery.append("entry_date,  trxn_date, description, "); 
+                    updateQuery.append(" debit, credit, ");   
+                    updateQuery.append(" is_reconcilled ");   
+                    updateQuery.append(" values (current_date, ?, ?, ?, ?) "); 
+
+                    System.out.println("cron = "+cron);
+
+                    prepStmnt =    cron.prepareStatement(updateQuery.toString());
+
+                    prepStmnt.setString(1, inTrxnDate);
+                    prepStmnt.setString(2, inDescription);
+                    prepStmnt.setBigDecimal(3, inAccountEntryValue); 
+                    prepStmnt.setBoolean(4, false);  
+
+                    resultCount = prepStmnt.executeUpdate();
+                     
+               // custPool.closePoolConnection(identKey); 
+            } catch (Exception e) {
+                 
+                e.printStackTrace();
+            }  finally{ 
+               updateQuery = null;
+               updateQuery1 = null;
+                 try{
+                     if(prepStmnt !=  null){
+                        prepStmnt.cancel();
+                        prepStmnt.close();
+                    }
+                     
+                      if(prepStmnt1 !=  null){
+                        prepStmnt1.cancel();
+                        prepStmnt1.close();
+                    }
+                     
+                    if(cron != null){
+                        cron.close();
+                    }
+                } catch (Exception ex) {  
+                    ex.printStackTrace();
+                }
+            } 
+           return   resultCount;
+       }
+  
+  
+  
+  
+  
+    
+  
      
+    
+  public     ArrayList<Account>    getAccount(String inAccountTableEntry){
+          
+           Statement     stmnt =    null; 
+           ResultSet row = null;
+           ArrayList<Account>  accountList =  new   ArrayList<>(); 
+           Connection  cron   = null;
+           
+            
+           try {  
+               
                 StringBuilder    selectQuery  =  new  StringBuilder(200);
-                selectQuery.append(" SELECT  book_inventory.id as id,  book_inventory.title as title,   ");
-                selectQuery.append(" book_inventory.genre as genre,  book_inventory.isbn as isbn,  ");
-                selectQuery.append(" book_inventory.author as author,  book_inventory.year_published as year_published,  ");
-                selectQuery.append("  book_prices.price as price,  book_prices.units_in_stock as  units_in_stock "); 
-                selectQuery.append("  FROM  book_inventory  JOIN  book_prices  ");
-                selectQuery.append("  ON  (book_prices.book_id  =  book_inventory.id) ");
- 
-              
+                selectQuery.append(" SELECT  id,  entry_date, ref_account,  trxn_date, description, "); 
+                selectQuery.append(" debit, credit, is_reconcilled "); 
+                selectQuery.append("  FROM  ").append(inAccountTableEntry);  
+  
                 cron   =  pgDataSource.getConnect();                
                 System.out.println("cron = "+cron);
                 
@@ -79,22 +158,22 @@ public class AccountDBInterface {
                         // Parameters start with 1
                         while (row.next()) {
 
-                             InventoryBook   inventoryBook  =  new  InventoryBook();
+                            Account   account  =  new  Account();
                         
-                            inventoryBook.setId( row.getInt("id")); 
-                            inventoryBook.setTitle(row.getString("title").trim());
-                            inventoryBook.setGenre(row.getString("genre").trim());
-                            inventoryBook.setIsbn(row.getString("isbn").trim());
-                            inventoryBook.setAuthor(row.getString("author").trim());
-                            inventoryBook.setYearPublished(row.getString("year_published").trim()); 
-                            inventoryBook.setPrice(row.getBigDecimal("price"));
-                            inventoryBook.setUnitsInStock( row.getInt("units_in_stock"));
-
-                           inventoryBookList.add(inventoryBook);
+                            account.setId( row.getInt("id")); 
+                            account.setEntryDate(row.getString("entry_date").trim());
+                            account.setRefAccount(row.getString("ref_account").trim());
+                            account.setTrxnDate(row.getString("trxn_date").trim());
+                            account.setDescription(row.getString("description").trim());
+                            account.setDebit(row.getBigDecimal("debit"));
+                            account.setCredit(row.getBigDecimal("credit")); 
+                            account.setIsReconcilled(row.getBoolean("is_reconcilled")); 
+                            
+                            accountList.add(account);
 
                         } 
                       
-                  System.out.println("Inventory Books >>>> "+inventoryBookList.size());
+                  System.out.println("Accounts >>>> "+accountList.size());
                // custPool.closePoolConnection(identKey); 
             } catch (Exception e) {
                  
@@ -117,7 +196,7 @@ public class AccountDBInterface {
                     ex.printStackTrace();
                 }
             } 
-           return   inventoryBookList;
+           return   accountList;
        }
      
   
