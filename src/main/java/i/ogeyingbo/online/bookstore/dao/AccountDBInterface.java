@@ -5,7 +5,6 @@
 package i.ogeyingbo.online.bookstore.dao;
 
 import i.ogeyingbo.input.Account;
-import i.ogeyingbo.online.bookstore.model.InventoryBook;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -47,30 +46,29 @@ public class AccountDBInterface {
     
      
         
-    private  String  getAccountTableName(String  inAction){
-        
-        String   accountTable = "";
-        switch(inAction){
-            case "purchases":   accountTable = "purchases_acc" ;  break; 
-            case "sales":   accountTable = "sales_acc" ;  break;  
-            case "return":   accountTable = "return_inwards_acc" ;  break;  
-            case "purchases":   accountTable = "return_outwards_acc" ;  break;  
-            case "capital":   accountTable = "capital_acc" ;  break;  
-            case "bank":   accountTable = "bank_acc" ;  break; 
-            case "cash":   accountTable = "cash_acc" ;  break;
-            case "furniture":   accountTable = "furniture_acc" ;  break; 
-            case "vehicle":   accountTable = "vehicle_acc" ;  break;
-            
-            default:   accountTable = ""; break;
-        }
+    public  static  String  getAccountTableName(String  inAction){
+         
+       String  accountTable = switch (inAction) {
+             case "purchase" -> "purchases_acc";
+             case "sold" -> "sales_acc";
+             case "return_in" -> "return_inwards_acc";
+             case "return_out" -> "return_outwards_acc";
+             case "purchase_credit" -> "payables_acc";
+             case "sold_credit" -> "recievables_acc";
+             case "capital" -> "capital_acc";
+             case "bank" -> "bank_acc";
+             case "cash" -> "cash_acc";
+             case "furniture" -> "furniture_acc";
+             case "vehicle" -> "vehicle_acc";
+             default -> "";
+         };
        return  accountTable;
     }
     
     
     
     public    int     doAccountEntry(String  inAccountTable, String  inTrxnDate,  String inDescription,  BigDecimal  inAccountEntryValue){
-         
-           StringBuilder   updateQuery1 = new StringBuilder(200);
+          
            StringBuilder   updateQuery = new StringBuilder(200);
            PreparedStatement    prepStmnt1 =    null;
            PreparedStatement    prepStmnt =    null; 
@@ -102,19 +100,12 @@ public class AccountDBInterface {
                  
                 e.printStackTrace();
             }  finally{ 
-               updateQuery = null;
-               updateQuery1 = null;
+               updateQuery = null; 
                  try{
                      if(prepStmnt !=  null){
                         prepStmnt.cancel();
                         prepStmnt.close();
-                    }
-                     
-                      if(prepStmnt1 !=  null){
-                        prepStmnt1.cancel();
-                        prepStmnt1.close();
-                    }
-                     
+                    } 
                     if(cron != null){
                         cron.close();
                     }
