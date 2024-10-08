@@ -5,6 +5,7 @@
 package i.ogeyingbo.input;
 
     
+import i.ogeyingbo.online.bookstore.dao.AccountDBInterface;
 import java.util.Scanner;  // Import the Scanner class
 /**
  *
@@ -19,6 +20,13 @@ public class AccountingInput {
     final static String GREEN = "\u001B[32m";
     final static String YELLOW = "\u001B[33m";
     
+    private  static  AccountDBInterface    accountDBInterface = null; 
+    
+    
+    
+    public AccountingInput(){
+        accountDBInterface =   AccountDBInterface.getInstance(); 
+    }
     
     
   public static void main(String[] args) {

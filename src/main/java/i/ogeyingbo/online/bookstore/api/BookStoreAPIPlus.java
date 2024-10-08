@@ -100,7 +100,7 @@ public class BookStoreAPIPlus extends AbstractVerticle  {
   public   BookStoreAPIPlus(){
               
        
-       pgDataRetriever =   PGDataRetriever.getInstance();  
+       pgDataRetriever =   PGDataRetriever.getInstance();   
        
       urlPageMap.put("/bookstore/inventory/books/page", "book-inventory.html");
       urlPageMap.put("/bookstore/shoppingcart/page", "shopping-cart.html");
